@@ -1,0 +1,174 @@
+{
+  "features_externas": [
+    "acs_renda_mediana",
+    "acs_aluguel_mediano",
+    "acs_pop_densidade",
+    "acs_pct_alugado",
+    "acs_pct_vago",
+    "acs_valor_imovel",
+    "crime_graves_km2",
+    "crime_total_km2",
+    "ruido_311_km2",
+    "zori",
+    "metro_dist_m",
+    "metro_n_800m",
+    "metro_linhas_800m",
+    "poi_restaurantes_k1",
+    "poi_bares_k1",
+    "poi_cafes_k1",
+    "poi_atracoes_k1",
+    "poi_hoteis_k1",
+    "poi_parques_k1",
+    "dist_centro_km",
+    "dist_aeroporto_km",
+    "dist_marco_km"
+  ],
+  "grupos_externos": {
+    "ACS": [
+      "acs_renda_mediana",
+      "acs_aluguel_mediano",
+      "acs_pop_densidade",
+      "acs_pct_alugado",
+      "acs_pct_vago",
+      "acs_valor_imovel"
+    ],
+    "NYPD": [
+      "crime_graves_km2",
+      "crime_total_km2"
+    ],
+    "311": [
+      "ruido_311_km2"
+    ],
+    "Zillow": [
+      "zori"
+    ],
+    "MTA": [
+      "metro_dist_m",
+      "metro_n_800m",
+      "metro_linhas_800m"
+    ],
+    "OSM": [
+      "poi_restaurantes_k1",
+      "poi_bares_k1",
+      "poi_cafes_k1",
+      "poi_atracoes_k1",
+      "poi_hoteis_k1",
+      "poi_parques_k1"
+    ],
+    "marcos": [
+      "dist_centro_km",
+      "dist_aeroporto_km",
+      "dist_marco_km"
+    ]
+  },
+  "produto": [
+    "room_type_cod",
+    "accommodates",
+    "bedrooms",
+    "beds",
+    "banheiros",
+    "banheiro_compartilhado",
+    "min30",
+    "host_superhost",
+    "review_scores_rating",
+    "lat",
+    "lon",
+    "distrito_cod",
+    "acs_renda_mediana",
+    "acs_aluguel_mediano",
+    "acs_pop_densidade",
+    "acs_pct_alugado",
+    "acs_pct_vago",
+    "acs_valor_imovel",
+    "crime_graves_km2",
+    "crime_total_km2",
+    "ruido_311_km2",
+    "zori",
+    "metro_dist_m",
+    "metro_n_800m",
+    "metro_linhas_800m",
+    "poi_restaurantes_k1",
+    "poi_bares_k1",
+    "poi_cafes_k1",
+    "poi_atracoes_k1",
+    "poi_hoteis_k1",
+    "poi_parques_k1",
+    "dist_centro_km",
+    "dist_aeroporto_km",
+    "dist_marco_km"
+  ],
+  "2019": {
+    "na_propria_celula": 48888,
+    "realocados_por_anel": {
+      "1": 7,
+      "2": 0,
+      "3": 0
+    },
+    "sem_celula_coberta": 0,
+    "cpi": {
+      "fator": 1.2930667785680212,
+      "para": "2026-06"
+    },
+    "n": 48895,
+    "n_preco_valido": 48884,
+    "cobertura_features_externas": {
+      "acs_renda_mediana": 0.9892,
+      "acs_aluguel_mediano": 0.9898,
+      "acs_pop_densidade": 1.0,
+      "acs_pct_alugado": 0.9927,
+      "acs_pct_vago": 0.9927,
+      "acs_valor_imovel": 0.9146,
+      "crime_graves_km2": 1.0,
+      "crime_total_km2": 1.0,
+      "ruido_311_km2": 0.9979,
+      "zori": 0.8713,
+      "metro_dist_m": 1.0,
+      "metro_n_800m": 1.0,
+      "metro_linhas_800m": 1.0,
+      "poi_restaurantes_k1": 1.0,
+      "poi_bares_k1": 1.0,
+      "poi_cafes_k1": 1.0,
+      "poi_atracoes_k1": 1.0,
+      "poi_hoteis_k1": 1.0,
+      "poi_parques_k1": 1.0,
+      "dist_centro_km": 1.0,
+      "dist_aeroporto_km": 1.0,
+      "dist_marco_km": 1.0
+    }
+  },
+  "2026": {
+    "na_propria_celula": 30257,
+    "realocados_por_anel": {
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "sem_celula_coberta": 0,
+    "n": 30257,
+    "n_preco_valido": 21114,
+    "cobertura_features_externas": {
+      "acs_renda_mediana": 0.9797,
+      "acs_aluguel_mediano": 0.9844,
+      "acs_pop_densidade": 1.0,
+      "acs_pct_alugado": 0.9893,
+      "acs_pct_vago": 0.9902,
+      "acs_valor_imovel": 0.8744,
+      "crime_graves_km2": 1.0,
+      "crime_total_km2": 1.0,
+      "ruido_311_km2": 0.9983,
+      "zori": 0.9552,
+      "metro_dist_m": 1.0,
+      "metro_n_800m": 1.0,
+      "metro_linhas_800m": 1.0,
+      "poi_restaurantes_k1": 1.0,
+      "poi_bares_k1": 1.0,
+      "poi_cafes_k1": 1.0,
+      "poi_atracoes_k1": 1.0,
+      "poi_hoteis_k1": 1.0,
+      "poi_parques_k1": 1.0,
+      "dist_centro_km": 1.0,
+      "dist_aeroporto_km": 1.0,
+      "dist_marco_km": 1.0
+    }
+  }
+}

@@ -1,0 +1,741 @@
+{
+  "gerado_por": "python -m airbnb.features.celulas",
+  "resolucao_h3": 9,
+  "n_celulas": 7219,
+  "h3_r9_unicas": 7219,
+  "area_total_celulas_km2": 763.6,
+  "area_terra_km2": 666.3,
+  "celulas_por_distrito": {
+    "Queens": 2523,
+    "Brooklyn": 1681,
+    "Staten Island": 1406,
+    "Bronx": 991,
+    "Manhattan": 618
+  },
+  "diagnostico_atribuicao": {
+    "centroide_em_mais_de_um_bairro": 0,
+    "bairro_por_proximidade": 897,
+    "geoid_2010_por_proximidade": 270,
+    "geoid_2020_por_proximidade": 360,
+    "zip_por_proximidade": 620,
+    "precinto_por_proximidade": 608,
+    "h3_r9_repetidas": 0
+  },
+  "fontes": {
+    "tracts_2019": "ok",
+    "tracts_atual": "ok",
+    "modzcta": "ok",
+    "acs_2019": "ok",
+    "acs_atual": "ok",
+    "nypd_2019": "ok",
+    "nypd_atual": "ok",
+    "ruido311_2019": "ok",
+    "ruido311_atual": "ok",
+    "zillow": "ok",
+    "metro": "ok",
+    "osm": "ok",
+    "marcos": "ok",
+    "ll18": "ok"
+  },
+  "cpi": {
+    "fator": 1.293067,
+    "de": "2019-07",
+    "para": "2026-06",
+    "serie": "CUURS12ASA0 (BLS)",
+    "arquivo": "data/processed/cpi_ny.parquet"
+  },
+  "cobertura_anuncios": {
+    "2019": {
+      "anuncios": 48895,
+      "na_tabela": 48888,
+      "pct_na_tabela": 99.986,
+      "celulas_com_anuncio": 3508
+    },
+    "atual": {
+      "anuncios": 30555,
+      "na_tabela": 30555,
+      "pct_na_tabela": 100.0,
+      "celulas_com_anuncio": 3434
+    }
+  },
+  "cobertura_pct_nao_nulo": {
+    "lat": 100.0,
+    "lon": 100.0,
+    "acs_renda_mediana_2019": 92.02,
+    "acs_renda_mediana_atual": 86.33,
+    "acs_aluguel_mediano_2019": 91.94,
+    "acs_aluguel_mediano_atual": 84.86,
+    "acs_pop_densidade_2019": 100.0,
+    "acs_pop_densidade_atual": 100.0,
+    "acs_pct_alugado_2019": 94.21,
+    "acs_pct_alugado_atual": 89.33,
+    "acs_pct_vago_2019": 94.25,
+    "acs_pct_vago_atual": 89.58,
+    "acs_valor_imovel_2019": 86.54,
+    "acs_valor_imovel_atual": 80.45,
+    "crime_graves_km2_2019": 100.0,
+    "crime_graves_km2_atual": 100.0,
+    "crime_total_km2_2019": 100.0,
+    "crime_total_km2_atual": 100.0,
+    "ruido_311_km2_2019": 99.06,
+    "ruido_311_km2_atual": 99.06,
+    "zori_2019": 30.92,
+    "zori_atual": 77.35,
+    "metro_dist_m": 100.0,
+    "metro_n_800m": 100.0,
+    "metro_linhas_800m": 100.0,
+    "poi_restaurantes_k1": 100.0,
+    "poi_bares_k1": 100.0,
+    "poi_cafes_k1": 100.0,
+    "poi_atracoes_k1": 100.0,
+    "poi_hoteis_k1": 100.0,
+    "poi_parques_k1": 100.0,
+    "dist_centro_km": 100.0,
+    "dist_aeroporto_km": 100.0,
+    "dist_marco_km": 100.0,
+    "zori_var_pct": 30.92,
+    "ll18_registros_km2_atual": 100.0
+  },
+  "estatisticas": {
+    "lat": {
+      "n": 7219,
+      "media": 40.6959,
+      "min": 40.4969,
+      "p25": 40.6191,
+      "mediana": 40.6918,
+      "p75": 40.7628,
+      "max": 40.916
+    },
+    "lon": {
+      "n": 7219,
+      "media": -73.9353,
+      "min": -74.2572,
+      "p25": -73.9979,
+      "mediana": -73.9168,
+      "p75": -73.8392,
+      "max": -73.7078
+    },
+    "acs_renda_mediana_2019": {
+      "n": 6643,
+      "media": 77289.4507,
+      "min": 9740.0,
+      "p25": 52956.0,
+      "mediana": 76518.0,
+      "p75": 96250.0,
+      "max": 250001.0
+    },
+    "acs_renda_mediana_atual": {
+      "n": 6232,
+      "media": 95830.622,
+      "min": 11094.0,
+      "p25": 69030.0,
+      "mediana": 92588.0,
+      "p75": 118267.25,
+      "max": 250001.0
+    },
+    "acs_aluguel_mediano_2019": {
+      "n": 6637,
+      "media": 1554.9262,
+      "min": 294.0,
+      "p25": 1300.0,
+      "mediana": 1511.0,
+      "p75": 1750.0,
+      "max": 3501.0
+    },
+    "acs_aluguel_mediano_atual": {
+      "n": 6126,
+      "media": 1982.9358,
+      "min": 283.0,
+      "p25": 1663.25,
+      "mediana": 1927.0,
+      "p75": 2240.0,
+      "max": 3501.0
+    },
+    "acs_pop_densidade_2019": {
+      "n": 7219,
+      "media": 11695.3455,
+      "min": 0.0,
+      "p25": 3233.911,
+      "mediana": 7396.6876,
+      "p75": 16720.2031,
+      "max": 96358.5585
+    },
+    "acs_pop_densidade_atual": {
+      "n": 7219,
+      "media": 11747.3298,
+      "min": 0.0,
+      "p25": 3257.0665,
+      "mediana": 7712.7826,
+      "p75": 16756.2281,
+      "max": 112956.3984
+    },
+    "acs_pct_alugado_2019": {
+      "n": 6801,
+      "media": 51.675,
+      "min": 0.0,
+      "p25": 25.8979,
+      "mediana": 50.3975,
+      "p75": 76.8931,
+      "max": 100.0
+    },
+    "acs_pct_alugado_atual": {
+      "n": 6449,
+      "media": 51.9796,
+      "min": 0.0,
+      "p25": 28.1465,
+      "mediana": 49.8973,
+      "p75": 75.7868,
+      "max": 100.0
+    },
+    "acs_pct_vago_2019": {
+      "n": 6804,
+      "media": 8.5863,
+      "min": 0.0,
+      "p25": 4.2045,
+      "mediana": 7.1457,
+      "p75": 10.8527,
+      "max": 100.0
+    },
+    "acs_pct_vago_atual": {
+      "n": 6467,
+      "media": 7.9442,
+      "min": 0.0,
+      "p25": 3.5039,
+      "mediana": 6.2232,
+      "p75": 9.8902,
+      "max": 100.0
+    },
+    "acs_valor_imovel_2019": {
+      "n": 6247,
+      "media": 639939.2606,
+      "min": 22800.0,
+      "p25": 458400.0,
+      "mediana": 568200.0,
+      "p75": 755900.0,
+      "max": 2000001.0
+    },
+    "acs_valor_imovel_atual": {
+      "n": 5808,
+      "media": 824134.6288,
+      "min": 9999.0,
+      "p25": 626550.0,
+      "mediana": 741400.0,
+      "p75": 971325.0,
+      "max": 2000001.0
+    },
+    "crime_graves_km2_2019": {
+      "n": 7219,
+      "media": 190.4339,
+      "min": 14.0469,
+      "p25": 65.1373,
+      "mediana": 107.1076,
+      "p75": 236.9322,
+      "max": 1812.6579
+    },
+    "crime_graves_km2_atual": {
+      "n": 7219,
+      "media": 248.711,
+      "min": 19.8432,
+      "p25": 73.2911,
+      "mediana": 146.4482,
+      "p75": 322.2765,
+      "max": 2466.937
+    },
+    "crime_total_km2_2019": {
+      "n": 7219,
+      "media": 618.1477,
+      "min": 54.9254,
+      "p25": 212.8766,
+      "mediana": 368.8532,
+      "p75": 736.304,
+      "max": 5276.2416
+    },
+    "crime_total_km2_atual": {
+      "n": 7219,
+      "media": 770.9277,
+      "min": 66.1909,
+      "p25": 243.667,
+      "mediana": 467.3499,
+      "p75": 1031.5735,
+      "max": 7741.6033
+    },
+    "ruido_311_km2_2019": {
+      "n": 7151,
+      "media": 636.6849,
+      "min": 10.2972,
+      "p25": 102.5953,
+      "mediana": 309.4555,
+      "p75": 668.7894,
+      "max": 7401.3086
+    },
+    "ruido_311_km2_atual": {
+      "n": 7151,
+      "media": 1119.7813,
+      "min": 4.3278,
+      "p25": 169.8625,
+      "mediana": 562.5314,
+      "p75": 1282.2257,
+      "max": 15148.8398
+    },
+    "zori_2019": {
+      "n": 2232,
+      "media": 2575.3584,
+      "min": 1521.3414,
+      "p25": 2065.9739,
+      "mediana": 2419.1759,
+      "p75": 2991.7328,
+      "max": 6081.982
+    },
+    "zori_atual": {
+      "n": 5584,
+      "media": 3083.2968,
+      "min": 2137.4192,
+      "p25": 2588.1424,
+      "mediana": 2826.5865,
+      "p75": 3157.4196,
+      "max": 9136.7337
+    },
+    "metro_dist_m": {
+      "n": 7219,
+      "media": 1742.0135,
+      "min": 9.1751,
+      "p25": 431.1932,
+      "mediana": 965.2821,
+      "p75": 2364.5229,
+      "max": 9752.8253
+    },
+    "metro_n_800m": {
+      "n": 7219,
+      "media": 1.1515,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 0.0,
+      "p75": 2.0,
+      "max": 13.0
+    },
+    "metro_linhas_800m": {
+      "n": 7219,
+      "media": 1.166,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 0.0,
+      "p75": 2.0,
+      "max": 19.0
+    },
+    "poi_restaurantes_k1": {
+      "n": 7219,
+      "media": 12.0864,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 3.0,
+      "p75": 11.0,
+      "max": 296.0
+    },
+    "poi_bares_k1": {
+      "n": 7219,
+      "media": 1.8576,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 0.0,
+      "p75": 1.0,
+      "max": 104.0
+    },
+    "poi_cafes_k1": {
+      "n": 7219,
+      "media": 2.4938,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 0.0,
+      "p75": 1.0,
+      "max": 77.0
+    },
+    "poi_atracoes_k1": {
+      "n": 7219,
+      "media": 0.8278,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 0.0,
+      "p75": 0.0,
+      "max": 116.0
+    },
+    "poi_hoteis_k1": {
+      "n": 7219,
+      "media": 0.6839,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 0.0,
+      "p75": 0.0,
+      "max": 66.0
+    },
+    "poi_parques_k1": {
+      "n": 7219,
+      "media": 1.937,
+      "min": 0.0,
+      "p25": 0.0,
+      "mediana": 1.0,
+      "p75": 3.0,
+      "max": 29.0
+    },
+    "dist_centro_km": {
+      "n": 7219,
+      "media": 15.8266,
+      "min": 0.1666,
+      "p25": 11.0181,
+      "mediana": 15.856,
+      "p75": 20.2311,
+      "max": 36.578
+    },
+    "dist_aeroporto_km": {
+      "n": 7219,
+      "media": 13.7472,
+      "min": 0.1137,
+      "p25": 6.8657,
+      "mediana": 10.272,
+      "p75": 17.0781,
+      "max": 43.1795
+    },
+    "dist_marco_km": {
+      "n": 7219,
+      "media": 12.6393,
+      "min": 0.1242,
+      "p25": 7.9629,
+      "mediana": 12.5557,
+      "p75": 17.0618,
+      "max": 31.2774
+    },
+    "zori_var_pct": {
+      "n": 2232,
+      "media": 39.3306,
+      "min": 20.6426,
+      "p25": 31.8605,
+      "mediana": 37.4038,
+      "p75": 44.2636,
+      "max": 74.7031
+    },
+    "ll18_registros_km2_atual": {
+      "n": 7219,
+      "media": 4.3074,
+      "min": 0.311,
+      "p25": 0.7601,
+      "mediana": 2.5223,
+      "p75": 5.1335,
+      "max": 40.2699
+    }
+  },
+  "features": {
+    "lat": {
+      "fonte": "H3",
+      "neutro": "lat",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "graus (WGS84)",
+      "descricao": "latitude do centroide da celula r9",
+      "transformacao": "h3.cell_to_latlng"
+    },
+    "lon": {
+      "fonte": "H3",
+      "neutro": "lon",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "graus (WGS84)",
+      "descricao": "longitude do centroide da celula r9",
+      "transformacao": "h3.cell_to_latlng"
+    },
+    "acs_renda_mediana_2019": {
+      "fonte": "ACS",
+      "neutro": "acs_renda_mediana",
+      "safra": "ACS 5 anos 2015-2019 (tracts 2010)",
+      "unidade": "USD nominais do ultimo ano do ACS (2019 | 2024)",
+      "descricao": "renda domiciliar mediana do tract (B19013_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; teto do Census 250.001 = '250.000 ou mais'"
+    },
+    "acs_renda_mediana_atual": {
+      "fonte": "ACS",
+      "neutro": "acs_renda_mediana",
+      "safra": "ACS 5 anos 2020-2024 (tracts 2020)",
+      "unidade": "USD nominais do ultimo ano do ACS (2019 | 2024)",
+      "descricao": "renda domiciliar mediana do tract (B19013_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; teto do Census 250.001 = '250.000 ou mais'"
+    },
+    "acs_aluguel_mediano_2019": {
+      "fonte": "ACS",
+      "neutro": "acs_aluguel_mediano",
+      "safra": "ACS 5 anos 2015-2019 (tracts 2010)",
+      "unidade": "USD/mes nominais do ultimo ano do ACS",
+      "descricao": "aluguel bruto mediano do tract (B25064_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; teto 3.501 (2019) / 3.501+ (2024) e censura"
+    },
+    "acs_aluguel_mediano_atual": {
+      "fonte": "ACS",
+      "neutro": "acs_aluguel_mediano",
+      "safra": "ACS 5 anos 2020-2024 (tracts 2020)",
+      "unidade": "USD/mes nominais do ultimo ano do ACS",
+      "descricao": "aluguel bruto mediano do tract (B25064_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; teto 3.501 (2019) / 3.501+ (2024) e censura"
+    },
+    "acs_pop_densidade_2019": {
+      "fonte": "ACS",
+      "neutro": "acs_pop_densidade",
+      "safra": "ACS 5 anos 2015-2019 (tracts 2010)",
+      "unidade": "hab/km2 de terra",
+      "descricao": "populacao do tract (B01003_001) / area de terra do tract (ALAND)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; ALAND do cartographic boundary da mesma safra"
+    },
+    "acs_pop_densidade_atual": {
+      "fonte": "ACS",
+      "neutro": "acs_pop_densidade",
+      "safra": "ACS 5 anos 2020-2024 (tracts 2020)",
+      "unidade": "hab/km2 de terra",
+      "descricao": "populacao do tract (B01003_001) / area de terra do tract (ALAND)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; ALAND do cartographic boundary da mesma safra"
+    },
+    "acs_pct_alugado_2019": {
+      "fonte": "ACS",
+      "neutro": "acs_pct_alugado",
+      "safra": "ACS 5 anos 2015-2019 (tracts 2010)",
+      "unidade": "%",
+      "descricao": "domicilios ocupados de aluguel / domicilios ocupados (B25003_003 / B25003_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; denominador 0 -> NaN"
+    },
+    "acs_pct_alugado_atual": {
+      "fonte": "ACS",
+      "neutro": "acs_pct_alugado",
+      "safra": "ACS 5 anos 2020-2024 (tracts 2020)",
+      "unidade": "%",
+      "descricao": "domicilios ocupados de aluguel / domicilios ocupados (B25003_003 / B25003_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; denominador 0 -> NaN"
+    },
+    "acs_pct_vago_2019": {
+      "fonte": "ACS",
+      "neutro": "acs_pct_vago",
+      "safra": "ACS 5 anos 2015-2019 (tracts 2010)",
+      "unidade": "%",
+      "descricao": "unidades habitacionais vagas / total (B25002_003 / B25002_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; inclui unidade vaga por uso sazonal/ocasional — onde mora o Airbnb"
+    },
+    "acs_pct_vago_atual": {
+      "fonte": "ACS",
+      "neutro": "acs_pct_vago",
+      "safra": "ACS 5 anos 2020-2024 (tracts 2020)",
+      "unidade": "%",
+      "descricao": "unidades habitacionais vagas / total (B25002_003 / B25002_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; inclui unidade vaga por uso sazonal/ocasional — onde mora o Airbnb"
+    },
+    "acs_valor_imovel_2019": {
+      "fonte": "ACS",
+      "neutro": "acs_valor_imovel",
+      "safra": "ACS 5 anos 2015-2019 (tracts 2010)",
+      "unidade": "USD nominais do ultimo ano do ACS",
+      "descricao": "valor mediano do imovel ocupado pelo proprietario (B25077_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; teto 2.000.001 = '2.000.000 ou mais'"
+    },
+    "acs_valor_imovel_atual": {
+      "fonte": "ACS",
+      "neutro": "acs_valor_imovel",
+      "safra": "ACS 5 anos 2020-2024 (tracts 2020)",
+      "unidade": "USD nominais do ultimo ano do ACS",
+      "descricao": "valor mediano do imovel ocupado pelo proprietario (B25077_001)",
+      "transformacao": "tract (GEOID) que contem o centroide da celula; codigos-sentinela negativos do Census -> NaN; teto 2.000.001 = '2.000.000 ou mais'"
+    },
+    "crime_graves_km2_2019": {
+      "fonte": "NYPD",
+      "neutro": "crime_graves_km2",
+      "safra": "12 meses: 2018-07-08 a 2019-07-07",
+      "unidade": "queixas/km2 em 12 meses",
+      "descricao": "queixas criminais de natureza FELONY registradas (rpt_dt) nos 12 meses antes do snapshot, por km2 de terra da delegacia",
+      "transformacao": "contagem agregada no servidor por delegacia (addr_pct_cd); a celula herda a densidade da delegacia que contem o centroide"
+    },
+    "crime_graves_km2_atual": {
+      "fonte": "NYPD",
+      "neutro": "crime_graves_km2",
+      "safra": "12 meses: 2025-06-14 a 2026-06-13",
+      "unidade": "queixas/km2 em 12 meses",
+      "descricao": "queixas criminais de natureza FELONY registradas (rpt_dt) nos 12 meses antes do snapshot, por km2 de terra da delegacia",
+      "transformacao": "contagem agregada no servidor por delegacia (addr_pct_cd); a celula herda a densidade da delegacia que contem o centroide"
+    },
+    "crime_total_km2_2019": {
+      "fonte": "NYPD",
+      "neutro": "crime_total_km2",
+      "safra": "12 meses: 2018-07-08 a 2019-07-07",
+      "unidade": "queixas/km2 em 12 meses",
+      "descricao": "queixas criminais de qualquer natureza (FELONY + MISDEMEANOR + VIOLATION) nos 12 meses antes do snapshot, por km2 de terra da delegacia",
+      "transformacao": "idem crime_graves_km2"
+    },
+    "crime_total_km2_atual": {
+      "fonte": "NYPD",
+      "neutro": "crime_total_km2",
+      "safra": "12 meses: 2025-06-14 a 2026-06-13",
+      "unidade": "queixas/km2 em 12 meses",
+      "descricao": "queixas criminais de qualquer natureza (FELONY + MISDEMEANOR + VIOLATION) nos 12 meses antes do snapshot, por km2 de terra da delegacia",
+      "transformacao": "idem crime_graves_km2"
+    },
+    "ruido_311_km2_2019": {
+      "fonte": "311",
+      "neutro": "ruido_311_km2",
+      "safra": "12 meses: 2018-07-08 a 2019-07-07",
+      "unidade": "chamados/km2 em 12 meses",
+      "descricao": "chamados ao 311 com complaint_type iniciado por 'Noise' nos 12 meses antes do snapshot, por km2 do MODZCTA",
+      "transformacao": "contagem agregada no servidor por incident_zip -> MODZCTA; a celula herda a densidade do MODZCTA que contem o centroide"
+    },
+    "ruido_311_km2_atual": {
+      "fonte": "311",
+      "neutro": "ruido_311_km2",
+      "safra": "12 meses: 2025-06-14 a 2026-06-13",
+      "unidade": "chamados/km2 em 12 meses",
+      "descricao": "chamados ao 311 com complaint_type iniciado por 'Noise' nos 12 meses antes do snapshot, por km2 do MODZCTA",
+      "transformacao": "contagem agregada no servidor por incident_zip -> MODZCTA; a celula herda a densidade do MODZCTA que contem o centroide"
+    },
+    "zori_2019": {
+      "fonte": "Zillow",
+      "neutro": "zori",
+      "safra": "2019-07",
+      "unidade": "USD/mes nominais do mes de referencia",
+      "descricao": "Zillow Observed Rent Index (suavizado, todas as tipologias) do ZIP",
+      "transformacao": "MODZCTA do centroide; valor do ZIP do MODZCTA ou, na falta, media dos ZCTAs membros com valor"
+    },
+    "zori_atual": {
+      "fonte": "Zillow",
+      "neutro": "zori",
+      "safra": "2026-06",
+      "unidade": "USD/mes nominais do mes de referencia",
+      "descricao": "Zillow Observed Rent Index (suavizado, todas as tipologias) do ZIP",
+      "transformacao": "MODZCTA do centroide; valor do ZIP do MODZCTA ou, na falta, media dos ZCTAs membros com valor"
+    },
+    "metro_dist_m": {
+      "fonte": "MTA",
+      "neutro": "metro_dist_m",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "m",
+      "descricao": "distancia do centroide a estacao de metro mais proxima (inclui SIR)",
+      "transformacao": "KD-tree em UTM 18N (EPSG:32618)"
+    },
+    "metro_n_800m": {
+      "fonte": "MTA",
+      "neutro": "metro_n_800m",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "complexos",
+      "descricao": "complexos de estacao distintos (complex_id) a ate 800 m do centroide",
+      "transformacao": "KD-tree em UTM 18N; conta complexo, nao plataforma"
+    },
+    "metro_linhas_800m": {
+      "fonte": "MTA",
+      "neutro": "metro_linhas_800m",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "linhas",
+      "descricao": "linhas distintas (daytime_routes) servidas pelas estacoes a ate 800 m",
+      "transformacao": "uniao das linhas diurnas das estacoes no raio"
+    },
+    "poi_restaurantes_k1": {
+      "fonte": "OSM",
+      "neutro": "poi_restaurantes_k1",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "POIs no anel k=1",
+      "descricao": "restaurantes e fast-food (amenity=restaurant|fast_food) na celula e nas 6 vizinhas",
+      "transformacao": "ponto (no) ou centro (way/relation) -> celula r9 -> soma no anel k=1"
+    },
+    "poi_bares_k1": {
+      "fonte": "OSM",
+      "neutro": "poi_bares_k1",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "POIs no anel k=1",
+      "descricao": "bares, pubs e casas noturnas (amenity=bar|pub|nightclub) no anel k=1",
+      "transformacao": "idem"
+    },
+    "poi_cafes_k1": {
+      "fonte": "OSM",
+      "neutro": "poi_cafes_k1",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "POIs no anel k=1",
+      "descricao": "cafes (amenity=cafe) no anel k=1",
+      "transformacao": "idem"
+    },
+    "poi_atracoes_k1": {
+      "fonte": "OSM",
+      "neutro": "poi_atracoes_k1",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "POIs no anel k=1",
+      "descricao": "atracoes, museus, galerias e mirantes (tourism=attraction|museum|gallery|viewpoint) no anel k=1",
+      "transformacao": "idem"
+    },
+    "poi_hoteis_k1": {
+      "fonte": "OSM",
+      "neutro": "poi_hoteis_k1",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "POIs no anel k=1",
+      "descricao": "hoteis, hostels e pousadas (tourism=hotel|hostel|guest_house) no anel k=1 — a concorrencia formal do Airbnb",
+      "transformacao": "idem"
+    },
+    "poi_parques_k1": {
+      "fonte": "OSM",
+      "neutro": "poi_parques_k1",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "POIs no anel k=1",
+      "descricao": "parques (leisure=park) cujo centro cai no anel k=1",
+      "transformacao": "idem; parque grande conta 1 (limitacao declarada)"
+    },
+    "dist_centro_km": {
+      "fonte": "marcos",
+      "neutro": "dist_centro_km",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "km",
+      "descricao": "distancia do centroide a Times Square",
+      "transformacao": "euclidiana em UTM 18N"
+    },
+    "dist_aeroporto_km": {
+      "fonte": "marcos",
+      "neutro": "dist_aeroporto_km",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "km",
+      "descricao": "distancia ao aeroporto mais proximo (min de JFK e LGA)",
+      "transformacao": "euclidiana em UTM 18N"
+    },
+    "dist_marco_km": {
+      "fonte": "marcos",
+      "neutro": "dist_marco_km",
+      "safra": "unica (aplicada as duas safras)",
+      "unidade": "km",
+      "descricao": "distancia ao marco turistico mais proximo (Times Square, Empire State, Central Park, One WTC, Brooklyn Bridge)",
+      "transformacao": "euclidiana em UTM 18N"
+    },
+    "zori_var_pct": {
+      "fonte": "Zillow",
+      "neutro": null,
+      "safra": "2019-07 -> 2026-06",
+      "unidade": "%",
+      "descricao": "variacao nominal do ZORI do ZIP entre os dois snapshots",
+      "transformacao": "(zori_atual / zori_2019 - 1) * 100. NAO usar como feature de modelo de 2019: e informacao do futuro. Serve a analise de deriva e ao mapa."
+    },
+    "ll18_registros_km2_atual": {
+      "fonte": "OSE",
+      "neutro": null,
+      "safra": "FY26 (registros ativos em 2026-06-30)",
+      "unidade": "registros/km2",
+      "descricao": "registros de curta temporada ATIVOS (Local Law 18) no distrito do Conselho Municipal que contem o centroide, por km2 de terra do distrito",
+      "transformacao": "Figura 1 do relatorio anual FY26 da OSE; 51 distritos. So existe na safra atual (a lei nao existia em 2019): contexto e mapa, nao feature de modelo."
+    }
+  },
+  "features_local_neutras": [
+    "lat",
+    "lon",
+    "acs_renda_mediana",
+    "acs_aluguel_mediano",
+    "acs_pop_densidade",
+    "acs_pct_alugado",
+    "acs_pct_vago",
+    "acs_valor_imovel",
+    "crime_graves_km2",
+    "crime_total_km2",
+    "ruido_311_km2",
+    "zori",
+    "metro_dist_m",
+    "metro_n_800m",
+    "metro_linhas_800m",
+    "poi_restaurantes_k1",
+    "poi_bares_k1",
+    "poi_cafes_k1",
+    "poi_atracoes_k1",
+    "poi_hoteis_k1",
+    "poi_parques_k1",
+    "dist_centro_km",
+    "dist_aeroporto_km",
+    "dist_marco_km"
+  ]
+}

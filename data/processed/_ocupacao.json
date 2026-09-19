@@ -1,0 +1,191 @@
+{
+  "alvo": "estimated_occupancy_l365d (Inside Airbnb)",
+  "n_com_preco": 21114,
+  "pct_ativos": 0.45666382495026997,
+  "pct_ativos_por_min30": {
+    "< 30 noites": 0.7996807661612131,
+    "30+ noites": 0.34989442305303686
+  },
+  "atividade": {
+    "auc": 0.912740930941369,
+    "arvores": [
+      162,
+      113,
+      281,
+      156,
+      143
+    ]
+  },
+  "noites_se_ativo": {
+    "modelo": {
+      "n": 9642,
+      "mae_noites": 57.77664960189012,
+      "mdae_noites": 48.548445433466085,
+      "spearman": 0.5936189790082755,
+      "media_observada": 153.57488073013897,
+      "media_prevista": 135.00604443347277
+    },
+    "baseline_bairro_tipo_min30": {
+      "n": 9642,
+      "mae_noites": 62.19897324206596,
+      "mdae_noites": 60.0,
+      "spearman": 0.3409464265656357,
+      "media_observada": 153.57488073013897,
+      "media_prevista": 166.9249637004771
+    },
+    "arvores": [
+      97,
+      149,
+      139,
+      86,
+      47
+    ],
+    "n_arvores_final": 97,
+    "pct_no_teto": 0.2803360298693217
+  },
+  "receita_se_ativo": {
+    "mediana_observada": 23885.565000000002,
+    "mediana_prevista": 25226.80259481696,
+    "spearman": 0.7923665880467387
+  },
+  "penalidade_sobrepreco": {
+    "por_estrato": {
+      "< 30 noites": {
+        "≥ 20% abaixo": {
+          "mediana_noites": 255.0,
+          "media_noites": 197.9017941454202,
+          "n": 1059
+        },
+        "5–20% abaixo": {
+          "mediana_noites": 255.0,
+          "media_noites": 201.2596026490066,
+          "n": 755
+        },
+        "±5%": {
+          "mediana_noites": 255.0,
+          "media_noites": 199.25586353944564,
+          "n": 469
+        },
+        "5–20% acima": {
+          "mediana_noites": 255.0,
+          "media_noites": 195.08849557522123,
+          "n": 565
+        },
+        "≥ 20% acima": {
+          "mediana_noites": 205.0,
+          "media_noites": 167.6551724137931,
+          "n": 1160
+        }
+      },
+      "30+ noites": {
+        "≥ 20% abaixo": {
+          "mediana_noites": 120.0,
+          "media_noites": 127.67009803921569,
+          "n": 2040
+        },
+        "5–20% abaixo": {
+          "mediana_noites": 120.0,
+          "media_noites": 131.54688618468145,
+          "n": 1397
+        },
+        "±5%": {
+          "mediana_noites": 120.0,
+          "media_noites": 127.84451219512195,
+          "n": 656
+        },
+        "5–20% acima": {
+          "mediana_noites": 120.0,
+          "media_noites": 129.83068017366136,
+          "n": 691
+        },
+        "≥ 20% acima": {
+          "mediana_noites": 120.0,
+          "media_noites": 121.51411764705882,
+          "n": 850
+        }
+      }
+    },
+    "spearman_sobrepreco_ocupacao": -0.004440779347325881,
+    "n": 9642
+  },
+  "receita_vs_aluguel": {
+    "n": 5069,
+    "razao_mediana": 0.5548490244831301,
+    "pct_receita_acima_de_um_ano_de_aluguel": 0.27658315249556126,
+    "por_min30": {
+      "< 30 noites": {
+        "n": 1433,
+        "razao_mediana": 1.69301037874078,
+        "pct_acima": 0.7480809490579204
+      },
+      "30+ noites": {
+        "n": 3636,
+        "razao_mediana": 0.4196823924043592,
+        "pct_acima": 0.09075907590759076
+      }
+    },
+    "por_distrito": {
+      "Manhattan": {
+        "n": 2781,
+        "razao_mediana": 0.5243426085863271,
+        "pct_acima": 0.26105717367853293
+      },
+      "Brooklyn": {
+        "n": 1691,
+        "razao_mediana": 0.6306178792670338,
+        "pct_acima": 0.3122412773506801
+      },
+      "Queens": {
+        "n": 453,
+        "razao_mediana": 0.5659116437874159,
+        "pct_acima": 0.2693156732891832
+      },
+      "Bronx": {
+        "n": 96,
+        "razao_mediana": 0.4198822044052393,
+        "pct_acima": 0.19791666666666666
+      },
+      "Staten Island": {
+        "n": 48,
+        "razao_mediana": 0.3899214337432685,
+        "pct_acima": 0.14583333333333334
+      }
+    }
+  },
+  "features": [
+    "room_type_cod",
+    "accommodates",
+    "bedrooms",
+    "beds",
+    "banheiros",
+    "banheiro_compartilhado",
+    "min30",
+    "host_superhost",
+    "review_scores_rating",
+    "lat",
+    "lon",
+    "distrito_cod",
+    "acs_renda_mediana",
+    "acs_aluguel_mediano",
+    "acs_pop_densidade",
+    "acs_pct_alugado",
+    "acs_pct_vago",
+    "acs_valor_imovel",
+    "crime_graves_km2",
+    "crime_total_km2",
+    "ruido_311_km2",
+    "zori",
+    "metro_dist_m",
+    "metro_n_800m",
+    "metro_linhas_800m",
+    "poi_restaurantes_k1",
+    "poi_bares_k1",
+    "poi_cafes_k1",
+    "poi_atracoes_k1",
+    "poi_hoteis_k1",
+    "poi_parques_k1",
+    "dist_centro_km",
+    "dist_aeroporto_km",
+    "dist_marco_km"
+  ]
+}

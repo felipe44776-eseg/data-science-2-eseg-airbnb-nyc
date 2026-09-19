@@ -1,0 +1,105 @@
+site_name: Airbnb em Nova York, 2019 → 2026
+site_description: CRISP-DM com dados externos, modelos preditivos e mapa público — Data Science 2, ESEG
+site_url: https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/docs/
+repo_url: https://github.com/felipe44776-eseg/data-science-2-eseg-airbnb-nyc
+repo_name: data-science-2-eseg-airbnb-nyc
+edit_uri: edit/main/docs/
+docs_dir: docs
+strict: true
+exclude_docs: |
+  _snippets/
+
+theme:
+  name: material
+  language: pt-BR
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Modo escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+
+nav:
+  - Início: index.md
+  - Da v0 à v1: 00-v0-e-o-que-muda.md
+  - CRISP-DM:
+      - 1 · Entendimento do negócio: 01-entendimento-do-negocio.md
+      - 2 · Entendimento dos dados: 02-entendimento-dos-dados.md
+      - 2 · Fontes externas: 03-fontes-externas.md
+      - 3 · Preparação dos dados: 04-preparacao-dos-dados.md
+      - 2/5 · Comparativo 2019 → 2026: 05-comparativo-2019-2026.md
+      - 2/5 · Testes de localização: 06-testes-de-localizacao.md
+      - 4 · Modelagem: 07-modelagem.md
+      - 5 · Avaliação: 08-avaliacao.md
+      - 6 · Implantação: 09-implantacao.md
+  - Ética e LGPD: 10-etica-e-lgpd.md
+  - Referência:
+      - Dicionário de dados: dicionario-dados.md
+      - Decisões (ADR):
+          - adr/index.md
+          - 0001 · Unidade espacial H3: adr/0001-unidade-espacial-h3.md
+          - 0002 · Validação espacial: adr/0002-validacao-espacial.md
+          - 0003 · Local-first e Pages: adr/0003-local-first-e-pages.md
+          - 0004 · Modelo no navegador: adr/0004-modelo-no-navegador.md
+          - 0005 · Comparabilidade 2019 × 2026: adr/0005-comparabilidade-2019-2026.md
+      - Como reproduzir: como-reproduzir.md
+      - Como contribuir: como-contribuir.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path: [docs]
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
+  - assets/katex.js
+
+extra_css:
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
+
+extra:
+  generator: false

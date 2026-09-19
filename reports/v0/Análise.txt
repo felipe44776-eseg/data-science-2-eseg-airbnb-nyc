@@ -1,0 +1,12 @@
+Id - Unico , duplicados perfeito? 
+Campo vazio , excluidos? 
+Host id - Id do Anfitrião 
+Host_name - nome do Anfitrião 
+Latitude  Longitude - mapa de calor - poligono do bairro 
+price - preco por noite 
+reviws_epr_month - testar se é do host ou do anuncio , por que tem mais que review per month 
+
+
+análises: 
+
+

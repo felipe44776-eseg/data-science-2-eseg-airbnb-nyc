@@ -1,0 +1,281 @@
+{
+  "moran": {
+    "preco_2026": {
+      "n_celulas": 515,
+      "ilhas_removidas": 12,
+      "I": 0.5827513892935468,
+      "I_esperado": -0.0019455252918287938,
+      "z_permutacao": 17.70035617613172,
+      "p_pseudo": 0.001,
+      "p_bilateral": 0.002,
+      "permutacoes": 999
+    },
+    "preco_real_2019": {
+      "n_celulas": 583,
+      "ilhas_removidas": 7,
+      "I": 0.6217169019596718,
+      "I_esperado": -0.001718213058419244,
+      "z_permutacao": 20.596432906547577,
+      "p_pseudo": 0.001,
+      "p_bilateral": 0.002,
+      "permutacoes": 999
+    },
+    "premio_local_2026": {
+      "n_celulas": 515,
+      "ilhas_removidas": 12,
+      "I": 0.4356967210914422,
+      "I_esperado": -0.0019455252918287938,
+      "z_permutacao": 13.201266735853357,
+      "p_pseudo": 0.001,
+      "p_bilateral": 0.002,
+      "permutacoes": 999
+    }
+  },
+  "lisa_premio_local": {
+    "contagem": {
+      "não significativo": 494,
+      "Alto-Alto": 19,
+      "Baixo-Baixo": 2
+    },
+    "celulas": 515
+  },
+  "lisa_preco_2026": {
+    "contagem": {
+      "não significativo": 470,
+      "Alto-Alto": 37,
+      "Baixo-Baixo": 8
+    }
+  },
+  "distritos": {
+    "Entire home/apt": {
+      "kruskal": {
+        "H": 1212.85296499933,
+        "p": 2.605065771885402e-261,
+        "n": 11226,
+        "k": 5,
+        "epsilon2": 0.10804926191530778
+      },
+      "pares": [
+        {
+          "a": "Bronx",
+          "b": "Brooklyn",
+          "U": 363895.0,
+          "p": 2.3065902364554987e-25,
+          "rank_biserial": -0.3509292950913242,
+          "mediana_a": 137.53500000000003,
+          "mediana_b": 200.52499999999998,
+          "p_holm": 1.1532951182277494e-24
+        },
+        {
+          "a": "Bronx",
+          "b": "Manhattan",
+          "U": 413077.0,
+          "p": 3.446252792156533e-65,
+          "rank_biserial": -0.5649989469250211,
+          "mediana_a": 137.53500000000003,
+          "mediana_b": 268.4100000000001,
+          "p_holm": 2.7570022337252263e-64
+        },
+        {
+          "a": "Bronx",
+          "b": "Queens",
+          "U": 182114.0,
+          "p": 3.809676517313334e-05,
+          "rank_biserial": -0.1480445359281437,
+          "mediana_a": 137.53500000000003,
+          "mediana_b": 163.01500000000001,
+          "p_holm": 7.619353034626668e-05
+        },
+        {
+          "a": "Bronx",
+          "b": "Staten Island",
+          "U": 25491.0,
+          "p": 0.0003116307699657227,
+          "rank_biserial": 0.21617366412213745,
+          "mediana_a": 137.53500000000003,
+          "mediana_b": 117.15000000000002,
+          "p_holm": 0.0003116307699657227
+        },
+        {
+          "a": "Brooklyn",
+          "b": "Manhattan",
+          "U": 7676474.5,
+          "p": 1.790520293909591e-100,
+          "rank_biserial": -0.26174399795347625,
+          "mediana_a": 200.52499999999998,
+          "mediana_b": 268.4100000000001,
+          "p_holm": 1.611468264518632e-99
+        },
+        {
+          "a": "Brooklyn",
+          "b": "Queens",
+          "U": 2840281.0,
+          "p": 1.3728827488689602e-30,
+          "rank_biserial": 0.2134468221092063,
+          "mediana_a": 200.52499999999998,
+          "mediana_b": 163.01500000000001,
+          "p_holm": 8.237296493213762e-30
+        },
+        {
+          "a": "Brooklyn",
+          "b": "Staten Island",
+          "U": 348331.0,
+          "p": 7.125986861829696e-24,
+          "rank_biserial": 0.517702778068249,
+          "mediana_a": 200.52499999999998,
+          "mediana_b": 117.15000000000002,
+          "p_holm": 2.8503947447318785e-23
+        },
+        {
+          "a": "Manhattan",
+          "b": "Queens",
+          "U": 5772877.0,
+          "p": 5.152667576696311e-150,
+          "rank_biserial": 0.4561131317819289,
+          "mediana_a": 268.4100000000001,
+          "mediana_b": 163.01500000000001,
+          "p_holm": 5.152667576696311e-149
+        },
+        {
+          "a": "Manhattan",
+          "b": "Staten Island",
+          "U": 652677.0,
+          "p": 1.963013993090572e-40,
+          "rank_biserial": 0.678944288314244,
+          "mediana_a": 268.4100000000001,
+          "mediana_b": 117.15000000000002,
+          "p_holm": 1.3741097951634004e-39
+        },
+        {
+          "a": "Queens",
+          "b": "Staten Island",
+          "U": 117841.0,
+          "p": 5.550496608049522e-11,
+          "rank_biserial": 0.3466311651506149,
+          "mediana_a": 163.01500000000001,
+          "mediana_b": 117.15000000000002,
+          "p_holm": 1.6651489824148566e-10
+        }
+      ]
+    },
+    "Private room": {
+      "kruskal": {
+        "H": 887.3363010930765,
+        "p": 9.234352432518326e-191,
+        "n": 9219,
+        "k": 5,
+        "epsilon2": 0.09626126069571236
+      },
+      "pares": [
+        {
+          "a": "Bronx",
+          "b": "Brooklyn",
+          "U": 678675.5,
+          "p": 4.564076506142725e-15,
+          "rank_biserial": -0.21700443486607723,
+          "mediana_a": 78.36999999999998,
+          "mediana_b": 93.10999999999999,
+          "p_holm": 3.194853554299907e-14
+        },
+        {
+          "a": "Bronx",
+          "b": "Manhattan",
+          "U": 374069.0,
+          "p": 1.0440221750727129e-69,
+          "rank_biserial": -0.4938440325882667,
+          "mediana_a": 78.36999999999998,
+          "mediana_b": 155.49500000000003,
+          "p_holm": 8.352177400581703e-69
+        },
+        {
+          "a": "Bronx",
+          "b": "Queens",
+          "U": 463816.5,
+          "p": 9.41471748301289e-05,
+          "rank_biserial": -0.1124751361234454,
+          "mediana_a": 78.36999999999998,
+          "mediana_b": 84.27000000000001,
+          "p_holm": 0.0003765886993205156
+        },
+        {
+          "a": "Bronx",
+          "b": "Staten Island",
+          "U": 32461.0,
+          "p": 0.0014968841825014618,
+          "rank_biserial": -0.1679760089197606,
+          "mediana_a": 78.36999999999998,
+          "mediana_b": 94.81000000000003,
+          "p_holm": 0.004490652547504385
+        },
+        {
+          "a": "Brooklyn",
+          "b": "Manhattan",
+          "U": 3526513.0,
+          "p": 2.712619025493802e-109,
+          "rank_biserial": -0.3200796428373117,
+          "mediana_a": 93.10999999999999,
+          "mediana_b": 155.49500000000003,
+          "p_holm": 2.4413571229444217e-108
+        },
+        {
+          "a": "Brooklyn",
+          "b": "Queens",
+          "U": 4075064.0,
+          "p": 3.1979045837592313e-12,
+          "rank_biserial": 0.1110885715906067,
+          "mediana_a": 93.10999999999999,
+          "mediana_b": 84.27000000000001,
+          "p_holm": 1.5989522918796158e-11
+        },
+        {
+          "a": "Brooklyn",
+          "b": "Staten Island",
+          "U": 286006.0,
+          "p": 0.34434388629155344,
+          "rank_biserial": 0.04454946531876347,
+          "mediana_a": 93.10999999999999,
+          "mediana_b": 94.81000000000003,
+          "p_holm": 0.40034995172897037
+        },
+        {
+          "a": "Manhattan",
+          "b": "Queens",
+          "U": 4413319.5,
+          "p": 6.030497206035453e-138,
+          "rank_biserial": 0.4112863072927808,
+          "mediana_a": 155.49500000000003,
+          "mediana_b": 84.27000000000001,
+          "p_holm": 6.0304972060354525e-137
+        },
+        {
+          "a": "Manhattan",
+          "b": "Staten Island",
+          "U": 315973.0,
+          "p": 7.747034244337966e-14,
+          "rank_biserial": 0.35344107530658486,
+          "mediana_a": 155.49500000000003,
+          "mediana_b": 94.81000000000003,
+          "p_holm": 4.64822054660278e-13
+        },
+        {
+          "a": "Queens",
+          "b": "Staten Island",
+          "U": 154981.0,
+          "p": 0.20017497586448518,
+          "rank_biserial": -0.06120767723391818,
+          "mediana_a": 84.27000000000001,
+          "mediana_b": 94.81000000000003,
+          "p_holm": 0.40034995172897037
+        }
+      ]
+    }
+  },
+  "variancia_explicada": {
+    "distrito_eta2": 0.1345695955216861,
+    "bairro_eta2": 0.292731144482337,
+    "celula_r8_eta2": 0.3597141908542105,
+    "imovel_M2_r2_fora_do_fold": 0.7157677284100976,
+    "imovel_mais_local_M4_r2_fora_do_fold": 0.7598894268308665,
+    "nota": "eta2 de grupos pequenos e otimista (cada celula usa a propria media); os R2 dos modelos sao fora do fold e nao tem esse vies"
+  }
+}

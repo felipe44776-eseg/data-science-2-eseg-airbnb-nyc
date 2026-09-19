@@ -1,0 +1,860 @@
+{
+  "descricao": "Relatório da limpeza (clean/pipeline.py). Regras de quarentena por snapshot, cascata de exclusões, nulos antes/depois. Números conferidos: a cascata fecha com as linhas da silver (assert no código).",
+  "entradas": {
+    "kaggle_ab_nyc_2019": {
+      "arquivo": "data/raw/kaggle/AB_NYC_2019.csv",
+      "sha256": "e420db40ff10fcb40efc1b5b1648ee0b18a48f4e4537155cecc59fe95d18783a"
+    },
+    "insideairbnb_listings": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/listings.csv.gz",
+      "sha256": "10eb56b21ec71a838b30ef47b836f3d375269baeed5ff9e5c35ff3c6a98d3ca7"
+    },
+    "insideairbnb_listings_resumo": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/listings_resumo.csv",
+      "sha256": "e42f8f897a4ed89d489e703dc462d314f5aa98912cca6637c988c99f5490caba"
+    },
+    "insideairbnb_reviews_resumo": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/reviews_resumo.csv",
+      "sha256": "dca796445924529428d6ab7f13f161b56114ef9bf7209ea1c2255ca45866e647"
+    },
+    "insideairbnb_neighbourhoods_geojson": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/neighbourhoods.geojson",
+      "sha256": "c0d3f80e341a4a95c40f37fc54c4af890c834bb30b5b27308e04033b05e9c3e7"
+    },
+    "insideairbnb_neighbourhoods_csv": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/neighbourhoods.csv",
+      "sha256": "0085b86dc498478df3024483fe5d4ddcf3f848802e280b1b6171145aed8edeff"
+    }
+  },
+  "linhas_entrada": {
+    "2019": 48895,
+    "2026": 30259
+  },
+  "regras": [
+    {
+      "codigo": "B01",
+      "regra": "id_duplicado",
+      "escopo": "base",
+      "motivo": "id repetido no arquivo (mantida a primeira ocorrência)",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 0,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "B02",
+      "regra": "duplicata_perfeita",
+      "escopo": "base",
+      "motivo": "linha idêntica a outra em todas as colunas exceto o id (anúncio publicado em dobro)",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 0,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "B03",
+      "regra": "coordenada_fora_nyc",
+      "escopo": "base",
+      "motivo": "latitude/longitude nula ou fora do envelope dos 5 distritos (config.NYC_BBOX)",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 0,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "B04",
+      "regra": "distrito_invalido",
+      "escopo": "base",
+      "motivo": "distrito fora dos 5 de Nova York",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 0,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "B05",
+      "regra": "bairro_desconhecido",
+      "escopo": "base",
+      "motivo": "bairro ausente da lista de bairros do Inside Airbnb (neighbourhoods.csv)",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 0,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "B06",
+      "regra": "room_type_invalido",
+      "escopo": "base",
+      "motivo": "room_type fora de ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 0,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "B07",
+      "regra": "minimo_noites_invalido",
+      "escopo": "base",
+      "motivo": "minimum_nights nulo ou < 1: sem ele não há como situar o anúncio antes/depois da LL18",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 2,
+        "cascata": 2
+      }
+    },
+    {
+      "codigo": "P01",
+      "regra": "preco_ausente",
+      "escopo": "preco",
+      "motivo": "preço nulo (2026: sem cotação — calendário sem data livre ou anúncio indisponível)",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 8744,
+        "cascata": 8743
+      }
+    },
+    {
+      "codigo": "P02",
+      "regra": "preco_zero",
+      "escopo": "preco",
+      "motivo": "preço igual a zero",
+      "2019": {
+        "casam": 11,
+        "cascata": 11
+      },
+      "2026": {
+        "casam": 0,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "P03",
+      "regra": "cotacao_acima_31_noites",
+      "escopo": "preco",
+      "motivo": "cotação de mais de 31 noites: o total é mensal e o Inside Airbnb o dividiu por N noites — preço por noite subestimado (~N/30 vezes)",
+      "2019": null,
+      "2026": {
+        "casam": 413,
+        "cascata": 388
+      }
+    },
+    {
+      "codigo": "P04",
+      "regra": "preco_abaixo_piso",
+      "escopo": "preco",
+      "motivo": "0 < preço < US$ 10 por noite (em 2019 não existe preço positivo abaixo de 10)",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 3,
+        "cascata": 0
+      }
+    },
+    {
+      "codigo": "P05",
+      "regra": "preco_acima_teto",
+      "escopo": "preco",
+      "motivo": "preço > US$ 10,000 por noite (máximo observado em 2019: fora do suporte de comparação)",
+      "2019": {
+        "casam": 0,
+        "cascata": 0
+      },
+      "2026": {
+        "casam": 12,
+        "cascata": 12
+      }
+    }
+  ],
+  "cascata": {
+    "2019": {
+      "entrada": 48895,
+      "passos": [
+        {
+          "regra": "B01",
+          "nome": "id_duplicado",
+          "sai_da_base": 0,
+          "restam": 48895
+        },
+        {
+          "regra": "B02",
+          "nome": "duplicata_perfeita",
+          "sai_da_base": 0,
+          "restam": 48895
+        },
+        {
+          "regra": "B03",
+          "nome": "coordenada_fora_nyc",
+          "sai_da_base": 0,
+          "restam": 48895
+        },
+        {
+          "regra": "B04",
+          "nome": "distrito_invalido",
+          "sai_da_base": 0,
+          "restam": 48895
+        },
+        {
+          "regra": "B05",
+          "nome": "bairro_desconhecido",
+          "sai_da_base": 0,
+          "restam": 48895
+        },
+        {
+          "regra": "B06",
+          "nome": "room_type_invalido",
+          "sai_da_base": 0,
+          "restam": 48895
+        },
+        {
+          "regra": "B07",
+          "nome": "minimo_noites_invalido",
+          "sai_da_base": 0,
+          "restam": 48895
+        },
+        {
+          "regra": "P01",
+          "nome": "preco_ausente",
+          "sai_do_preco": 0,
+          "restam_com_preco_valido": 48895
+        },
+        {
+          "regra": "P02",
+          "nome": "preco_zero",
+          "sai_do_preco": 11,
+          "restam_com_preco_valido": 48884
+        },
+        {
+          "regra": "P04",
+          "nome": "preco_abaixo_piso",
+          "sai_do_preco": 0,
+          "restam_com_preco_valido": 48884
+        },
+        {
+          "regra": "P05",
+          "nome": "preco_acima_teto",
+          "sai_do_preco": 0,
+          "restam_com_preco_valido": 48884
+        }
+      ],
+      "base_final": 48895,
+      "preco_valido": 48884,
+      "fora_do_preco": 11
+    },
+    "2026": {
+      "entrada": 30259,
+      "passos": [
+        {
+          "regra": "B01",
+          "nome": "id_duplicado",
+          "sai_da_base": 0,
+          "restam": 30259
+        },
+        {
+          "regra": "B02",
+          "nome": "duplicata_perfeita",
+          "sai_da_base": 0,
+          "restam": 30259
+        },
+        {
+          "regra": "B03",
+          "nome": "coordenada_fora_nyc",
+          "sai_da_base": 0,
+          "restam": 30259
+        },
+        {
+          "regra": "B04",
+          "nome": "distrito_invalido",
+          "sai_da_base": 0,
+          "restam": 30259
+        },
+        {
+          "regra": "B05",
+          "nome": "bairro_desconhecido",
+          "sai_da_base": 0,
+          "restam": 30259
+        },
+        {
+          "regra": "B06",
+          "nome": "room_type_invalido",
+          "sai_da_base": 0,
+          "restam": 30259
+        },
+        {
+          "regra": "B07",
+          "nome": "minimo_noites_invalido",
+          "sai_da_base": 2,
+          "restam": 30257
+        },
+        {
+          "regra": "P01",
+          "nome": "preco_ausente",
+          "sai_do_preco": 8743,
+          "restam_com_preco_valido": 21514
+        },
+        {
+          "regra": "P02",
+          "nome": "preco_zero",
+          "sai_do_preco": 0,
+          "restam_com_preco_valido": 21514
+        },
+        {
+          "regra": "P03",
+          "nome": "cotacao_acima_31_noites",
+          "sai_do_preco": 388,
+          "restam_com_preco_valido": 21126
+        },
+        {
+          "regra": "P04",
+          "nome": "preco_abaixo_piso",
+          "sai_do_preco": 0,
+          "restam_com_preco_valido": 21126
+        },
+        {
+          "regra": "P05",
+          "nome": "preco_acima_teto",
+          "sai_do_preco": 12,
+          "restam_com_preco_valido": 21114
+        }
+      ],
+      "base_final": 30257,
+      "preco_valido": 21114,
+      "fora_do_preco": 9143
+    }
+  },
+  "quarentena_por_escopo": [
+    {
+      "snapshot": "2019",
+      "escopo": "preco",
+      "linhas": 11
+    },
+    {
+      "snapshot": "2026",
+      "escopo": "base",
+      "linhas": 2
+    },
+    {
+      "snapshot": "2026",
+      "escopo": "preco",
+      "linhas": 9143
+    }
+  ],
+  "nulos": {
+    "2019": {
+      "antes": {
+        "id": 0,
+        "name": 16,
+        "host_id": 0,
+        "host_name": 21,
+        "neighbourhood_group": 0,
+        "neighbourhood": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "room_type": 0,
+        "price": 0,
+        "minimum_nights": 0,
+        "number_of_reviews": 0,
+        "last_review": 10052,
+        "reviews_per_month": 10052,
+        "calculated_host_listings_count": 0,
+        "availability_365": 0
+      },
+      "depois": {
+        "snapshot": 0,
+        "id": 0,
+        "name": 16,
+        "host_id": 0,
+        "neighbourhood_group": 0,
+        "neighbourhood": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "room_type": 0,
+        "preco": 0,
+        "minimum_nights": 0,
+        "number_of_reviews": 0,
+        "last_review": 10052,
+        "reviews_per_month": 10052,
+        "calculated_host_listings_count": 0,
+        "availability_365": 0,
+        "preco_valido": 0,
+        "min30": 0,
+        "host_multi": 0,
+        "h3_r9": 0,
+        "h3_r8": 0,
+        "h3_r6": 0,
+        "ocupacao_modelo": 0,
+        "dias_desde_ultima_avaliacao": 10052,
+        "presente_2026": 0
+      }
+    },
+    "2026": {
+      "antes": {
+        "id": 0,
+        "listing_url": 0,
+        "scrape_id": 0,
+        "last_scraped": 0,
+        "source": 0,
+        "name": 1,
+        "description": 902,
+        "neighborhood_overview": 30259,
+        "picture_url": 0,
+        "host_id": 0,
+        "host_url": 0,
+        "host_profile_id": 349,
+        "host_profile_url": 349,
+        "host_name": 349,
+        "host_since": 30259,
+        "hosts_time_as_user_years": 349,
+        "hosts_time_as_user_months": 349,
+        "hosts_time_as_host_years": 349,
+        "hosts_time_as_host_months": 349,
+        "host_location": 7162,
+        "host_about": 12410,
+        "host_response_time": 30259,
+        "host_response_rate": 30259,
+        "host_acceptance_rate": 30259,
+        "host_is_superhost": 349,
+        "host_thumbnail_url": 30259,
+        "host_picture_url": 349,
+        "host_neighbourhood": 30259,
+        "host_listings_count": 349,
+        "host_total_listings_count": 30259,
+        "host_verifications": 30259,
+        "host_has_profile_pic": 349,
+        "host_identity_verified": 349,
+        "neighbourhood": 30259,
+        "neighbourhood_cleansed": 0,
+        "neighbourhood_group_cleansed": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "property_type": 0,
+        "room_type": 0,
+        "accommodates": 0,
+        "bathrooms": 10112,
+        "bathrooms_text": 159,
+        "bedrooms": 10973,
+        "beds": 9420,
+        "amenities": 0,
+        "price": 8744,
+        "price_quote_checkin_date": 7581,
+        "price_quote_checkout_date": 7581,
+        "price_quote_total_price": 8745,
+        "price_quote_price_per_night": 8745,
+        "price_quote_raw": 7581,
+        "minimum_nights": 2,
+        "maximum_nights": 2,
+        "minimum_minimum_nights": 2,
+        "maximum_minimum_nights": 2,
+        "minimum_maximum_nights": 2,
+        "maximum_maximum_nights": 2,
+        "minimum_nights_avg_ntm": 0,
+        "maximum_nights_avg_ntm": 0,
+        "calendar_updated": 30259,
+        "has_availability": 347,
+        "availability_30": 0,
+        "availability_60": 0,
+        "availability_90": 0,
+        "availability_365": 0,
+        "calendar_last_scraped": 0,
+        "number_of_reviews": 0,
+        "number_of_reviews_ltm": 0,
+        "number_of_reviews_l30d": 0,
+        "availability_eoy": 0,
+        "number_of_reviews_ly": 0,
+        "estimated_occupancy_l365d": 0,
+        "estimated_revenue_l365d": 8744,
+        "first_review": 8559,
+        "last_review": 8559,
+        "review_scores_rating": 8559,
+        "review_scores_accuracy": 8565,
+        "review_scores_cleanliness": 8559,
+        "review_scores_checkin": 8567,
+        "review_scores_communication": 8562,
+        "review_scores_location": 8568,
+        "review_scores_value": 8568,
+        "license": 24973,
+        "instant_bookable": 30259,
+        "calculated_host_listings_count": 0,
+        "calculated_host_listings_count_entire_homes": 0,
+        "calculated_host_listings_count_private_rooms": 0,
+        "calculated_host_listings_count_shared_rooms": 0,
+        "reviews_per_month": 8559
+      },
+      "depois": {
+        "snapshot": 0,
+        "id": 0,
+        "last_scraped": 0,
+        "source": 0,
+        "name": 1,
+        "host_id": 0,
+        "hosts_time_as_user_years": 349,
+        "hosts_time_as_user_months": 349,
+        "hosts_time_as_host_years": 349,
+        "hosts_time_as_host_months": 349,
+        "host_is_superhost": 349,
+        "host_listings_count": 349,
+        "host_has_profile_pic": 349,
+        "host_identity_verified": 349,
+        "neighbourhood_group_cleansed": 0,
+        "neighbourhood_cleansed": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "property_type": 0,
+        "room_type": 0,
+        "accommodates": 0,
+        "bathrooms": 10110,
+        "bathrooms_text": 159,
+        "bedrooms": 10972,
+        "beds": 9419,
+        "amenities": 0,
+        "preco": 8743,
+        "preco_valido": 0,
+        "preco_cotacao_noites": 7580,
+        "preco_cheio": 8744,
+        "desconto_pct": 8744,
+        "price_quote_checkin_date": 7580,
+        "price_quote_checkout_date": 7580,
+        "price_quote_total_price": 8744,
+        "minimum_nights": 0,
+        "min30": 0,
+        "maximum_nights": 0,
+        "minimum_minimum_nights": 0,
+        "maximum_minimum_nights": 0,
+        "minimum_maximum_nights": 0,
+        "maximum_maximum_nights": 0,
+        "minimum_nights_avg_ntm": 0,
+        "maximum_nights_avg_ntm": 0,
+        "has_availability": 347,
+        "availability_30": 0,
+        "availability_60": 0,
+        "availability_90": 0,
+        "availability_365": 0,
+        "availability_eoy": 0,
+        "calendar_last_scraped": 0,
+        "number_of_reviews": 0,
+        "number_of_reviews_ltm": 0,
+        "number_of_reviews_l30d": 0,
+        "number_of_reviews_ly": 0,
+        "first_review": 8559,
+        "last_review": 8559,
+        "reviews_per_month": 8559,
+        "review_scores_rating": 8559,
+        "review_scores_accuracy": 8565,
+        "review_scores_cleanliness": 8559,
+        "review_scores_checkin": 8567,
+        "review_scores_communication": 8562,
+        "review_scores_location": 8568,
+        "review_scores_value": 8568,
+        "estimated_occupancy_l365d": 0,
+        "estimated_revenue_l365d": 8743,
+        "ocupacao_modelo": 0,
+        "calculated_host_listings_count": 0,
+        "calculated_host_listings_count_entire_homes": 0,
+        "calculated_host_listings_count_private_rooms": 0,
+        "calculated_host_listings_count_shared_rooms": 0,
+        "host_multi": 0,
+        "license": 24972,
+        "licenca_status": 0,
+        "h3_r9": 0,
+        "h3_r8": 0,
+        "h3_r6": 0,
+        "dias_desde_ultima_avaliacao": 8559,
+        "meses_desde_primeira_avaliacao": 8559,
+        "banheiros": 36,
+        "banheiro_compartilhado": 159,
+        "n_amenidades": 0,
+        "amen_wifi": 0,
+        "amen_cozinha": 0,
+        "amen_ar_condicionado": 0,
+        "amen_aquecimento": 0,
+        "amen_lavadora": 0,
+        "amen_secadora": 0,
+        "amen_lava_loucas": 0,
+        "amen_elevador": 0,
+        "amen_academia": 0,
+        "amen_estacionamento": 0,
+        "amen_piscina": 0,
+        "amen_porteiro": 0,
+        "amen_self_checkin": 0,
+        "amen_espaco_trabalho": 0,
+        "amen_tv": 0,
+        "amen_varanda_patio": 0,
+        "amen_permite_pets": 0,
+        "host_superhost": 0,
+        "host_anos": 349,
+        "tipo_imovel_grupo": 0
+      }
+    }
+  },
+  "limiares_preco": {
+    "piso_usd": 10.0,
+    "teto_usd": 10000.0,
+    "noites_cotacao_max": 31
+  },
+  "modelo_ocupacao": {
+    "taxa_avaliacao": 0.5,
+    "estadia_media_nyc": 6.4,
+    "teto": 0.7,
+    "janela_atividade_dias": 365,
+    "fonte": "https://insideairbnb.com/data-assumptions/ (consultado em 2026-09-18)"
+  },
+  "resumo_vs_detalhado_2026": {
+    "linhas_resumo": 30555,
+    "linhas_detalhado": 30259,
+    "ids_so_no_resumo": 296,
+    "ids_so_no_detalhado": 0,
+    "so_resumo_host_id_nulo": 296,
+    "so_resumo_room_type": {
+      "Private room": 296
+    },
+    "so_resumo_minimum_nights": {
+      "1.0": 296
+    },
+    "so_resumo_license_nula": 296,
+    "so_resumo_nome_de_hotel": 268,
+    "so_resumo_distrito": {
+      "Manhattan": 246,
+      "Brooklyn": 24,
+      "Queens": 23,
+      "Bronx": 3
+    },
+    "so_resumo_preco_mediano": 249.0,
+    "fracao_colunas_comuns_identicas": {
+      "latitude": 1.0,
+      "longitude": 1.0,
+      "room_type": 1.0,
+      "minimum_nights": 1.0,
+      "number_of_reviews": 1.0,
+      "last_review": 1.0,
+      "reviews_per_month": 1.0,
+      "calculated_host_listings_count": 1.0,
+      "availability_365": 1.0,
+      "number_of_reviews_ltm": 1.0,
+      "license": 1.0,
+      "neighbourhood": 1.0,
+      "neighbourhood_group": 1.0
+    },
+    "preco_resumo_e_arredondamento_do_detalhado": {
+      "linhas_com_preco": 21515,
+      "max_diferenca_abs": 0.5,
+      "diferenca_ate_1_dolar": 21515
+    }
+  },
+  "amenities_json_invalido": 0,
+  "amenidades": {
+    "amen_wifi": {
+      "prevalencia": 0.9849,
+      "preco_mediano_com_min_lt30": 310.89,
+      "preco_mediano_sem_min_lt30": 269.04,
+      "razao_min_lt30": 1.156,
+      "preco_mediano_com_min30": 144.36,
+      "preco_mediano_sem_min30": 143.69,
+      "razao_min30": 1.005
+    },
+    "amen_cozinha": {
+      "prevalencia": 0.8801,
+      "preco_mediano_com_min_lt30": 299.0,
+      "preco_mediano_sem_min_lt30": 332.45,
+      "razao_min_lt30": 0.899,
+      "preco_mediano_com_min30": 146.02,
+      "preco_mediano_sem_min30": 115.78,
+      "razao_min30": 1.261
+    },
+    "amen_ar_condicionado": {
+      "prevalencia": 0.9082,
+      "preco_mediano_com_min_lt30": 311.5,
+      "preco_mediano_sem_min_lt30": 261.98,
+      "razao_min_lt30": 1.189,
+      "preco_mediano_com_min30": 152.38,
+      "preco_mediano_sem_min30": 83.83,
+      "razao_min30": 1.818
+    },
+    "amen_aquecimento": {
+      "prevalencia": 0.8703,
+      "preco_mediano_com_min_lt30": 309.0,
+      "preco_mediano_sem_min_lt30": 293.66,
+      "razao_min_lt30": 1.052,
+      "preco_mediano_com_min30": 148.23,
+      "preco_mediano_sem_min30": 129.43,
+      "razao_min30": 1.145
+    },
+    "amen_lavadora": {
+      "prevalencia": 0.4558,
+      "preco_mediano_com_min_lt30": 371.0,
+      "preco_mediano_sem_min_lt30": 285.0,
+      "razao_min_lt30": 1.302,
+      "preco_mediano_com_min30": 179.84,
+      "preco_mediano_sem_min30": 121.94,
+      "razao_min30": 1.475
+    },
+    "amen_secadora": {
+      "prevalencia": 0.3972,
+      "preco_mediano_com_min_lt30": 371.0,
+      "preco_mediano_sem_min_lt30": 285.0,
+      "razao_min_lt30": 1.302,
+      "preco_mediano_com_min30": 186.23,
+      "preco_mediano_sem_min30": 125.2,
+      "razao_min30": 1.487
+    },
+    "amen_lava_loucas": {
+      "prevalencia": 0.2691,
+      "preco_mediano_com_min_lt30": 394.0,
+      "preco_mediano_sem_min_lt30": 290.0,
+      "razao_min_lt30": 1.359,
+      "preco_mediano_com_min30": 222.45,
+      "preco_mediano_sem_min30": 121.83,
+      "razao_min30": 1.826
+    },
+    "amen_elevador": {
+      "prevalencia": 0.2412,
+      "preco_mediano_com_min_lt30": 351.75,
+      "preco_mediano_sem_min_lt30": 291.0,
+      "razao_min_lt30": 1.209,
+      "preco_mediano_com_min30": 241.1,
+      "preco_mediano_sem_min30": 132.74,
+      "razao_min30": 1.816
+    },
+    "amen_academia": {
+      "prevalencia": 0.1918,
+      "preco_mediano_com_min_lt30": 399.0,
+      "preco_mediano_sem_min_lt30": 277.16,
+      "razao_min_lt30": 1.44,
+      "preco_mediano_com_min30": 265.5,
+      "preco_mediano_sem_min30": 132.92,
+      "razao_min30": 1.997
+    },
+    "amen_estacionamento": {
+      "prevalencia": 0.1821,
+      "preco_mediano_com_min_lt30": 342.45,
+      "preco_mediano_sem_min_lt30": 299.0,
+      "razao_min_lt30": 1.145,
+      "preco_mediano_com_min30": 156.78,
+      "preco_mediano_sem_min30": 142.82,
+      "razao_min30": 1.098
+    },
+    "amen_piscina": {
+      "prevalencia": 0.0225,
+      "preco_mediano_com_min_lt30": 434.0,
+      "preco_mediano_sem_min_lt30": 304.41,
+      "razao_min_lt30": 1.426,
+      "preco_mediano_com_min30": 398.22,
+      "preco_mediano_sem_min30": 143.3,
+      "razao_min30": 2.779
+    },
+    "amen_porteiro": {
+      "prevalencia": 0.1016,
+      "preco_mediano_com_min_lt30": 396.73,
+      "preco_mediano_sem_min_lt30": 280.0,
+      "razao_min_lt30": 1.417,
+      "preco_mediano_com_min30": 370.52,
+      "preco_mediano_sem_min30": 138.3,
+      "razao_min30": 2.679
+    },
+    "amen_self_checkin": {
+      "prevalencia": 0.4553,
+      "preco_mediano_com_min_lt30": 308.5,
+      "preco_mediano_sem_min_lt30": 311.76,
+      "razao_min_lt30": 0.99,
+      "preco_mediano_com_min30": 172.56,
+      "preco_mediano_sem_min30": 123.94,
+      "razao_min30": 1.392
+    },
+    "amen_espaco_trabalho": {
+      "prevalencia": 0.5165,
+      "preco_mediano_com_min_lt30": 319.0,
+      "preco_mediano_sem_min_lt30": 290.5,
+      "razao_min_lt30": 1.098,
+      "preco_mediano_com_min30": 157.33,
+      "preco_mediano_sem_min30": 133.66,
+      "razao_min30": 1.177
+    },
+    "amen_tv": {
+      "prevalencia": 0.8049,
+      "preco_mediano_com_min_lt30": 329.0,
+      "preco_mediano_sem_min_lt30": 205.0,
+      "razao_min_lt30": 1.605,
+      "preco_mediano_com_min30": 160.7,
+      "preco_mediano_sem_min30": 82.16,
+      "razao_min30": 1.956
+    },
+    "amen_varanda_patio": {
+      "prevalencia": 0.1994,
+      "preco_mediano_com_min_lt30": 286.0,
+      "preco_mediano_sem_min_lt30": 314.0,
+      "razao_min_lt30": 0.911,
+      "preco_mediano_com_min30": 165.56,
+      "preco_mediano_sem_min30": 139.93,
+      "razao_min30": 1.183
+    },
+    "amen_permite_pets": {
+      "prevalencia": 0.2536,
+      "preco_mediano_com_min_lt30": 366.0,
+      "preco_mediano_sem_min_lt30": 285.29,
+      "razao_min_lt30": 1.283,
+      "preco_mediano_com_min30": 223.03,
+      "preco_mediano_sem_min30": 122.23,
+      "razao_min30": 1.825
+    }
+  },
+  "banheiros": {
+    "bathrooms_nulo": 10112,
+    "bathrooms_text_nulo": 159,
+    "completados_pelo_texto": 10076,
+    "banheiros_nulo_final": 36,
+    "numero_e_texto_concordam": 0.99995,
+    "linhas_com_os_dois": 20024
+  },
+  "saidas": {
+    "anuncios_2019.parquet": {
+      "linhas": 48895,
+      "colunas": 25,
+      "hash_conteudo": "3008ec374e1ebedfb7acb9f6067f1b32d32dab7ebff810c0dbf1e98706e0d25b"
+    },
+    "anuncios_2026.parquet": {
+      "linhas": 30257,
+      "colunas": 102,
+      "hash_conteudo": "d0f5fdf6fd02485c49aaaf62c199fd2ae7ccee5406458f98a8edb96574d94f6d"
+    },
+    "anuncios_resumo.parquet": {
+      "linhas": 79152,
+      "colunas": 23,
+      "hash_conteudo": "39df113154213739f2afa1e66c3e6cc511e0f0fc23753aae82b52d1468fbcaba"
+    },
+    "quarentena.parquet": {
+      "linhas": 9156,
+      "colunas": 5,
+      "hash_conteudo": "b910b8d31b22ba63d832ba75b52c46d7ab0a922c06d78ca3f9f909ef95e31d86"
+    }
+  }
+}

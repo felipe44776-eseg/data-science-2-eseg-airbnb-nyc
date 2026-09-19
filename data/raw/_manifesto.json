@@ -1,0 +1,77 @@
+{
+  "descricao": "Fontes primárias do Airbnb. Gerado e CONFERIDO por `python -m airbnb.ingest.baixar`; hash divergente aborta a ingestão.",
+  "snapshot_2019": "2019-07-08",
+  "snapshot_atual": "2026-06-14",
+  "arquivos": {
+    "kaggle_ab_nyc_2019": {
+      "arquivo": "data/raw/kaggle/AB_NYC_2019.csv",
+      "url": "https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data",
+      "bytes": 7077973,
+      "sha256": "e420db40ff10fcb40efc1b5b1648ee0b18a48f4e4537155cecc59fe95d18783a",
+      "acesso": "2026-09-18",
+      "licenca": "CC0 1.0 (domínio público) — Kaggle dgomonov/new-york-city-airbnb-open-data, versão 3",
+      "conteudo": "resumo de 2019 (scrape de 2019-07-08): 48.895 × 16",
+      "usada_no_pipeline": true
+    },
+    "insideairbnb_listings": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/listings.csv.gz",
+      "url": "https://data.insideairbnb.com/united-states/ny/new-york-city/2026-06-14/data/listings.csv.gz",
+      "bytes": 15694632,
+      "sha256": "10eb56b21ec71a838b30ef47b836f3d375269baeed5ff9e5c35ff3c6a98d3ca7",
+      "acesso": "2026-09-18",
+      "licenca": "CC BY 4.0 — Inside Airbnb (insideairbnb.com), Murray Cox. Atribuição obrigatória em toda superfície publicada.",
+      "conteudo": "detalhado de 2026: 30.259 × 90",
+      "usada_no_pipeline": true
+    },
+    "insideairbnb_listings_resumo": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/listings_resumo.csv",
+      "url": "https://data.insideairbnb.com/united-states/ny/new-york-city/2026-06-14/visualisations/listings.csv",
+      "bytes": 5540939,
+      "sha256": "e42f8f897a4ed89d489e703dc462d314f5aa98912cca6637c988c99f5490caba",
+      "acesso": "2026-09-18",
+      "licenca": "CC BY 4.0 — Inside Airbnb (insideairbnb.com), Murray Cox. Atribuição obrigatória em toda superfície publicada.",
+      "conteudo": "resumo de 2026: 30.555 × 19 (conferência do detalhado)",
+      "usada_no_pipeline": true
+    },
+    "insideairbnb_reviews_resumo": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/reviews_resumo.csv",
+      "url": "https://data.insideairbnb.com/united-states/ny/new-york-city/2026-06-14/visualisations/reviews.csv",
+      "bytes": 22506716,
+      "sha256": "dca796445924529428d6ab7f13f161b56114ef9bf7209ea1c2255ca45866e647",
+      "acesso": "2026-09-18",
+      "licenca": "CC BY 4.0 — Inside Airbnb (insideairbnb.com), Murray Cox. Atribuição obrigatória em toda superfície publicada.",
+      "conteudo": "avaliações de 2026: listing_id, date (990.170 linhas)",
+      "usada_no_pipeline": true
+    },
+    "insideairbnb_neighbourhoods_geojson": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/neighbourhoods.geojson",
+      "url": "https://data.insideairbnb.com/united-states/ny/new-york-city/2026-06-14/visualisations/neighbourhoods.geojson",
+      "bytes": 634167,
+      "sha256": "c0d3f80e341a4a95c40f37fc54c4af890c834bb30b5b27308e04033b05e9c3e7",
+      "acesso": "2026-09-18",
+      "licenca": "CC BY 4.0 — Inside Airbnb (insideairbnb.com), Murray Cox. Atribuição obrigatória em toda superfície publicada.",
+      "conteudo": "polígonos dos bairros (233 feições, 230 bairros)",
+      "usada_no_pipeline": true
+    },
+    "insideairbnb_neighbourhoods_csv": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/neighbourhoods.csv",
+      "url": "https://data.insideairbnb.com/united-states/ny/new-york-city/2026-06-14/visualisations/neighbourhoods.csv",
+      "bytes": 4962,
+      "sha256": "0085b86dc498478df3024483fe5d4ddcf3f848802e280b1b6171145aed8edeff",
+      "acesso": "2026-09-18",
+      "licenca": "CC BY 4.0 — Inside Airbnb (insideairbnb.com), Murray Cox. Atribuição obrigatória em toda superfície publicada.",
+      "conteudo": "lista bairro → distrito (230 linhas)",
+      "usada_no_pipeline": true
+    },
+    "insideairbnb_calendar": {
+      "arquivo": "data/raw/insideairbnb/2026-06-14/calendar.csv.gz",
+      "url": "https://data.insideairbnb.com/united-states/ny/new-york-city/2026-06-14/data/calendar.csv.gz",
+      "bytes": 25904041,
+      "sha256": "1023688159497ffccdfabe81e163d31ca4fae7af4b4e87bed119168531e4648d",
+      "acesso": "2026-09-18",
+      "licenca": "CC BY 4.0 — Inside Airbnb (insideairbnb.com), Murray Cox. Atribuição obrigatória em toda superfície publicada.",
+      "conteudo": "calendário de 365 dias — FORA do pipeline: não tem mais coluna de preço",
+      "usada_no_pipeline": false
+    }
+  }
+}

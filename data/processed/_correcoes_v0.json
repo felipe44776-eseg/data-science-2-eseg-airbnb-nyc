@@ -1,0 +1,377 @@
+{
+  "descricao": "Correções da v0 (reports/v0/airbnb-nyc-dashboard-slide.html): o que a v0 mediu e o que de fato mede. Números da v0 reproduzidos com o script dela antes de comparar.",
+  "a_ocupacao": {
+    "o_que_a_v0_mediu": "1 − availability_365/365: fração do calendário INDISPONÍVEL, que soma noite reservada e noite bloqueada pelo anfitrião",
+    "v0_publicado": {
+      "geral": 0.691,
+      "por_distrito": {
+        "Bronx": 0.546,
+        "Brooklyn": 0.725,
+        "Manhattan": 0.693,
+        "Queens": 0.604,
+        "Staten Island": 0.453
+      }
+    },
+    "v0_reproduzido": {
+      "geral": 0.691,
+      "por_distrito": {
+        "Bronx": 0.5463,
+        "Brooklyn": 0.7254,
+        "Manhattan": 0.6932,
+        "Queens": 0.6042,
+        "Staten Island": 0.4529
+      }
+    },
+    "availability_365_zero": {
+      "2019": {
+        "anuncios": 17533,
+        "fracao": 0.3586
+      },
+      "2026": {
+        "anuncios": 6789,
+        "fracao": 0.2244
+      }
+    },
+    "2026_indisponibilidade_vs_ocupacao_estimada": {
+      "pearson": -0.109,
+      "spearman": -0.113,
+      "media_1_menos_disp": 0.4908,
+      "media_ocupacao_estimada": 0.1436,
+      "anuncios_disp_zero": 6789,
+      "disp_zero_com_ocupacao_estimada_zero": 6450,
+      "disp_zero_fracao_ocupacao_zero": 0.9501,
+      "disp_zero_ocupacao_estimada_media": 0.0151,
+      "disp_zero_sem_avaliacao_12m": 6450
+    },
+    "reproducao_estimated_occupancy_l365d": {
+      "formula": "min(round(number_of_reviews_ltm / 0,5 × max(6,4; minimum_nights)); 255)",
+      "anuncios": 30257,
+      "iguais": 30257
+    },
+    "modelo_avaliacoes": {
+      "fonte": "https://insideairbnb.com/data-assumptions/ (consultado em 2026-09-18)",
+      "parametros": {
+        "taxa_avaliacao": 0.5,
+        "estadia_media_nyc": 6.4,
+        "estadia_media_padrao_da_pagina": 3.0,
+        "teto": 0.7,
+        "janela_atividade_dias": 365
+      },
+      "validacao_2026_contra_estimated_occupancy_l365d": {
+        "estadia_3_sem_janela": {
+          "media": 0.285,
+          "spearman": 0.564,
+          "pearson": 0.542,
+          "erro_abs_medio": 0.1785
+        },
+        "estadia_3_com_janela": {
+          "media": 0.1686,
+          "spearman": 0.967,
+          "pearson": 0.844,
+          "erro_abs_medio": 0.0621
+        },
+        "estadia_6.4_sem_janela": {
+          "media": 0.3062,
+          "spearman": 0.622,
+          "pearson": 0.618,
+          "erro_abs_medio": 0.1733
+        },
+        "estadia_6.4_com_janela": {
+          "media": 0.1885,
+          "spearman": 0.977,
+          "pearson": 0.886,
+          "erro_abs_medio": 0.0555
+        }
+      },
+      "validacao_2019_sobreviventes_ltm": {
+        "anuncios": 7516,
+        "ocupacao_media_modelo_rpm": 0.2949,
+        "ocupacao_media_ltm_reconstruida": 0.2547,
+        "spearman": 0.938,
+        "pearson": 0.887,
+        "erro_abs_medio": 0.0677,
+        "nota": "sobreviventes são um subconjunto enviesado (mais ativos); serve para validar o proxy, não para estimar 2019"
+      }
+    },
+    "ocupacao_2019_modelo": {
+      "geral": 0.2868,
+      "por_distrito": {
+        "Manhattan": 0.2652,
+        "Brooklyn": 0.2832,
+        "Queens": 0.3563,
+        "Bronx": 0.3756,
+        "Staten Island": 0.4133
+      },
+      "mediana": 0.1641,
+      "fracao_zero": 0.4038,
+      "sensibilidade": {
+        "estadia_3_com_janela": 0.2176,
+        "estadia_6.4_sem_janela": 0.3061,
+        "estadia_3_sem_janela": 0.2308
+      }
+    },
+    "ocupacao_2026": {
+      "estimated_occupancy_l365d_media": 0.1436,
+      "modelo_rpm_media": 0.1885
+    },
+    "rendimento_por_distrito": {
+      "v0_publicado": {
+        "Brooklyn": 86.3,
+        "Manhattan": 124.0,
+        "Queens": 57.7,
+        "Staten Island": 48.2,
+        "Bronx": 45.2
+      },
+      "preco_vezes_ocupacao_modelo_2019": {
+        "Manhattan": 47.9,
+        "Brooklyn": 33.7,
+        "Queens": 32.4,
+        "Bronx": 29.2,
+        "Staten Island": 34.9
+      }
+    }
+  },
+  "b_drop_id_antes_do_drop_duplicates": {
+    "o_que_a_v0_fez": "removeu id, host_name e last_review e SÓ ENTÃO procurou duplicatas",
+    "problema": "sem a chave, dois anúncios distintos com os mesmos atributos seriam fundidos; a verificação certa é por id (chave) e, à parte, por todas as colunas exceto o id",
+    "duplicatas_v0": 0,
+    "ids_repetidos_2019": 0,
+    "duplicatas_sem_id_2019": 0,
+    "efeito_nesta_base": "nenhum — 0 duplicatas por qualquer critério; o erro é de método, não de número"
+  },
+  "c_dropna_por_name": {
+    "o_que_a_v0_fez": "dropna() depois de preencher reviews_per_month — só `name` ainda tinha nulo",
+    "linhas_removidas": 16,
+    "colunas_responsaveis": {
+      "name": 16
+    },
+    "necessario": false,
+    "por_que": "nenhuma análise da v0 usa `name`; os 16 anúncios têm preço, coordenada e bairro válidos. A limpeza desta versão os mantém (name é só para análise)",
+    "limpeza_v0_reproduzida": {
+      "entrada": 48895,
+      "duplicatas_removidas_sem_id": 0,
+      "price_zero_removidos": 11,
+      "dropna_removidos": 16,
+      "dropna_por_coluna": {
+        "name": 16
+      },
+      "saida": 48868
+    }
+  },
+  "d_pearson_vs_spearman": {
+    "o_que_a_v0_fez": "df.corr() — Pearson — em variáveis de cauda pesada",
+    "v0_publicado_preco_x_avaliacoes": -0.05,
+    "2019_base_da_v0": {
+      "pares_ordenados_pela_diferenca": [
+        {
+          "par": "number_of_reviews × reviews_per_month",
+          "pearson": 0.589,
+          "spearman": 0.851,
+          "diferenca": 0.262
+        },
+        {
+          "par": "calculated_host_listings_count × availability_365",
+          "pearson": 0.226,
+          "spearman": 0.407,
+          "diferenca": 0.181
+        },
+        {
+          "par": "price × calculated_host_listings_count",
+          "pearson": 0.057,
+          "spearman": -0.106,
+          "diferenca": -0.163
+        },
+        {
+          "par": "reviews_per_month × calculated_host_listings_count",
+          "pearson": -0.047,
+          "spearman": 0.095,
+          "diferenca": 0.143
+        },
+        {
+          "par": "reviews_per_month × availability_365",
+          "pearson": 0.164,
+          "spearman": 0.298,
+          "diferenca": 0.134
+        },
+        {
+          "par": "number_of_reviews × calculated_host_listings_count",
+          "pearson": -0.072,
+          "spearman": 0.056,
+          "diferenca": 0.128
+        },
+        {
+          "par": "minimum_nights × reviews_per_month",
+          "pearson": -0.127,
+          "spearman": -0.248,
+          "diferenca": -0.12
+        },
+        {
+          "par": "minimum_nights × number_of_reviews",
+          "pearson": -0.082,
+          "spearman": -0.175,
+          "diferenca": -0.093
+        },
+        {
+          "par": "minimum_nights × availability_365",
+          "pearson": 0.146,
+          "spearman": 0.076,
+          "diferenca": -0.07
+        },
+        {
+          "par": "minimum_nights × calculated_host_listings_count",
+          "pearson": 0.131,
+          "spearman": 0.064,
+          "diferenca": -0.067
+        },
+        {
+          "par": "number_of_reviews × availability_365",
+          "pearson": 0.172,
+          "spearman": 0.237,
+          "diferenca": 0.065
+        },
+        {
+          "par": "price × minimum_nights",
+          "pearson": 0.043,
+          "spearman": 0.101,
+          "diferenca": 0.058
+        },
+        {
+          "par": "price × reviews_per_month",
+          "pearson": -0.051,
+          "spearman": -0.06,
+          "diferenca": -0.009
+        },
+        {
+          "par": "price × number_of_reviews",
+          "pearson": -0.048,
+          "spearman": -0.055,
+          "diferenca": -0.007
+        },
+        {
+          "par": "price × availability_365",
+          "pearson": 0.082,
+          "spearman": 0.086,
+          "diferenca": 0.004
+        }
+      ],
+      "assimetria": {
+        "price": 19.12,
+        "minimum_nights": 21.0,
+        "number_of_reviews": 3.69,
+        "reviews_per_month": 3.3,
+        "calculated_host_listings_count": 7.93,
+        "availability_365": 0.76
+      }
+    },
+    "2026_preco_valido": {
+      "pares_ordenados_pela_diferenca": [
+        {
+          "par": "price × minimum_nights",
+          "pearson": -0.224,
+          "spearman": -0.409,
+          "diferenca": -0.185
+        },
+        {
+          "par": "number_of_reviews × reviews_per_month",
+          "pearson": 0.763,
+          "spearman": 0.926,
+          "diferenca": 0.163
+        },
+        {
+          "par": "number_of_reviews × calculated_host_listings_count",
+          "pearson": -0.144,
+          "spearman": -0.299,
+          "diferenca": -0.155
+        },
+        {
+          "par": "minimum_nights × calculated_host_listings_count",
+          "pearson": 0.13,
+          "spearman": -0.022,
+          "diferenca": -0.151
+        },
+        {
+          "par": "reviews_per_month × calculated_host_listings_count",
+          "pearson": -0.123,
+          "spearman": -0.26,
+          "diferenca": -0.137
+        },
+        {
+          "par": "reviews_per_month × availability_365",
+          "pearson": -0.069,
+          "spearman": -0.191,
+          "diferenca": -0.122
+        },
+        {
+          "par": "number_of_reviews × availability_365",
+          "pearson": -0.097,
+          "spearman": -0.187,
+          "diferenca": -0.09
+        },
+        {
+          "par": "calculated_host_listings_count × availability_365",
+          "pearson": 0.045,
+          "spearman": 0.092,
+          "diferenca": 0.047
+        },
+        {
+          "par": "price × reviews_per_month",
+          "pearson": 0.015,
+          "spearman": 0.042,
+          "diferenca": 0.027
+        },
+        {
+          "par": "price × calculated_host_listings_count",
+          "pearson": 0.057,
+          "spearman": 0.035,
+          "diferenca": -0.022
+        },
+        {
+          "par": "price × number_of_reviews",
+          "pearson": -0.027,
+          "spearman": -0.006,
+          "diferenca": 0.02
+        },
+        {
+          "par": "minimum_nights × number_of_reviews",
+          "pearson": -0.294,
+          "spearman": -0.312,
+          "diferenca": -0.018
+        },
+        {
+          "par": "minimum_nights × availability_365",
+          "pearson": 0.103,
+          "spearman": 0.108,
+          "diferenca": 0.005
+        },
+        {
+          "par": "price × availability_365",
+          "pearson": 0.066,
+          "spearman": 0.07,
+          "diferenca": 0.004
+        },
+        {
+          "par": "minimum_nights × reviews_per_month",
+          "pearson": -0.433,
+          "spearman": -0.431,
+          "diferenca": 0.002
+        }
+      ],
+      "assimetria": {
+        "price": 9.9,
+        "minimum_nights": -1.25,
+        "number_of_reviews": 11.2,
+        "reviews_per_month": 17.92,
+        "calculated_host_listings_count": 4.73,
+        "availability_365": -0.62
+      }
+    }
+  },
+  "host_multiplo": {
+    "v0_publicado_pct_anuncios": 33.9,
+    "pct_anuncios_2019": 33.9,
+    "pct_anfitrioes_2019": 13.8,
+    "pct_anuncios_2026": 56.1,
+    "pct_anfitrioes_2026": 19.4,
+    "nota": "a v0 está certa: é fração de ANÚNCIOS; a fração de ANFITRIÕES é outra grandeza"
+  }
+}

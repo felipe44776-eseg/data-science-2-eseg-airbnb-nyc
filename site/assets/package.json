@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "Marca os .js desta pasta como ES modules para o Node (tests/paridade_js.mjs importa modelo.js daqui). O navegador ignora este arquivo."
+}

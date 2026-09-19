@@ -1,0 +1,52 @@
+# dados — versionados por manifesto/hash, nunca por conteudo (invariante 5).
+# git nao reinclui arquivo dentro de diretorio excluido: o padrao ignora os
+# ARQUIVOS (**/*) e mantem os DIRETORIOS navegaveis (!**/).
+data/raw/**/*
+data/interim/**/*
+data/processed/**/*
+data/external/**/*
+!data/**/
+!data/**/.gitkeep
+# Resultado versiona; dado nao. Convencao: todo artefato de RESULTADO comeca
+# com "_" e e JSON — a regra e por convencao, nao por lista de nomes.
+!data/**/_*.json
+!data/**/*.md
+
+# o site publico e entregavel: seus dados (agregados, sem dado pessoal) vao para o git
+!site/data/**
+
+# log de execucao: local da maquina, nao artefato do projeto
+reports/execucao.jsonl
+
+# documentacao construida (mkdocs build)
+_site/
+site_docs/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# node (so o teste de paridade usa; sem dependencia de npm)
+node_modules/
+
+# artefatos de modelo binarios — o que vai para o site e JSON
+models/
+*.pkl
+*.joblib
+
+# ambiente e credenciais
+.env
+.env.*
+!.env.example
+kaggle.json
+
+# so
+Thumbs.db
+.DS_Store

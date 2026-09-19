@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: instalar
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: lint
+        run: ruff check src tests
+
+      # Roda sem o dado real: testes que exigem data/ sao marcados `dados` e pulados.
+      # Os de paridade JS (`node`) rodam, porque o Node esta instalado acima.
+      - name: testes
+        env:
+          PYTHONPATH: src
+        run: pytest -q
+
+      # O site calcula com o MESMO modelo validado (invariante 10): a paridade roda
+      # contra o modelo publicado em site/data/, nao contra um modelo de teste.
+      - name: paridade Python <-> JavaScript do modelo publicado
+        run: |
+          if [ -f site/data/modelo_preco.json ] && [ -f site/data/_casos_paridade_preco.json ]; then
+            node tests/paridade_js.mjs site/data/modelo_preco.json site/data/_casos_paridade_preco.json
+          else
+            echo "modelo ainda nao publicado em site/data/ — paridade do publicado pulada"
+          fi
+
+      - name: documentacao (mkdocs --strict)
+        run: mkdocs build --strict --site-dir _site/docs

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Airbnb em Nova York, 2019 → 2026 · Teste de localização</title>
+<meta name="description" content="Mapa interativo e simulador de preço por noite do Airbnb em Nova York: compare 2019 com 2026 e teste o valor de uma localização com o modelo do projeto, direto no navegador.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7-12-7V9z' fill='%23E14F3D'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FBF6EC'/%3E%3C/svg%3E">
+<link rel="preload" href="vendor/fontes/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fontes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="vendor/maplibre-gl-6.10.0/maplibre-gl.css">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  /* tema escolhido antes do primeiro desenho, para não piscar */
+  try {
+    var t = localStorage.getItem("tema");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  } catch (e) { /* armazenamento bloqueado: segue o sistema */ }
+</script>
+<script type="module" src="assets/app.js"></script>
+</head>
+<body>
+<a class="pular" href="#simulador">Pular para o teste de localização</a>
+
+<header class="topo"><div class="wrap">
+  <div class="topo-linha">
+    <p class="eyebrow"><span class="sw" aria-hidden="true"></span>Data Science 2 · ESEG · Airbnb em Nova York</p>
+    <button class="botao-tema" id="botao-tema" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 000 16z" fill="currentColor"/></svg>
+      <span id="botao-tema-rotulo">Tema: automático</span>
+    </button>
+  </div>
+  <h1>Quanto vale uma noite em cada canto de Nova York?</h1>
+  <p class="lede">Comparamos os anúncios do Airbnb de <span data-snapshot="2019">2019</span> com os de hoje
+    (<span data-snapshot="2026">2026</span>) e treinamos um modelo que estima o preço por noite a partir do
+    lugar e das características do imóvel. Escolha um ponto no mapa e faça o teste — tudo roda no seu
+    navegador.</p>
+  <div class="faixa-provisoria" id="faixa-provisoria" role="note" hidden>
+    <b>Dados provisórios.</b> Estes números vêm de uma versão de teste da base e do modelo, usada para
+    montar o site. Eles serão substituídos pelos resultados finais do projeto.
+  </div>
+  <ul class="kpis" id="kpis" aria-label="O mercado em 2019 e em 2026"></ul>
+  <p class="nota-kpis" id="nota-kpis"></p>
+</div></header>
+
+<main id="conteudo">
+  <section class="app" id="app" aria-label="Mapa e teste de localização">
+    <div class="mapa-area">
+      <div id="mapa"></div>
+      <svg class="mira" id="mira" viewBox="0 0 34 34" aria-hidden="true">
+        <circle cx="17" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M17 1v10M17 23v10M1 17h10M23 17h10" stroke="currentColor" stroke-width="2"/>
+      </svg>
+
+      <details class="cartao-mapa mapa-controles" id="mapa-controles" open>
+        <summary>Camadas e legenda</summary>
+        <div class="controles-corpo">
+          <div class="campo-mapa">
+            <label for="metrica">O que os hexágonos mostram</label>
+            <select id="metrica"></select>
+          </div>
+          <div class="legenda" id="legenda"></div>
+          <fieldset class="camadas">
+            <legend class="grupo-rotulo">Camadas</legend>
+            <label class="alternar"><input type="checkbox" id="camada-hex" checked> Hexágonos (a medida acima)</label>
+            <label class="alternar"><input type="checkbox" id="camada-bairros" checked> Contorno dos bairros</label>
+            <label class="alternar"><input type="checkbox" id="camada-anuncios"> Anúncios de 2026</label>
+            <label class="alternar"><input type="checkbox" id="camada-metro"> Estações de metrô</label>
+          </fieldset>
+          <ul class="legenda-pontos" id="legenda-pontos" hidden></ul>
+        </div>
+      </details>
+
+      <div class="cartao-mapa aviso-mapa" id="aviso-mapa" role="status" hidden></div>
+    </div>
+
+    <aside class="painel" id="simulador" aria-labelledby="sim-titulo" data-estado="fechado" tabindex="-1">
+      <button class="alca" id="alca" type="button" aria-expanded="false" aria-controls="painel-corpo"><span>Ver detalhes</span></button>
+      <div class="painel-corpo" id="painel-corpo">
+        <div>
+          <h2 id="sim-titulo">Teste de localização</h2>
+          <p class="painel-intro">Clique num ponto do mapa ou busque um endereço. O modelo estima o preço por noite
+            de um imóvel como o descrito abaixo, naquele lugar.</p>
+        </div>
+
+        <div>
+          <form class="busca" id="form-busca" role="search" aria-label="Buscar endereço">
+            <label for="busca">Buscar endereço em Nova York</label>
+            <input id="busca" name="q" type="search" placeholder="ex.: 200 Kent Ave, Brooklyn" autocomplete="off" enterkeyhint="search">
+            <button class="botao" id="botao-busca" type="submit">Buscar</button>
+          </form>
+          <p class="busca-status" id="busca-status" aria-live="polite"></p>
+          <ul class="busca-resultados" id="busca-resultados"></ul>
+          <p class="creditos-busca">Busca de endereços:
+            <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener">Nominatim</a> ·
+            © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">colaboradores do OpenStreetMap</a></p>
+        </div>
+
+        <div class="linha-centro">
+          <button class="botao botao-sec" id="usar-centro" type="button">Usar o centro do mapa</button>
+          <span>pelo teclado: mova o mapa com as setas e use este botão</span>
+        </div>
+
+        <div class="ponto-escolhido" id="ponto-escolhido">Nenhum ponto escolhido ainda.</div>
+
+        <section class="resultado" id="resultado" data-estado="vazio" aria-labelledby="res-titulo">
+          <h3 id="res-titulo">Resultado</h3>
+          <div id="res-resumo" aria-live="polite" aria-atomic="true">
+            <p class="res-sub">Escolha um ponto no mapa para ver a estimativa.</p>
+          </div>
+          <div id="res-detalhes"></div>
+        </section>
+
+        <form class="form-imovel" id="form-imovel" novalidate aria-labelledby="form-titulo">
+          <h3 id="form-titulo">O imóvel</h3>
+          <p class="res-sub" style="margin:-4px 0 0">Mude qualquer campo: o resultado acima se atualiza sozinho.</p>
+          <div id="campos"></div>
+        </form>
+
+        <ul class="avisos" aria-label="Avisos sobre os dados">
+          <li><b>A coordenada do Airbnb é aproximada:</b> o site desloca a posição publicada de cada anúncio
+            em até ~150 m. Por isso o modelo usa a área (hexágono de ~0,1 km²), não o ponto exato.</li>
+          <li><b>Preço anunciado não é preço pago:</b> é o valor pedido por noite, sem descontos, taxas
+            nem a ocupação real.</li>
+          <li><b>Regra nova desde 2023 (Local Law 18):</b> estadias com menos de 30 noites exigem registro na
+            prefeitura, e a maioria dos anúncios de hoje exige 30 noites ou mais.</li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+
+  <section class="secao" id="como-ler" aria-labelledby="como-ler-titulo"><div class="wrap">
+    <h2 id="como-ler-titulo">Como ler o mapa</h2>
+    <p class="lede">Cada hexágono cobre cerca de 0,7 km² e resume os anúncios que caem dentro dele. Escolha a
+      medida no seletor do mapa; passe o mouse (ou toque) num hexágono para ver o bairro e o valor.
+      Hexágonos tracejados, sem cor, não têm dado suficiente para aquela medida.</p>
+    <div class="grade-cartoes" id="cartoes-metricas"></div>
+  </div></section>
+
+  <section class="secao" id="modelo" aria-labelledby="modelo-titulo"><div class="wrap">
+    <h2 id="modelo-titulo">O modelo por trás do teste</h2>
+    <p class="lede">Um conjunto de árvores de decisão (LightGBM) aprendeu, com os anúncios de hoje, como o
+      preço varia com o imóvel e com a área ao redor. A validação separou regiões inteiras da cidade para
+      testar o modelo em lugares que ele não viu no treino.</p>
+    <ul class="metricas-modelo" id="metricas-modelo"></ul>
+    <div class="grade-cartoes">
+      <div class="cartao">
+        <h3>Roda no seu navegador</h3>
+        <p>O modelo foi exportado do Python para um arquivo de dados e é calculado aqui, em JavaScript, sem
+          servidor. Nenhuma informação que você digita sai do seu computador (só a busca de endereço consulta
+          o Nominatim).</p>
+      </div>
+      <div class="cartao">
+        <h3>O mesmo número do Python</h3>
+        <p>A cada atualização, um teste automático compara centenas de previsões do JavaScript com as do
+          modelo original. Se um único número divergir, a publicação é barrada.</p>
+      </div>
+      <div class="cartao">
+        <h3>Uma faixa, não só um número</h3>
+        <p>A faixa de 80% mostra onde ficam, em geral, os preços de imóveis parecidos naquele lugar. Ela foi
+          calibrada nos testes por região: em cerca de 8 a cada 10 anúncios reais, o preço caiu dentro dela.</p>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="rodape">
+    <div>
+      <h2>Quem fez</h2>
+      <ul class="equipe" id="equipe"></ul>
+      <p id="credito"></p>
+      <div class="links">
+        <a class="botao botao-sec" href="./docs/">Documentação do projeto</a>
+        <a class="botao botao-sec" id="link-repositorio" href="#" target="_blank" rel="noopener">Código no GitHub</a>
+      </div>
+    </div>
+    <div>
+      <h2>Fontes e créditos</h2>
+      <ul class="atribuicoes" id="atribuicoes"></ul>
+      <p style="margin-top:10px">Mapa: <a href="https://maplibre.org/" target="_blank" rel="noopener">MapLibre GL JS</a> (BSD-3),
+        hexágonos <a href="https://h3geo.org/" target="_blank" rel="noopener">H3</a> (Apache-2.0), mapa-base
+        <a href="https://openfreemap.org/" target="_blank" rel="noopener">OpenFreeMap</a> ·
+        © <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> ·
+        © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">colaboradores do OpenStreetMap</a>.
+        Fontes tipográficas Fraunces e Inter (SIL OFL 1.1).</p>
+      <p id="gerado-em"></p>
+    </div>
+  </div>
+</div></footer>
+
+<noscript><p class="wrap" style="padding:16px 0">Este site precisa de JavaScript para o mapa e o teste de localização.</p></noscript>
+</body>
+</html>

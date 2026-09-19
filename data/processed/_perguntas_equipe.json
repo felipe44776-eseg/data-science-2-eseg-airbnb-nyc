@@ -1,0 +1,485 @@
+{
+  "descricao": "Perguntas da equipe (reports/v0/Análise.txt) respondidas com contagem sobre os dados. Q1–Q3 no bruto (antes da limpeza); Q4–Q6 na silver. Sem nome, id ou texto livre.",
+  "Q1_id_unico_e_duplicatas": {
+    "2019": {
+      "linhas": 48895,
+      "ids_distintos": 48895,
+      "id_unico": true,
+      "ids_repetidos": 0,
+      "duplicatas_perfeitas_todas_colunas": 0,
+      "duplicatas_perfeitas_sem_id": 0,
+      "semanticas": {
+        "anuncios_mesmo_host_mesma_coordenada": 3,
+        "grupos_mesmo_host_mesma_coordenada": 1,
+        "maior_grupo": 3,
+        "room_type_desses_anuncios": {
+          "Entire home/apt": 3
+        },
+        "anuncios_mesmo_host_coordenada_e_preco": 2,
+        "anuncios_mesmo_host_coordenada_e_nome": 0,
+        "anuncios_mesmo_host_e_nome": 410,
+        "coordenadas_distintas": 48871
+      }
+    },
+    "2026": {
+      "linhas": 30259,
+      "ids_distintos": 30259,
+      "id_unico": true,
+      "ids_repetidos": 0,
+      "duplicatas_perfeitas_todas_colunas": 0,
+      "duplicatas_perfeitas_sem_id": 0,
+      "semanticas": {
+        "anuncios_mesmo_host_mesma_coordenada": 3638,
+        "grupos_mesmo_host_mesma_coordenada": 761,
+        "maior_grupo": 49,
+        "room_type_desses_anuncios": {
+          "Entire home/apt": 1957,
+          "Private room": 1212,
+          "Hotel room": 465,
+          "Shared room": 4
+        },
+        "anuncios_mesmo_host_coordenada_e_preco": 2064,
+        "anuncios_mesmo_host_coordenada_e_nome": 466,
+        "anuncios_mesmo_host_e_nome": 1406,
+        "coordenadas_distintas": 27295
+      }
+    }
+  },
+  "Q2_campos_vazios": {
+    "2019": {
+      "colunas_com_nulo": {
+        "reviews_per_month": 10052,
+        "last_review": 10052,
+        "host_name": 21,
+        "name": 16
+      },
+      "colunas_100pct_nulas": [],
+      "sem_avaliacao": 10052,
+      "nulos_estruturais_de_avaliacao": {
+        "last_review": {
+          "nulos": 10052,
+          "nulo_e_sem_avaliacao": 10052,
+          "nulo_com_avaliacao": 0,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": true
+        },
+        "reviews_per_month": {
+          "nulos": 10052,
+          "nulo_e_sem_avaliacao": 10052,
+          "nulo_com_avaliacao": 0,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": true
+        }
+      },
+      "name_nulo": {
+        "linhas": 16,
+        "com_preco_positivo": 16,
+        "com_coordenada": 16,
+        "host_name_nulo_tambem": 0
+      },
+      "host_name_nulo": 21
+    },
+    "2026": {
+      "colunas_com_nulo": {
+        "neighborhood_overview": 30259,
+        "host_since": 30259,
+        "host_neighbourhood": 30259,
+        "host_verifications": 30259,
+        "host_total_listings_count": 30259,
+        "host_thumbnail_url": 30259,
+        "host_response_time": 30259,
+        "host_acceptance_rate": 30259,
+        "host_response_rate": 30259,
+        "calendar_updated": 30259,
+        "instant_bookable": 30259,
+        "neighbourhood": 30259,
+        "license": 24973,
+        "host_about": 12410,
+        "bedrooms": 10973,
+        "bathrooms": 10112,
+        "beds": 9420,
+        "price_quote_price_per_night": 8745,
+        "price_quote_total_price": 8745,
+        "estimated_revenue_l365d": 8744,
+        "price": 8744,
+        "review_scores_value": 8568,
+        "review_scores_location": 8568,
+        "review_scores_checkin": 8567,
+        "review_scores_accuracy": 8565,
+        "review_scores_communication": 8562,
+        "review_scores_cleanliness": 8559,
+        "review_scores_rating": 8559,
+        "first_review": 8559,
+        "reviews_per_month": 8559,
+        "last_review": 8559,
+        "price_quote_checkout_date": 7581,
+        "price_quote_checkin_date": 7581,
+        "price_quote_raw": 7581,
+        "host_location": 7162,
+        "description": 902,
+        "hosts_time_as_user_years": 349,
+        "hosts_time_as_user_months": 349,
+        "host_name": 349,
+        "host_profile_url": 349,
+        "host_profile_id": 349,
+        "hosts_time_as_host_years": 349,
+        "host_identity_verified": 349,
+        "host_picture_url": 349,
+        "host_has_profile_pic": 349,
+        "host_is_superhost": 349,
+        "hosts_time_as_host_months": 349,
+        "host_listings_count": 349,
+        "has_availability": 347,
+        "bathrooms_text": 159,
+        "minimum_nights": 2,
+        "minimum_maximum_nights": 2,
+        "maximum_nights": 2,
+        "minimum_minimum_nights": 2,
+        "maximum_minimum_nights": 2,
+        "maximum_maximum_nights": 2,
+        "name": 1
+      },
+      "colunas_100pct_nulas": [
+        "neighborhood_overview",
+        "host_since",
+        "host_response_time",
+        "host_response_rate",
+        "host_acceptance_rate",
+        "host_thumbnail_url",
+        "host_neighbourhood",
+        "host_total_listings_count",
+        "host_verifications",
+        "neighbourhood",
+        "calendar_updated",
+        "instant_bookable"
+      ],
+      "sem_avaliacao": 8559,
+      "nulos_estruturais_de_avaliacao": {
+        "last_review": {
+          "nulos": 8559,
+          "nulo_e_sem_avaliacao": 8559,
+          "nulo_com_avaliacao": 0,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": true
+        },
+        "reviews_per_month": {
+          "nulos": 8559,
+          "nulo_e_sem_avaliacao": 8559,
+          "nulo_com_avaliacao": 0,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": true
+        },
+        "first_review": {
+          "nulos": 8559,
+          "nulo_e_sem_avaliacao": 8559,
+          "nulo_com_avaliacao": 0,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": true
+        },
+        "review_scores_rating": {
+          "nulos": 8559,
+          "nulo_e_sem_avaliacao": 8559,
+          "nulo_com_avaliacao": 0,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": true
+        },
+        "review_scores_accuracy": {
+          "nulos": 8565,
+          "nulo_e_sem_avaliacao": 8559,
+          "nulo_com_avaliacao": 6,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": false
+        },
+        "review_scores_value": {
+          "nulos": 8568,
+          "nulo_e_sem_avaliacao": 8559,
+          "nulo_com_avaliacao": 9,
+          "preenchido_sem_avaliacao": 0,
+          "estrutural": false
+        }
+      },
+      "sem_perfil_de_anfitriao": {
+        "linhas": 349,
+        "has_availability_f": 348,
+        "preco_nulo": 71
+      }
+    }
+  },
+  "Q3_host_id_x_host_name": {
+    "2019": {
+      "host_id_distintos": 37457,
+      "host_name_distintos": 11452,
+      "host_name_nulo": 21,
+      "host_id_com_mais_de_um_nome": 0,
+      "nomes_usados_por_mais_de_um_host_id": 3125,
+      "fracao_nomes_compartilhados": 0.2729,
+      "anuncios_cujo_nome_e_compartilhado": 36325,
+      "fracao_anuncios_nome_compartilhado": 0.7429,
+      "host_ids_do_nome_mais_comum": 335,
+      "host_ids_por_nome_mediana": 1.0
+    },
+    "2026": {
+      "host_id_distintos": 16474,
+      "host_name_distintos": 7001,
+      "host_name_nulo": 349,
+      "host_id_com_mais_de_um_nome": 0,
+      "nomes_usados_por_mais_de_um_host_id": 1737,
+      "fracao_nomes_compartilhados": 0.2481,
+      "anuncios_cujo_nome_e_compartilhado": 17534,
+      "fracao_anuncios_nome_compartilhado": 0.5795,
+      "host_ids_do_nome_mais_comum": 154,
+      "host_ids_por_nome_mediana": 1.0
+    }
+  },
+  "Q4_coordenadas": {
+    "poligonos": {
+      "feicoes_geojson": 233,
+      "bairros": 230,
+      "geometrias_invalidas_corrigidas": 7
+    },
+    "2019": {
+      "anuncios": 48895,
+      "dentro_do_envelope_nyc": 48895,
+      "dentro_do_poligono_declarado": 48878,
+      "fracao_no_declarado": 0.9997,
+      "em_outro_bairro": 0,
+      "fora_de_todos_os_poligonos": 17,
+      "distancia_ao_declarado_m": {
+        "mediana": 84.4,
+        "p90": 323.4,
+        "max": 360.6,
+        "ate_150m": 10,
+        "fracao_ate_150m": 0.5882
+      },
+      "distancia_a_fronteira_do_proprio_bairro_m": {
+        "mediana": 264.2,
+        "ate_150m": 14364,
+        "fracao_ate_150m": 0.2939
+      }
+    },
+    "2026": {
+      "anuncios": 30257,
+      "dentro_do_envelope_nyc": 30257,
+      "dentro_do_poligono_declarado": 30257,
+      "fracao_no_declarado": 1.0,
+      "em_outro_bairro": 0,
+      "fora_de_todos_os_poligonos": 0,
+      "distancia_ao_declarado_m": {
+        "mediana": null,
+        "p90": null,
+        "max": null,
+        "ate_150m": 0,
+        "fracao_ate_150m": null
+      },
+      "distancia_a_fronteira_do_proprio_bairro_m": {
+        "mediana": 247.4,
+        "ate_150m": 9401,
+        "fracao_ate_150m": 0.3107
+      }
+    }
+  },
+  "Q5_preco": {
+    "2019": {
+      "semantica": "diária anunciada pelo anfitrião (inteiro, US$)",
+      "distribuicao": {
+        "n": 48895,
+        "media": 152.72,
+        "min": 0.0,
+        "p01": 30.0,
+        "p25": 69.0,
+        "mediana": 106.0,
+        "p75": 175.0,
+        "p99": 799.0,
+        "max": 10000.0,
+        "assimetria": 19.12
+      },
+      "zeros": 11,
+      "entre_1_e_9": 0,
+      "igual_10000": 3,
+      "igual_9999": 3,
+      "acima_1000": 239,
+      "mediana_por_minimo_de_noites": {
+        "min_lt30": {
+          "n": 44379,
+          "mediana": 100.0
+        },
+        "min30": {
+          "n": 4505,
+          "mediana": 130.0
+        }
+      },
+      "fracao_min30": 0.0922
+    },
+    "2026": {
+      "semantica": "cotação de uma estadia de N noites a partir da primeira data livre, dividida por N, já com desconto de estadia longa",
+      "distribuicao": {
+        "n": 21515,
+        "media": 278.23,
+        "min": 4.58,
+        "p01": 39.47,
+        "p25": 96.88,
+        "mediana": 174.69,
+        "p75": 302.72,
+        "p99": 1713.94,
+        "max": 30972.96,
+        "assimetria": 19.12
+      },
+      "preco_nulo": 8744,
+      "preco_nulo_sem_cotacao": 7581,
+      "preco_nulo_com_cotacao_sem_valor": 1163,
+      "preco_nulo_se_availability_365_zero": 0.9999,
+      "availability_365_zero": 6791,
+      "preco_nulo_se_availability_365_positivo": 0.0833,
+      "price_igual_price_per_night": {
+        "linhas_com_ambos": 21514,
+        "iguais": 21514
+      },
+      "total_igual_price_vezes_noites": 1.0,
+      "cotacoes": 22678,
+      "noites_cotacao": {
+        "n": 22678,
+        "media": 24.99,
+        "min": 1.0,
+        "p01": 1.0,
+        "p25": 30.0,
+        "mediana": 30.0,
+        "p75": 30.0,
+        "p99": 75.0,
+        "max": 365.0,
+        "assimetria": 6.91
+      },
+      "noites_igual_minimo": {
+        "cotacoes": 22678,
+        "iguais": 21909,
+        "fracao": 0.9661
+      },
+      "dias_do_scrape_ao_checkin": {
+        "n": 22678,
+        "media": 45.22,
+        "min": -1.0,
+        "p01": 0.0,
+        "p25": 1.0,
+        "mediana": 18.0,
+        "p75": 60.0,
+        "p99": 290.0,
+        "max": 364.0,
+        "assimetria": 2.03
+      },
+      "preco_mediano_por_noites_cotadas": {
+        "1-27": {
+          "n": 4993,
+          "preco_mediano": 308.5,
+          "total_mediano": 453.0
+        },
+        "28-31": {
+          "n": 16133,
+          "preco_mediano": 144.57,
+          "total_mediano": 4339.0
+        },
+        "32-60": {
+          "n": 146,
+          "preco_mediano": 89.98,
+          "total_mediano": 4777.51
+        },
+        "61-120": {
+          "n": 173,
+          "preco_mediano": 61.35,
+          "total_mediano": 5487.28
+        },
+        "121-365": {
+          "n": 69,
+          "preco_mediano": 25.62,
+          "total_mediano": 5189.24
+        }
+      },
+      "cheio_do_periodo_igual_average_monthly_price": {
+        "cotacoes_com_o_item": 16515,
+        "iguais_ate_2_centavos": 10022,
+        "iguais_ate_1_dolar": 16486,
+        "nota": "total_price às vezes vem arredondado ao dólar; as cotações que diferem mais de US$ 1 têm impostos embutidos no total (itens 'Taxes' + 'Total')",
+        "cotacoes_com_imposto": 58
+      },
+      "desconto": {
+        "cotacoes_com_valor": 21513,
+        "com_desconto": 11393,
+        "fracao_com_desconto": 0.5296,
+        "mediana_min_lt30": 0.0,
+        "mediana_min30": 0.0434,
+        "p90_min30": 0.2286,
+        "max": 0.8991
+      },
+      "mediana_por_minimo_de_noites": {
+        "min_lt30": {
+          "n": 5012,
+          "mediana": 308.5
+        },
+        "min30": {
+          "n": 16102,
+          "mediana": 144.36
+        }
+      },
+      "mediana_preco_cheio_por_minimo_de_noites": {
+        "min_lt30": 313.0,
+        "min30": 164.1
+      },
+      "fracao_min30": 0.8169,
+      "acima_10000": 12,
+      "abaixo_10": 3
+    }
+  },
+  "Q6_reviews_per_month": {
+    "teste1_recalculo_2026": {
+      "anuncios_com_avaliacao": 21700,
+      "ingenuo_total_div_meses": {
+        "pearson": 0.9777,
+        "spearman": 0.9991,
+        "erro_abs_medio": 0.0327
+      },
+      "formula_inside_airbnb": {
+        "definicao": "number_of_reviews / max(1, (last_scraped - first_review + 1 dia) / 30)",
+        "pearson": 0.999998,
+        "igual_em_2_casas": 21675,
+        "diferenca_ate_0_01": 21693,
+        "fracao_ate_0_01": 0.9997
+      }
+    },
+    "teste2_variacao_entre_anuncios_do_mesmo_host": {
+      "2019": {
+        "hosts_com_2_ou_mais_anuncios_avaliados": 4302,
+        "hosts_com_valor_constante": 68,
+        "hosts_com_valor_variando": 4234,
+        "fracao_variando": 0.9842,
+        "amplitude_mediana_no_host": 0.75
+      },
+      "2026": {
+        "hosts_com_2_ou_mais_anuncios_avaliados": 2497,
+        "hosts_com_valor_constante": 29,
+        "hosts_com_valor_variando": 2468,
+        "fracao_variando": 0.9884,
+        "amplitude_mediana_no_host": 0.37
+      }
+    },
+    "teste3_reviews_per_month_maior_que_total": {
+      "2019": 0,
+      "2026": 0,
+      "rpm_igual_total_piso_de_1_mes": {
+        "2019": 1558,
+        "2026": 203
+      },
+      "meses_implicitos_2019_min": 1.0
+    },
+    "acima_de_30_por_mes": {
+      "2019": 1,
+      "2026": 10,
+      "tipo_de_imovel_2026": {
+        "Room in hotel": 7,
+        "Entire loft": 2,
+        "Private room in bed and breakfast": 1
+      },
+      "maximo": {
+        "2019": 58.5,
+        "2026": 115.63
+      }
+    }
+  }
+}

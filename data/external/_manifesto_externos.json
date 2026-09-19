@@ -1,0 +1,915 @@
+{
+  "fontes": {
+    "acs": {
+      "titulo": "American Community Survey 5-year — Summary File por tabela (tracts de NYC)",
+      "orgao": "U.S. Census Bureau",
+      "licenca": "dominio publico (obra do governo federal dos EUA)",
+      "atribuicao": "Fonte: U.S. Census Bureau, American Community Survey 5-year estimates (2015-2019 e 2020-2024). Este produto usa dados do Census Bureau, mas nao e endossado nem certificado por ele.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/acs/acs5_2015-2019_tracts_nyc.csv",
+          "bytes": 191292,
+          "sha256": "fcbb5f4c541867408122c909de1736ed7958e343ffffb3b1b07a96b7de8502ab",
+          "acessado_em": "2026-09-19T02:50:04Z",
+          "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype/5YRData/acsdt5y2019-{tabela}.dat",
+          "tabelas": [
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype/5YRData/acsdt5y2019-b01003.dat",
+              "linhas_ny": 4918,
+              "linhas_nyc": 2167,
+              "sha256_bloco": "b0e346f537d6e75ff34904c7b2d9f97b7f2ae78c837d775234a5a46e244ca28f"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype/5YRData/acsdt5y2019-b19013.dat",
+              "linhas_ny": 4918,
+              "linhas_nyc": 2167,
+              "sha256_bloco": "f9d92b7a632bf7e27818d4479aededc371b76161c6d0ffa692aef39d79f573ef"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype/5YRData/acsdt5y2019-b25064.dat",
+              "linhas_ny": 4918,
+              "linhas_nyc": 2167,
+              "sha256_bloco": "7c4e28bf4241aa26b8604391353e09d2c524e4e2496a7893b01aecc61d159eb3"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype/5YRData/acsdt5y2019-b25077.dat",
+              "linhas_ny": 4918,
+              "linhas_nyc": 2167,
+              "sha256_bloco": "41efa01a0d1dde87b3f73677ee53a0e16cabb9b12ed661da026fa9db0cec918a"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype/5YRData/acsdt5y2019-b25003.dat",
+              "linhas_ny": 4918,
+              "linhas_nyc": 2167,
+              "sha256_bloco": "49f5555904f153bc5dfb22f3f8b00ae9d3b50b39d1c473df73b60569d01a8b41"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype/5YRData/acsdt5y2019-b25002.dat",
+              "linhas_ny": 4918,
+              "linhas_nyc": 2167,
+              "sha256_bloco": "0209ce00d7f9fd1ccf3e296816dbeb11893fd54f947e82905448915f61074a5e"
+            }
+          ],
+          "metodo": "HTTP Range + busca binaria por GEO_ID"
+        },
+        {
+          "arquivo": "data/external/acs/acs5_2020-2024_tracts_nyc.csv",
+          "bytes": 202868,
+          "sha256": "19291c2738caf4bfca87aa10c05a6b80078f062daeb6391bc41213f6f8729d34",
+          "acessado_em": "2026-09-19T02:50:28Z",
+          "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-{tabela}.dat",
+          "tabelas": [
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b01003.dat",
+              "linhas_ny": 5397,
+              "linhas_nyc": 2327,
+              "sha256_bloco": "783b39caba034988a85e5079483c0f16fd5e1af8a43ad7e678258db26cdb4637"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b19013.dat",
+              "linhas_ny": 5397,
+              "linhas_nyc": 2327,
+              "sha256_bloco": "1c4b96d25bdade143d51600a108eff07ed4efe238efc5e1d6056934db8dc363d"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25064.dat",
+              "linhas_ny": 5397,
+              "linhas_nyc": 2327,
+              "sha256_bloco": "37f2f8c49b889819f56491e27c43b2e790d629d59c6711d877cc5d1f1f7226ae"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25077.dat",
+              "linhas_ny": 5397,
+              "linhas_nyc": 2327,
+              "sha256_bloco": "60fc8f8e821d89645b324c4ed3048da9a77e5dc7470460056962f95e156da8fb"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25003.dat",
+              "linhas_ny": 5397,
+              "linhas_nyc": 2327,
+              "sha256_bloco": "5ac33a972c895c1fe17c249a8480aefb209eae3864d436ae9221503c51d4ca67"
+            },
+            {
+              "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25002.dat",
+              "linhas_ny": 5397,
+              "linhas_nyc": 2327,
+              "sha256_bloco": "2780add7dbae3888d14e3b179ff34d4d9978e6179c477659f45e17557acd08eb"
+            }
+          ],
+          "metodo": "HTTP Range + busca binaria por GEO_ID"
+        }
+      ],
+      "resumo": {
+        "2019": {
+          "periodo": "2015-2019",
+          "tracts": 2167,
+          "nulos_pct": {
+            "populacao": 0.0,
+            "renda_mediana": 3.3,
+            "renda_mediana_moe": 3.6,
+            "aluguel_mediano": 3.4,
+            "aluguel_mediano_moe": 3.8,
+            "valor_imovel": 11.2,
+            "valor_imovel_moe": 12.7,
+            "ocupados": 0.0,
+            "alugados": 0.0,
+            "unidades": 0.0,
+            "vagos": 0.0
+          },
+          "no_teto": {
+            "renda_mediana": 5,
+            "valor_imovel": 33,
+            "aluguel_mediano": 8
+          },
+          "renda_cv_mediana": 0.128
+        },
+        "atual": {
+          "periodo": "2020-2024",
+          "tracts": 2327,
+          "nulos_pct": {
+            "populacao": 0.0,
+            "renda_mediana": 5.5,
+            "renda_mediana_moe": 6.1,
+            "aluguel_mediano": 6.1,
+            "aluguel_mediano_moe": 10.1,
+            "valor_imovel": 16.5,
+            "valor_imovel_moe": 19.1,
+            "ocupados": 0.0,
+            "alugados": 0.0,
+            "unidades": 0.0,
+            "vagos": 0.0
+          },
+          "no_teto": {
+            "renda_mediana": 13,
+            "valor_imovel": 57,
+            "aluguel_mediano": 94
+          },
+          "renda_cv_mediana": 0.174
+        }
+      },
+      "saida": [
+        "data/external/acs/acs5_2015-2019_tracts_nyc.csv",
+        "data/external/acs/acs5_2020-2024_tracts_nyc.csv"
+      ],
+      "segundos": 48.4
+    },
+    "cpi": {
+      "titulo": "CPI-U, All items, New York-Newark-Jersey City (NSA, mensal)",
+      "orgao": "U.S. Bureau of Labor Statistics (via FRED, Federal Reserve Bank of St. Louis)",
+      "licenca": "dominio publico (obra do governo federal dos EUA); FRED pede citacao da fonte",
+      "atribuicao": "U.S. Bureau of Labor Statistics, Consumer Price Index for All Urban Consumers: All Items in New York-Newark-Jersey City, NY-NJ-PA [CUURS12ASA0], via FRED, Federal Reserve Bank of St. Louis.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/cpi/CUURS12ASA0_bls.json",
+          "bytes": 10430,
+          "sha256": "0d0567bce1d435a46f9925f1db37f9c050fdb8426b49df75fdc22f3cb37bc690",
+          "acessado_em": "2026-09-19T02:48:30Z",
+          "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/CUURS12ASA0",
+          "nota": "ja existia — nao rebaixado"
+        },
+        {
+          "arquivo": "data/external/cpi/CUURA101SA0_fred.csv",
+          "bytes": 23219,
+          "sha256": "6301b25b86663326e8eab12ba58a323f0ead039f1717ef25b0d79022c90e77d4",
+          "acessado_em": "2026-09-19T02:48:30Z",
+          "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=CUURA101SA0",
+          "nota": "so conferencia: mesma serie publicada pelo FRED"
+        }
+      ],
+      "resumo": {
+        "via": "BLS",
+        "serie_bls": "CUURS12ASA0",
+        "serie_fred": "CUURA101SA0",
+        "conferencia_fred_x_bls": {
+          "meses_em_comum": 115,
+          "maior_diferenca": 0.0,
+          "identicas": true
+        },
+        "meses": 115,
+        "primeiro": "2017-01",
+        "ultimo": "2026-08",
+        "meses_faltantes_desde_2017": [
+          "2025-10"
+        ],
+        "fator_2019_para_atual": 1.293067,
+        "mes_de": "2019-07",
+        "mes_para": "2026-06",
+        "indice_de": 278.817,
+        "indice_para": 360.529,
+        "saida": "data/processed/cpi_ny.parquet"
+      },
+      "segundos": 0.1
+    },
+    "ll18": {
+      "titulo": "Relatorios anuais da LL18 (registros de curta temporada) e distritos do Conselho",
+      "orgao": "NYC Mayor's Office of Special Enforcement (OSE); limites: NYC Dept. of City Planning",
+      "licenca": "publicacao oficial da Prefeitura de NYC (Termos de Uso do nyc.gov); limites via NYC Open Data Terms of Use",
+      "atribuicao": "Registros de aluguel de curta temporada: NYC Office of Special Enforcement, relatorios anuais da Local Law 18. Distritos: NYC DCP, via NYC Open Data.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/ll18/Short-Term-Rental-Registration-Report-FY23.xlsx",
+          "bytes": 69053,
+          "sha256": "7b802ac91df6ca005630d58c9c707a5589563e33d5ef956fc01a0959492b30bb",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/Short-Term-Rental-Registration-Report-FY23.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/Short_Term_Rental_Registration_Report_FY24.xlsx",
+          "bytes": 78522,
+          "sha256": "d08771cf5b50d231292dc94ec58880a2c043cf28107f39efc3a3e1582cac4876",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/Short_Term_Rental_Registration_Report_FY24.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/Short_Term_Rental_Registration_Report_FY25.xlsx",
+          "bytes": 92493,
+          "sha256": "d77cb1493f4d84550a7878896cce5c1b4912621c5ccf8899fa460f2857e35ad9",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/Short_Term_Rental_Registration_Report_FY25.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/LL18_Short_Term_Rental_Registration_Report_FY26.xlsx",
+          "bytes": 367797,
+          "sha256": "3923b185cf73473d4ad869596882218fb748baaa38e24465860ec372a2469943",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/LL18_Short_Term_Rental_Registration_Report_FY26.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/2018_LL87_report.xlsx",
+          "bytes": 328587,
+          "sha256": "b1738c8cb74b91d3c802ae79f634f860c0a02a527a0e3378d3da3bbb4699da56",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/2018_LL87_report.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/2019_ll87_report.xlsx",
+          "bytes": 1300458,
+          "sha256": "7af4851b6ffeb8090cf2e9e6309a54477811a2a6079976f56f025e0f9aafadb7",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/2019_ll87_report.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/2024_LL87_OSE_Annual_Report.xlsx",
+          "bytes": 296490,
+          "sha256": "ef4d642ec220428be207217f0daf7f50e285498a2dbdce3075981f38dfc422e9",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/2024_LL87_OSE_Annual_Report.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/2025_LL87_2025_Annual_Report.xlsx",
+          "bytes": 319532,
+          "sha256": "f46321158fb44d9d386429fe96edc9e8950f5ecb7ca9f63e8a351ea61cc0b0ec",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://www.nyc.gov/assets/specialenforcement/downloads/excel/2025_LL87_2025_Annual_Report.xlsx",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/distritos_conselho.geojson",
+          "bytes": 3824556,
+          "sha256": "ead49c8ccb67f42083200da61f91bd830d0e6d36086cde683d23cab148920c75",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://data.cityofnewyork.us/resource/872g-cjhh.geojson",
+          "nota": "ja existia"
+        },
+        {
+          "arquivo": "data/external/ll18/registros_ll18_por_distrito.csv",
+          "bytes": 2693,
+          "sha256": "1734c99d37f09e92b6516e018f6160cb9cb2c89fb57b7827c95b5b3299c0bf8d",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "derivado_de": "relatorios LL18 (Figura 1)"
+        }
+      ],
+      "resumo": {
+        "pagina_oficial": "https://www.nyc.gov/site/specialenforcement/about/data-reports.page",
+        "dataset_no_nyc_open_data": false,
+        "formato_por_relatorio": {
+          "FY23": "ok",
+          "FY24": "ok",
+          "FY25": "ok",
+          "FY26": "ok"
+        },
+        "totais_por_ano_fiscal": {
+          "FY23": {
+            "ativos_fim": 105,
+            "ativos_periodo": null
+          },
+          "FY24": {
+            "ativos_fim": 2290,
+            "ativos_periodo": null
+          },
+          "FY25": {
+            "ativos_fim": 2952,
+            "ativos_periodo": 3111
+          },
+          "FY26": {
+            "ativos_fim": 3338,
+            "ativos_periodo": 3522
+          }
+        },
+        "linha_do_tempo": [
+          [
+            "2022-01-09",
+            "Local Law 18 de 2022 adotada (Short-Term Rental Registration Law)"
+          ],
+          [
+            "2023-03-06",
+            "OSE comeca a aceitar pedidos de registro"
+          ],
+          [
+            "2023-09-05",
+            "plataformas obrigadas a verificar o registro antes da reserva"
+          ]
+        ]
+      },
+      "saida": "data/external/ll18/registros_ll18_por_distrito.csv",
+      "segundos": 0.2
+    },
+    "marcos": {
+      "titulo": "Marcos da cidade (curadoria, conferida na Wikipedia)",
+      "orgao": "Wikipedia (coordenadas de infobox; GNIS/USGS e Port Authority como origem)",
+      "licenca": "CC BY-SA 4.0 (texto da Wikipedia); coordenadas sao fato, nao obra",
+      "atribuicao": "Coordenadas conferidas na Wikipedia (en.wikipedia.org), CC BY-SA 4.0.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/marcos/marcos.json",
+          "bytes": 2196,
+          "sha256": "6510dd4ed370c6aefc19976c0b80e9a3095f375f11cc0dbf8921c0dad47e7f3c",
+          "acessado_em": "2026-09-19T02:48:31Z",
+          "url": "https://en.wikipedia.org/w/api.php",
+          "parametros": {
+            "prop": "coordinates"
+          }
+        }
+      ],
+      "resumo": {
+        "n_marcos": 7,
+        "maior_desvio_m": 0.1,
+        "conferencia": {
+          "Times Square": {
+            "wikipedia": [
+              40.7575,
+              -73.9858
+            ],
+            "desvio_m": 0.0
+          },
+          "Empire State Building": {
+            "wikipedia": [
+              40.7483,
+              -73.9856
+            ],
+            "desvio_m": 0.0
+          },
+          "Central Park": {
+            "wikipedia": [
+              40.78222222,
+              -73.96527778
+            ],
+            "desvio_m": 0.0
+          },
+          "One World Trade Center": {
+            "wikipedia": [
+              40.71305556,
+              -74.01333333
+            ],
+            "desvio_m": 0.1
+          },
+          "Brooklyn Bridge": {
+            "wikipedia": [
+              40.7057,
+              -73.9964
+            ],
+            "desvio_m": 0.0
+          },
+          "JFK": {
+            "wikipedia": [
+              40.63972222,
+              -73.77888889
+            ],
+            "desvio_m": 0.0
+          },
+          "LGA": {
+            "wikipedia": [
+              40.775,
+              -73.875
+            ],
+            "desvio_m": 0.0
+          }
+        }
+      },
+      "segundos": 0.7
+    },
+    "metro": {
+      "titulo": "MTA Subway Stations",
+      "orgao": "Metropolitan Transportation Authority (via Open NY, data.ny.gov)",
+      "licenca": "Open NY Terms of Use; atribuicao a MTA (mta.info/open-data)",
+      "atribuicao": "Dados de estacoes: Metropolitan Transportation Authority (MTA), via data.ny.gov.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/mta/estacoes_metro.csv",
+          "bytes": 48490,
+          "sha256": "c7c8e21325113e8dcffb81c965c07dd002ff062ea99da6acb7d1fbd9b5527666",
+          "acessado_em": "2026-09-19T02:48:31Z",
+          "url": "https://data.ny.gov/resource/39hk-dx4f.csv",
+          "parametros": {
+            "$select": "gtfs_stop_id,station_id,complex_id,division,line,stop_name,borough,daytime_routes,structure,gtfs_latitude,gtfs_longitude",
+            "$order": "station_id",
+            "$limit": 5000
+          },
+          "nota": "ja existia — nao rebaixado",
+          "registros": 496
+        }
+      ],
+      "resumo": {
+        "estacoes": 496,
+        "complexos": 445,
+        "linhas": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "J",
+          "L",
+          "M",
+          "N",
+          "Q",
+          "R",
+          "S",
+          "SIR",
+          "W",
+          "Z"
+        ]
+      },
+      "segundos": 0.0
+    },
+    "modzcta": {
+      "titulo": "Modified Zip Code Tabulation Areas (MODZCTA)",
+      "orgao": "NYC Department of Health and Mental Hygiene (via NYC Open Data)",
+      "licenca": "NYC Open Data Terms of Use (uso livre, sem garantia)",
+      "atribuicao": "MODZCTA: NYC Department of Health and Mental Hygiene, via NYC Open Data.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/modzcta/modzcta.geojson",
+          "bytes": 3150358,
+          "sha256": "bad811df00484f72985bbf49101dbb3096e565df977bf143f1c913e6e72b5a05",
+          "acessado_em": "2026-09-19T02:48:31Z",
+          "url": "https://data.cityofnewyork.us/resource/pri4-ifjk.geojson",
+          "parametros": {
+            "$limit": 1000
+          },
+          "nota": "ja existia — nao rebaixado"
+        }
+      ],
+      "resumo": {
+        "poligonos": 178,
+        "area_km2": 771.2
+      },
+      "segundos": 0.2
+    },
+    "nypd": {
+      "titulo": "NYPD Complaint Data Historic + Current (YTD); Police Precincts",
+      "orgao": "New York City Police Department (via NYC Open Data); limites: NYC Dept. of City Planning",
+      "licenca": "NYC Open Data Terms of Use (uso livre, sem garantia)",
+      "atribuicao": "Queixas criminais: NYPD, via NYC Open Data. Limites de delegacias: NYC DCP.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/nypd/delegacias.geojson",
+          "bytes": 3842851,
+          "sha256": "7181d42d8384a4a0334d7874209294f3c21c616502de0bacaee50125b0654626",
+          "acessado_em": "2026-09-19T02:50:31Z",
+          "url": "https://data.cityofnewyork.us/resource/y76i-bdw7.geojson"
+        },
+        {
+          "arquivo": "data/external/nypd/queixas_por_delegacia.csv",
+          "bytes": 23889,
+          "sha256": "1246521bbea6c219c11a1f96ce0c90aa41a226f571ed3872549330351ee0dce6",
+          "acessado_em": "2026-09-19T02:51:09Z",
+          "url": "https://data.cityofnewyork.us/resource/",
+          "consultas": [
+            {
+              "safra": "2019",
+              "dataset": "qgea-i56i",
+              "inicio": "2018-07-08",
+              "fim": "2019-07-07",
+              "url": "https://data.cityofnewyork.us/resource/qgea-i56i.csv",
+              "parametros": {
+                "$select": "addr_pct_cd, law_cat_cd, count(*) AS n",
+                "$where": "rpt_dt between '2018-07-08T00:00:00' and '2019-07-07T23:59:59'",
+                "$group": "addr_pct_cd, law_cat_cd",
+                "$limit": 50000
+              },
+              "consultas": 1,
+              "segundos": 21.0,
+              "sha256_resultado": "b01c5d502d5346035d6f2b5e9030a8a4edb8796c2e64bfb2d7fc5409a786242b",
+              "total": 458158
+            },
+            {
+              "safra": "atual",
+              "dataset": "qgea-i56i",
+              "inicio": "2025-06-14",
+              "fim": "2025-12-31",
+              "url": "https://data.cityofnewyork.us/resource/qgea-i56i.csv",
+              "parametros": {
+                "$select": "addr_pct_cd, law_cat_cd, count(*) AS n",
+                "$where": "rpt_dt between '2025-06-14T00:00:00' and '2025-12-31T23:59:59'",
+                "$group": "addr_pct_cd, law_cat_cd",
+                "$limit": 50000
+              },
+              "consultas": 1,
+              "segundos": 1.9,
+              "sha256_resultado": "6e2e90f60e6b8a41b8f12180acb70286190ebeb0e147b7f8c1a84c1085989028",
+              "total": 318478
+            },
+            {
+              "safra": "atual",
+              "dataset": "5uac-w243",
+              "inicio": "2026-01-01",
+              "fim": "2026-06-13",
+              "url": "https://data.cityofnewyork.us/resource/5uac-w243.csv",
+              "parametros": {
+                "$select": "addr_pct_cd, law_cat_cd, count(*) AS n",
+                "$where": "rpt_dt between '2026-01-01T00:00:00' and '2026-06-13T23:59:59'",
+                "$group": "addr_pct_cd, law_cat_cd",
+                "$limit": 50000
+              },
+              "consultas": 1,
+              "segundos": 15.0,
+              "sha256_resultado": "a70ed4239d857875d69d1560346200cf92845dd2280e97f4ccaa064d86136133",
+              "total": 252342
+            }
+          ]
+        }
+      ],
+      "resumo": {
+        "2019": {
+          "janela": [
+            "2018-07-08",
+            "2019-07-07"
+          ],
+          "queixas": 458158,
+          "por_natureza": {
+            "FELONY": 140916,
+            "MISDEMEANOR": 245465,
+            "VIOLATION": 71777
+          },
+          "sem_delegacia_valida": 0,
+          "delegacias": 77,
+          "total_km2_mediana": 955.5
+        },
+        "atual": {
+          "janela": [
+            "2025-06-14",
+            "2026-06-13"
+          ],
+          "queixas": 570820,
+          "por_natureza": {
+            "FELONY": 184147,
+            "MISDEMEANOR": 294837,
+            "VIOLATION": 91836
+          },
+          "sem_delegacia_valida": 0,
+          "delegacias": 78,
+          "total_km2_mediana": 1104.6
+        }
+      },
+      "saida": "data/external/nypd/queixas_por_delegacia.csv",
+      "segundos": 40.7
+    },
+    "osm": {
+      "titulo": "OpenStreetMap — POIs via Overpass API",
+      "orgao": "OpenStreetMap Foundation / contribuidores do OpenStreetMap",
+      "licenca": "Open Database License (ODbL) 1.0 — atribuicao e compartilhamento pela mesma licenca",
+      "atribuicao": "Dados de pontos de interesse (c) OpenStreetMap contributors, ODbL 1.0 (openstreetmap.org/copyright).",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/osm/restaurantes.json",
+          "bytes": 7059351,
+          "sha256": "367445817e6787bb4ed7f697199f0d6233a84b62b54d51a972fbc667141b999e",
+          "acessado_em": "2026-09-19T02:52:00Z",
+          "url": "https://overpass-api.de/api/interpreter",
+          "consulta": "[out:json][timeout:85];(node[\"amenity\"~\"^(restaurant|fast_food)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);way[\"amenity\"~\"^(restaurant|fast_food)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);relation[\"amenity\"~\"^(restaurant|fast_food)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904););out center qt;",
+          "osm_base": "2026-09-19T02:50:50Z",
+          "verificado_em": "2026-09-19T02:57:11Z"
+        },
+        {
+          "arquivo": "data/external/osm/cafes.json",
+          "bytes": 1372629,
+          "sha256": "97bc7d02760650bf2119d3dd3eebaba30095ef50cc05f19523420b88e0d68a46",
+          "acessado_em": "2026-09-19T02:52:13Z",
+          "url": "https://overpass-api.de/api/interpreter",
+          "consulta": "[out:json][timeout:85];(node[\"amenity\"~\"^(cafe)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);way[\"amenity\"~\"^(cafe)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);relation[\"amenity\"~\"^(cafe)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904););out center qt;",
+          "osm_base": "2026-09-19T02:50:50Z",
+          "verificado_em": "2026-09-19T02:57:11Z"
+        },
+        {
+          "arquivo": "data/external/osm/bares.json",
+          "bytes": 898242,
+          "sha256": "d93987747197d40f7a89587e01aabb1ca600b2a18f9ca6180ebdc5464a130dff",
+          "acessado_em": "2026-09-19T02:56:49Z",
+          "url": "https://overpass-api.de/api/interpreter",
+          "consulta": "[out:json][timeout:85];(node[\"amenity\"~\"^(bar|pub|nightclub)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);way[\"amenity\"~\"^(bar|pub|nightclub)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);relation[\"amenity\"~\"^(bar|pub|nightclub)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904););out center qt;",
+          "osm_base": "2026-09-19T02:54:49Z",
+          "verificado_em": "2026-09-19T02:57:11Z"
+        },
+        {
+          "arquivo": "data/external/osm/atracoes.json",
+          "bytes": 515737,
+          "sha256": "3fe76d1314699da1b965353828f7b4bdb8fe249fa08b788b8011c07554452a8a",
+          "acessado_em": "2026-09-19T02:55:05Z",
+          "url": "https://overpass-api.de/api/interpreter",
+          "consulta": "[out:json][timeout:85];(node[\"tourism\"~\"^(attraction|museum|gallery|viewpoint)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);way[\"tourism\"~\"^(attraction|museum|gallery|viewpoint)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);relation[\"tourism\"~\"^(attraction|museum|gallery|viewpoint)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904););out center qt;",
+          "osm_base": "2026-09-19T02:53:47Z",
+          "verificado_em": "2026-09-19T02:57:11Z"
+        },
+        {
+          "arquivo": "data/external/osm/hoteis.json",
+          "bytes": 618018,
+          "sha256": "90a95dc2643b5166c050eb08da6689314c9de549ea2fd7328200a1ddd546c216",
+          "acessado_em": "2026-09-19T02:55:19Z",
+          "url": "https://overpass-api.de/api/interpreter",
+          "consulta": "[out:json][timeout:85];(node[\"tourism\"~\"^(hotel|hostel|guest_house)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);way[\"tourism\"~\"^(hotel|hostel|guest_house)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);relation[\"tourism\"~\"^(hotel|hostel|guest_house)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904););out center qt;",
+          "osm_base": "2026-09-19T02:53:47Z",
+          "verificado_em": "2026-09-19T02:57:11Z"
+        },
+        {
+          "arquivo": "data/external/osm/parques.json",
+          "bytes": 1912140,
+          "sha256": "ca60e4408181fddea17c739adbefd56297e201f9a9c06043cd46b0604cc25668",
+          "acessado_em": "2026-09-19T02:56:17Z",
+          "url": "https://overpass-api.de/api/interpreter",
+          "consulta": "[out:json][timeout:85];(node[\"leisure\"~\"^(park)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);way[\"leisure\"~\"^(park)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904);relation[\"leisure\"~\"^(park)$\"](40.467400000000005,-74.26910000000001,40.9276,-73.6904););out center qt;",
+          "osm_base": "2026-09-19T02:54:49Z",
+          "verificado_em": "2026-09-19T02:57:11Z"
+        }
+      ],
+      "resumo": {
+        "envelope_sul_oeste_norte_leste": [
+          40.467400000000005,
+          -74.26910000000001,
+          40.9276,
+          -73.6904
+        ],
+        "bases_coerentes": true,
+        "grupos": {
+          "restaurantes": {
+            "elementos": 15540,
+            "osm_base": "2026-09-19T02:50:50Z",
+            "por_valor": {
+              "restaurant": 9858,
+              "fast_food": 5682
+            },
+            "por_tipo": {
+              "node": 14198,
+              "way": 1339,
+              "relation": 3
+            }
+          },
+          "cafes": {
+            "elementos": 2958,
+            "osm_base": "2026-09-19T02:50:50Z",
+            "por_valor": {
+              "cafe": 2958
+            },
+            "por_tipo": {
+              "node": 2838,
+              "way": 120
+            }
+          },
+          "bares": {
+            "elementos": 2137,
+            "osm_base": "2026-09-19T02:54:49Z",
+            "por_valor": {
+              "bar": 1586,
+              "pub": 430,
+              "nightclub": 121
+            },
+            "por_tipo": {
+              "node": 1985,
+              "way": 151,
+              "relation": 1
+            }
+          },
+          "atracoes": {
+            "elementos": 1103,
+            "osm_base": "2026-09-19T02:53:47Z",
+            "por_valor": {
+              "gallery": 362,
+              "attraction": 285,
+              "viewpoint": 250,
+              "museum": 206
+            },
+            "por_tipo": {
+              "node": 827,
+              "way": 262,
+              "relation": 14
+            }
+          },
+          "hoteis": {
+            "elementos": 859,
+            "osm_base": "2026-09-19T02:53:47Z",
+            "por_valor": {
+              "hotel": 814,
+              "guest_house": 24,
+              "hostel": 21
+            },
+            "por_tipo": {
+              "way": 559,
+              "node": 291,
+              "relation": 9
+            }
+          },
+          "parques": {
+            "elementos": 3134,
+            "osm_base": "2026-09-19T02:54:49Z",
+            "por_valor": {
+              "park": 3134
+            },
+            "por_tipo": {
+              "way": 2745,
+              "node": 230,
+              "relation": 159
+            }
+          }
+        }
+      },
+      "segundos": 0.3
+    },
+    "ruido311": {
+      "titulo": "311 Service Requests (2010-2019 e 2020-presente), complaint_type 'Noise%'",
+      "orgao": "NYC 311 / Office of Technology and Innovation (via NYC Open Data)",
+      "licenca": "NYC Open Data Terms of Use (uso livre, sem garantia)",
+      "atribuicao": "Chamados de barulho: NYC 311, via NYC Open Data.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/nyc311/barulho_por_zip.csv",
+          "bytes": 11877,
+          "sha256": "db00a7420d3c070512c25c843881d1b2f75ba9b94c8fae167ec70307ae93dfe0",
+          "acessado_em": "2026-09-19T02:51:15Z",
+          "url": "https://data.cityofnewyork.us/resource/",
+          "consultas": [
+            {
+              "safra": "2019",
+              "dataset": "76ig-c548",
+              "inicio": "2018-07-08",
+              "fim": "2019-07-07",
+              "url": "https://data.cityofnewyork.us/resource/76ig-c548.csv",
+              "parametros": {
+                "$select": "incident_zip, count(*) AS n",
+                "$where": "created_date between '2018-07-08T00:00:00' and '2019-07-07T23:59:59' AND complaint_type like 'Noise%'",
+                "$group": "incident_zip",
+                "$limit": 50000
+              },
+              "consultas": 1,
+              "segundos": 3.4,
+              "sha256_resultado": "1d2a0e52a396ba380440349f8c07a40a68b462fbd7cbfa159a85ed5d4a44a860",
+              "total": 460880
+            },
+            {
+              "safra": "atual",
+              "dataset": "erm2-nwe9",
+              "inicio": "2025-06-14",
+              "fim": "2026-06-13",
+              "url": "https://data.cityofnewyork.us/resource/erm2-nwe9.csv",
+              "parametros": {
+                "$select": "incident_zip, count(*) AS n",
+                "$where": "created_date between '2025-06-14T00:00:00' and '2026-06-13T23:59:59' AND complaint_type like 'Noise%'",
+                "$group": "incident_zip",
+                "$limit": 50000
+              },
+              "consultas": 1,
+              "segundos": 2.6,
+              "sha256_resultado": "54d1143972d9ec525c59f4e7ec8ddb157d6e88f7ac7f40ea1e56501b22f159ea",
+              "total": 803259
+            }
+          ]
+        }
+      ],
+      "resumo": {
+        "2019": {
+          "janela": [
+            "2018-07-08",
+            "2019-07-07"
+          ],
+          "chamados": 460880,
+          "fora_de_modzcta": 4356,
+          "modzcta_com_valor": 177,
+          "por_km2_mediana": 565.7
+        },
+        "atual": {
+          "janela": [
+            "2025-06-14",
+            "2026-06-13"
+          ],
+          "chamados": 803259,
+          "fora_de_modzcta": 4916,
+          "modzcta_com_valor": 177,
+          "por_km2_mediana": 1010.5
+        }
+      },
+      "saida": "data/external/nyc311/barulho_por_zip.csv",
+      "segundos": 6.2
+    },
+    "tracts": {
+      "titulo": "Cartographic Boundary Files — Census Tracts, New York (1:500.000)",
+      "orgao": "U.S. Census Bureau, Geography Division",
+      "licenca": "dominio publico (obra do governo federal dos EUA)",
+      "atribuicao": "Limites de setores censitarios: U.S. Census Bureau, Cartographic Boundary Files.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/tracts/cb_2019_36_tract_500k.zip",
+          "bytes": 1761483,
+          "sha256": "e4ed39cd98bc03365d96b6588a8ff5e2e2c71134d9afa1ff9fd093286c43b553",
+          "acessado_em": "2026-09-19T02:48:31Z",
+          "url": "https://www2.census.gov/geo/tiger/GENZ2019/shp/cb_2019_36_tract_500k.zip",
+          "nota": "ja existia — nao rebaixado"
+        },
+        {
+          "arquivo": "data/external/tracts/cb_2024_36_tract_500k.zip",
+          "bytes": 1925268,
+          "sha256": "ab7f72cb4a66079fd5b3a99302af0a48bdf87d53aec3b49e5ee4d18a7280cd02",
+          "acessado_em": "2026-09-19T02:48:31Z",
+          "url": "https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_36_tract_500k.zip",
+          "nota": "ja existia — nao rebaixado"
+        }
+      ],
+      "resumo": {
+        "2019": {
+          "arquivo_ano": 2019,
+          "tracts_nyc": 2166,
+          "tracts_sem_terra": 2
+        },
+        "atual": {
+          "arquivo_ano": 2024,
+          "tracts_nyc": 2324,
+          "tracts_sem_terra": 0
+        }
+      },
+      "segundos": 0.5
+    },
+    "zillow": {
+      "titulo": "Zillow Observed Rent Index (ZORI), ZIP, suavizado, todas as tipologias",
+      "orgao": "Zillow Research (Zillow Group)",
+      "licenca": "uso publico gratuito com atribuicao clara ao Zillow, conforme os Termos de Uso da pagina Zillow Research Data",
+      "atribuicao": "Dados de aluguel: Zillow Observed Rent Index (ZORI), Zillow Research.",
+      "estado": "ok",
+      "artefatos": [
+        {
+          "arquivo": "data/external/zillow/Zip_zori_uc_sfrcondomfr_sm_month.csv",
+          "bytes": 10023480,
+          "sha256": "a60963f429dbacf97e4371a8e4f9146322a09073d76031fc1fe477ca65183933",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "url": "https://files.zillowstatic.com/research/public_csvs/zori/Zip_zori_uc_sfrcondomfr_sm_month.csv",
+          "nota": "ja existia — nao rebaixado"
+        },
+        {
+          "arquivo": "data/external/zillow/zori_nyc.csv",
+          "bytes": 9732,
+          "sha256": "aa510e77d7913a1f7c3375825bfc7d4e87af494418d52f87baac7e033f8f113b",
+          "acessado_em": "2026-09-19T02:48:32Z",
+          "derivado_de": "data/external/zillow/Zip_zori_uc_sfrcondomfr_sm_month.csv"
+        }
+      ],
+      "resumo": {
+        "zips_nyc": 149,
+        "com_2019": 81,
+        "com_atual": 140,
+        "mes_2019": "2019-07",
+        "mes_atual": "2026-06",
+        "serie": [
+          "2015-01",
+          "2026-08"
+        ]
+      },
+      "saida": "data/external/zillow/zori_nyc.csv",
+      "segundos": 0.2
+    }
+  },
+  "atualizado_em": "2026-09-19T02:57:11Z",
+  "user_agent": "data-science-2-eseg-airbnb-nyc (projeto academico)"
+}
