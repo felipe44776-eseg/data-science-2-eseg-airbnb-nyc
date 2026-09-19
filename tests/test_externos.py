@@ -332,8 +332,16 @@ def test_marcos_dentro_de_nyc_e_haversine_conhecida():
 MANIFESTO = config.EXTERNAL / "_manifesto_externos.json"
 
 
-@pytest.mark.dados
-@pytest.mark.skipif(not MANIFESTO.exists(), reason="coleta externa nao executada")
+def _artefatos_presentes() -> bool:
+    """A coleta rodou NESTA maquina? O manifesto e versionado; os brutos, nao."""
+    if not MANIFESTO.exists():
+        return False
+    m = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+    return any((config.RAIZ / Path(a["arquivo"])).exists()
+               for f in m["fontes"].values() for a in f.get("artefatos", []))
+
+
+@pytest.mark.skipif(not MANIFESTO.exists(), reason="manifesto externo ausente")
 def test_manifesto_tem_hash_de_todo_artefato():
     m = json.loads(MANIFESTO.read_text(encoding="utf-8"))
     for chave, f in m["fontes"].items():
@@ -341,6 +349,17 @@ def test_manifesto_tem_hash_de_todo_artefato():
             continue
         for a in f["artefatos"]:
             assert len(a["sha256"]) == 64 and a["bytes"] > 0, (chave, a["arquivo"])
+
+
+@pytest.mark.dados
+@pytest.mark.skipif(not _artefatos_presentes(),
+                    reason="artefatos brutos ausentes (CI ou clone novo: rode .\\tasks.ps1 externos)")
+def test_artefatos_do_manifesto_existem_no_disco():
+    m = json.loads(MANIFESTO.read_text(encoding="utf-8"))
+    for f in m["fontes"].values():
+        if f.get("estado") != "ok":
+            continue
+        for a in f["artefatos"]:
             assert (config.RAIZ / Path(a["arquivo"])).exists(), a["arquivo"]
 
 
