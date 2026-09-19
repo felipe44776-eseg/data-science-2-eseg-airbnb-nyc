@@ -36,8 +36,9 @@ venv/
 # node (so o teste de paridade usa; sem dependencia de npm)
 node_modules/
 
-# artefatos de modelo binarios — o que vai para o site e JSON
-models/
+# artefatos de modelo binarios — o que vai para o site e JSON.
+# Ancorado na raiz: sem a barra, `models/` ignorava tambem o PACOTE src/airbnb/models/.
+/models/
 *.pkl
 *.joblib
 
