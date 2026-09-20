@@ -124,6 +124,40 @@ def taxas(df: pd.DataFrame) -> dict:
     return saida
 
 
+def fracao_atribuivel_ll18(df: pd.DataFrame) -> dict:
+    """Quanto do encolhimento a Local Law 18 explica — diferencas-em-diferencas ingenuo.
+
+    O grupo de CONTROLE ja esta na base e ninguem tinha usado: um anuncio que em
+    2019 ja exigia 30+ noites nunca esteve no alcance do registro. O EXPOSTO e o
+    resto. Se os expostos tivessem morrido a taxa dos controles, quantos a mais
+    teriam sobrevivido? Essa diferenca, sobre o total de mortes, e a fracao
+    atribuivel.
+
+    LIMITE, que vai publicado junto com o numero: em 2019 o grupo de 30+ noites
+    era 9,2% do mercado e atipico — estadia longa mobiliada, outro publico, outra
+    sazonalidade. Tendencias paralelas nao e testavel com dois pontos no tempo.
+    O resultado e um PISO sob um desenho contestavel, nao um efeito causal
+    estimado. Serve para dizer o que NAO se sustenta: que a lei explica "quase
+    tudo" do encolhimento.
+    """
+    m30 = df[S.COL_MIN30].astype(bool)
+    exp, ctl = df.loc[~m30, E.SOBREVIVEU], df.loc[m30, E.SOBREVIVEU]
+    s_e, s_c = float(exp.mean()), float(ctl.mean())
+    n_e, n_c = len(exp), len(ctl)
+    mortes = n_e * (1 - s_e) + n_c * (1 - s_c)
+    salvos = n_e * max(0.0, s_c - s_e)
+    return {
+        "exposto_min30_falso": {"n": n_e, "sobrevivencia": round(s_e, 6)},
+        "controle_min30_verdadeiro": {"n": n_c, "sobrevivencia": round(s_c, 6)},
+        "diferenca_pp": round(100 * (s_c - s_e), 2),
+        "mortes_observadas": round(mortes, 0),
+        "sobreviventes_no_contrafactual": round(salvos, 0),
+        "fracao_atribuivel_pct": round(100 * salvos / mortes, 2),
+        "limite": ("controle atipico (9,2% do mercado de 2019) e tendencias paralelas "
+                   "nao testaveis com dois snapshots: e um piso, nao um efeito causal"),
+    }
+
+
 def main() -> None:
     df = carregar()
     cols = features()
@@ -163,6 +197,7 @@ def main() -> None:
                                   .sort_values(ascending=False).round(5).to_dict(),
         "logistica": logistica(df),
         "taxas": taxas(df),
+        "fracao_atribuivel_ll18": fracao_atribuivel_ll18(df),
         "criterio_C5": {"auc_minimo": 0.70, "auc": met["auc"],
                         "atende": bool(met["auc"] >= 0.70 and met["brier"] < met["brier_baseline"])},
     }

@@ -157,7 +157,10 @@ function Invoke-Site {
     Invoke-Etapa 'site' 'Dados do site publico + paridade Python <-> JavaScript' {
         & $PY -m airbnb.produto.exportar
         if (Get-Command node -ErrorAction SilentlyContinue) {
-            node tests/paridade_js.mjs
+            node tests/paridade_js.mjs site/data/modelo_preco.json site/data/_casos_paridade_preco.json
+            # o simulador tambem roda o modelo de ocupacao: a invariante 10
+            # vale para o produto inteiro, nao so para o preco
+            node tests/paridade_js.mjs site/data/modelo_ocupacao.json site/data/_casos_paridade_ocupacao.json
         }
         else {
             Write-Host '    node ausente: paridade JS nao conferida' -ForegroundColor Yellow

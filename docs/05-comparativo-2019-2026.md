@@ -29,7 +29,17 @@ Três leituras:
   dos anúncios (eram 2,7%). O "morador que aluga o quarto de vez em quando" deixou de
   ser o caso típico.
 - **De estadia curta a aluguel mensal.** O mínimo de 30 noites passou de exceção (9%)
-  a regra (82%), em todos os distritos — é a Local Law 18 no dado.
+  a regra (82%), em todos os distritos. É o efeito que a Local Law 18 desenhou, e ele
+  aparece no dado — ver a ressalva causal em [Avaliação](08-avaliacao.md) §2.
+- **Não foi atrito: foi substituição.** "48.895 → 30.257" sugere que o mercado de hoje
+  é um subconjunto do de 2019. Não é. Só **24,8%** dos anúncios atuais existiam em
+  2019; outros 17,7% são novos de anfitriões que já estavam lá; e **57,5% são de
+  anfitriões que não existiam em 2019**. Dos 37.457 anfitriões de 2019, só **19%**
+  ainda anunciam. Mais da metade do mercado atual é gente que chegou depois da lei.
+- **A oferta efetiva caiu bem mais que 38%.** Contar anúncios superestima o que
+  restou, porque dois terços da base de 2026 não recebe hóspede. Somando as noites
+  efetivamente ocupadas (`ocupacao_modelo`, mesma fórmula nas duas safras), a oferta
+  vai de **14.021 para 5.705 anúncios-ano equivalentes: −59,3%**.
 
 ![Mínimo de 30 noites por distrito](assets/figuras/min30_distritos.svg)
 
@@ -69,7 +79,7 @@ estadia curta, que encolheu de 91% para 18% dos anúncios e ficou muito mais car
 
 --8<-- "_snippets/tabela_distritos.md"
 
-Manhattan e Brooklyn, o núcleo turístico, perderam 37% e 48% dos anúncios; Queens,
+Manhattan e Brooklyn, o núcleo turístico, perderam 37% e 47% dos anúncios; Queens,
 Bronx e Staten Island, entre 11% e 17%. Alguns bairros periféricos de Queens e do
 Bronx **cresceram** (Laurelton, Edenwald, Cambria Heights mais que dobraram, a partir
 de bases pequenas). É compatível com a oferta migrando para onde o aluguel mensal
@@ -84,7 +94,10 @@ Enforcement (OSE). No snapshot, **7,7% dos anúncios exibem número de registro*
 e quase todos esses são de 30+ noites, que não exigem registro. Entre os anúncios de
 estadia curta, 41% são registrados, 52% isentos e **6,6% não têm registro nem isenção**.
 Os relatórios anuais da OSE contam 105 registros ativos ao fim do primeiro ano fiscal da
-lei (jun/2023) e 3.338 em jun/2026 — contra 30 mil anúncios. Fonte e linha do tempo em
+lei (jun/2023) e 3.338 em jun/2026. O denominador desses 3.338 **não são os 30 mil
+anúncios** — 82% deles exigem 30+ noites e não precisam de registro. São os 5.540 de
+estadia curta: **3.338 sobre 5.540 é 60%**, não 11%. A lei é cumprida por quem está no
+alcance dela; o que ela fez foi empurrar o mercado para fora desse alcance. Fonte e linha do tempo em
 [Fontes externas](03-fontes-externas.md); a densidade de registros por distrito do
 Conselho está no mapa.
 
@@ -92,5 +105,6 @@ Conselho está no mapa.
 
 As métricas por célula H3 r8 (anúncios, variação, preço, 30+ noites, sobrevivência,
 valorização ajustada) estão no [mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/) — seletor "métrica". A variação de preço
-bruta por célula mistura composição; a **valorização ajustada** (resíduo do modelo de
+bruta por célula mistura composição; a **valorização ajustada** — calculada, desde a
+revisão de método, **dentro do estrato de 30+ noites** — é o resíduo do modelo de
 2019, ver [Modelagem](07-modelagem.md) §5) é a leitura correta.

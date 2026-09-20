@@ -40,6 +40,7 @@ jobs:
         run: |
           if [ -f site/data/modelo_preco.json ] && [ -f site/data/_casos_paridade_preco.json ]; then
             node tests/paridade_js.mjs site/data/modelo_preco.json site/data/_casos_paridade_preco.json
+            node tests/paridade_js.mjs site/data/modelo_ocupacao.json site/data/_casos_paridade_ocupacao.json
           else
             echo "modelo ainda nao publicado em site/data/ — paridade do publicado pulada"
           fi

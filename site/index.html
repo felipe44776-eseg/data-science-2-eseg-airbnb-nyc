@@ -418,13 +418,16 @@ document.getElementById("espinha-linhas").innerHTML = espinha.map(e =>
 /* ---------- análises ---------- */
 const D = "./docs/";
 const grupos = [
-  {n:"01", t:"Por que mudou", sub:"A regulação não é contexto de fundo: é a variável que explica quase tudo o que separa os dois retratos.", cards:[
+  {n:"01", t:"Por que mudou", sub:"A regulação redesenhou o mercado — mas quanto dela explica o encolhimento é outra pergunta, e a resposta é bem menor do que parece.", cards:[
     {p:"Que leis existem por causa do Airbnb?", v:"05/09/2023", vs:"o marco",
      r:"Nova York levou dezesseis anos até achar o mecanismo que funciona: obrigar a plataforma a não processar o pagamento de anúncio sem registro.",
      ir:"Fontes externas §5", h:D+"03-fontes-externas/"},
     {p:"A lei pegou?", v:"93,4%", vs:"dos anúncios curtos",
      r:"Dos 5.540 anúncios de estadia curta, só 367 estão sem registro nem isenção. Mas 24.605 migraram para 30+ noites: saíram do alcance da lei em vez de cumpri-la.",
      ir:"Entendimento dos dados", h:D+"02-entendimento-dos-dados/"},
+    {p:"Quanto do encolhimento a lei explica?", v:"6,8%", vs:"no máximo",
+     r:"O grupo de controle sempre esteve na base: quem já exigia 30+ noites em 2019 nunca esteve no alcance do registro, e sobreviveu 21,1% contra 14,8%. A diferença responde por 6,8% das saídas — os outros 93% atingiram os dois grupos igualmente.",
+     ir:"Avaliação §2, com a ressalva", h:D+"08-avaliacao/"},
     {p:"Por que isso muda toda comparação?", v:"ADR 0005", vs:"",
      r:"Depois da lei, o preço de um anúncio de 30+ noites é cotação com desconto mensal. Comparar sem estratificar mede composição, não preço.",
      ir:"A decisão registrada", h:D+"adr/0005-comparabilidade-2019-2026/"},
@@ -437,7 +440,10 @@ const grupos = [
      r:"O modelo treinado em 2019, aplicado a 2026, perde oito pontos. O resíduo por área vira a valorização ajustada do mapa.",
      ir:"Modelagem §deriva", h:D+"07-modelagem/"},
   ]},
-  {n:"03", t:"Quem ficou", sub:"De 48.895 anúncios de 2019, 7.516 ainda existem. A pergunta é o que separou esses dos outros.", cards:[
+  {n:"03", t:"Quem ficou — e quem chegou", sub:"De 48.895 anúncios de 2019, 7.516 ainda existem. Mas o mercado de hoje não é o que sobrou daquele: é outro.", cards:[
+    {p:"O mercado encolheu ou foi trocado?", v:"57,5%", vs:"são gente nova",
+     r:"Só 24,8% dos anúncios de hoje existiam em 2019. Outros 17,7% são novos de anfitriões antigos, e 57,5% vêm de anfitriões que não existiam. Dos 37.457 anfitriões de 2019, só 19% ainda anunciam. E a oferta efetivamente operada caiu 59,3%, não 38%.",
+     ir:"Comparativo §2", h:D+"05-comparativo-2019-2026/"},
     {p:"Quem sobreviveu até 2026?", v:"15,4%", vs:"dos anúncios de 2019",
      r:"Não foi quem cobrava mais nem quem estava no bairro nobre: foi quem já operava no regime que a lei ia exigir (2,08×) e quem tinha o calendário fechado (1,64×).",
      ir:"Modelagem §sobrevivência", h:D+"07-modelagem/"},
@@ -456,13 +462,13 @@ const grupos = [
      r:"Só 27,7% dos apartamentos inteiros ativos superam doze meses de contrato. Na estadia curta registrada são 1,69×; na de 30+ noites, 0,42×.",
      ir:"Implantação", h:D+"09-implantacao/"},
   ]},
-  {n:"05", t:"O que não fechou", sub:"Critério registrado antes de modelar que não foi atingido vira resultado publicado, não escopo removido.", cards:[
-    {p:"As fontes externas melhoraram a previsão?", v:"não", vs:"critério C4", nulo:true,
-     r:"No agregado pioram o erro em 0,35 p.p. frente ao mesmo modelo só com coordenadas. Sozinhas substituem as coordenadas quase sem perda: explicam o lugar, não preveem melhor.",
-     ir:"Avaliação §critérios", h:D+"08-avaliacao/"},
-    {p:"Dá para prever quem sobrevive?", v:"0,666", vs:"de AUC, alvo 0,70", nulo:true,
-     r:"Abaixo do limiar registrado. O modelo ficou explicativo: o mapa mostra a sobrevivência observada, não a prevista.",
-     ir:"Avaliação §critérios", h:D+"08-avaliacao/"},
+  {n:"05", t:"O que não fechou — e o que isso ensinou", sub:"Dois critérios registrados antes de modelar não foram atingidos. Reprovaram pelo mesmo motivo, e o motivo é um achado.", cards:[
+    {p:"Por que as externas e o lugar não somam?", v:"0,85", vs:"de η² mediano",
+     r:"As 22 features externas são, em 85% da sua variância, a própria célula do mapa com outro nome — as distâncias a marcos chegam a 0,999, o aluguel do Zillow a 0,94. Um modelo que já sabe onde o anúncio está não ganha informação ao receber isso de novo.",
+     ir:"Avaliação §2", h:D+"08-avaliacao/"},
+    {p:"Quanto o lugar acrescenta, afinal?", v:"4,4", vs:"pontos de R²", nulo:true,
+     r:"O imóvel sozinho dá R² 0,716; com todo o aparato espacial e as oito fontes externas, 0,760. Na sobrevivência é mais duro: tirar a localização melhora o modelo. O lugar define o nível do preço, não a previsão marginal.",
+     ir:"Modelagem §2.2", h:D+"07-modelagem/"},
     {p:"O que a versão anterior errou?", v:"−0,11", vs:"de correlação",
      r:"A 'ocupação de 69%' da v0 era calendário fechado, não ocupação: tem correlação negativa com a ocupação estimada pelas avaliações.",
      ir:"Da v0 à v1", h:D+"00-v0-e-o-que-muda/"},

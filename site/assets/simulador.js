@@ -350,7 +350,9 @@ export function criarSimulador({ dados, el, tema: temaInicial }) {
     const metr = [];
     if (typeof mpRes.mae_usd === "number") metr.push(`erro absoluto médio de ${dolares(mpRes.mae_usd)}`);
     if (typeof mpRes.mdape === "number") metr.push(`erro percentual mediano de ${pct(emPontos(mpRes.mdape))}`);
-    if (typeof mpRes.cobertura_80 === "number") metr.push(`a faixa de 80% acertou ${pct(emPontos(mpRes.cobertura_80))} dos casos`);
+    // uma casa decimal de propósito: 79,578 exibido como "80%" vira a tautologia
+    // "a faixa de 80% acerta 80%", que não informa nada sobre a calibração
+    if (typeof mpRes.cobertura_80 === "number") metr.push(`a faixa de 80% conteve o preço real em ${pct(emPontos(mpRes.cobertura_80), { casas: 1 })} dos casos`);
     const grupo = r.grupo !== null && mp.intervalo_por_grupo
       ? " Para este tipo de acomodação, a faixa usa uma calibração própria: a faixa única da cidade ficava estreita demais para alguns tipos."
       : "";

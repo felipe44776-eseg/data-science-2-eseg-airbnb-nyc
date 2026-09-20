@@ -3,7 +3,7 @@
 > Fase 6 do CRISP-DM. O modelo validado chega ao público como um site estático
 > (GitHub Pages) que roda o **mesmo** modelo no navegador — paridade verificada a cada
 > exportação e no CI. Os números de paridade e de verificação abaixo são os dos dados
-> reais exportados por `.	asks.ps1 site`.
+> reais exportados por `.\tasks.ps1 site`.
 
 ## O que o site faz
 
@@ -263,9 +263,9 @@ aparelho físico, e desempenho com os dados reais (tamanho final dos JSON).
 A exportação é uma etapa do pipeline — ninguém monta JSON à mão:
 
 ```powershell
-.	asks.ps1 site      # airbnb.produto.exportar + node tests/paridade_js.mjs
-.	asks.ps1 figuras   # tabelas e figuras da documentação
-.	asks.ps1 docs      # mkdocs build --strict
+.\tasks.ps1 site      # airbnb.produto.exportar + node tests/paridade_js.mjs
+.\tasks.ps1 figuras   # tabelas e figuras da documentação
+.\tasks.ps1 docs      # mkdocs build --strict
 git add site/data docs data/processed/_*.json
 git commit -m "Atualiza site e documentação"
 git push               # o workflow pages publica
@@ -288,8 +288,8 @@ localmente. Reconstruir exigiria baixar e reprocessar todas as fontes a cada pus
 ## Atualizar para um snapshot novo
 
 1. Trocar `SNAPSHOT_ATUAL` em `src/airbnb/config.py` (datas em <https://insideairbnb.com/get-the-data/>).
-2. `.	asks.ps1 dados --forcar` e `.	asks.ps1 all` — refaz fontes, células, modelos,
+2. `.\tasks.ps1 dados --forcar` e `.\tasks.ps1 all` — refaz fontes, células, modelos,
    site, figuras e documentação.
-3. `.	asks.ps1 status` tem de fechar todas as etapas `ok`.
+3. `.\tasks.ps1 status` tem de fechar todas as etapas `ok`.
 4. Reler os documentos cujos números mudaram (as tabelas se atualizam sozinhas; o texto
    corrido, não) e publicar.
