@@ -40,7 +40,7 @@ publicado no site.
 | entender uma coluna | `src/airbnb/schema.py` e o [dicionário](dicionario-dados.md) |
 | adicionar uma fonte externa | um módulo em `src/airbnb/external/`, entrada no manifesto, `data/external/FONTES.md`, [docs/03](03-fontes-externas.md) e um teste com fixture |
 | mudar o modelo do site | `src/airbnb/models/preco.py` → `.\tasks.ps1 preco` → `.\tasks.ps1 site` (a paridade JS roda junto) |
-| mudar o visual do site | `site/index.html`, `site/assets/` — e `.\tasks.ps1 servir` para ver |
+| mudar o visual do site | `site/index.html` (portal), `site/mapa/index.html` (mapa), `site/assets/` — e `.\tasks.ps1 servir` para ver |
 | ver o que está desatualizado | `.\tasks.ps1 status` |
 
 ## Adicionando uma fonte externa (checklist)

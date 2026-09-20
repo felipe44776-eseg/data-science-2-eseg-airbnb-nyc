@@ -6,7 +6,7 @@ validados espacialmente e um site público com mapa e teste de localização.
 
 <div class="grid cards" markdown>
 
-- :material-map-search: **[Mapa e teste de localização](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/)**
+- :material-map-search: **[Mapa e teste de localização](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/)**
 
     Escolha um ponto de Nova York e as características de um imóvel: o modelo devolve o
     preço por noite esperado, com faixa de erro, e quanto um anúncio ativo fatura ali.

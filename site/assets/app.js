@@ -13,7 +13,9 @@ import { GRUPOS_PT, emPontos, esc } from "./comum.js";
 import { PALETAS, dolares, fatorExibicao, numero, pct } from "./escalas.js";
 import { criarSimulador } from "./simulador.js";
 
-const DADOS = new URL("./data/", document.baseURI);
+// relativo ao MODULO (assets/), nao a pagina: o mapa pode viver em qualquer
+// caminho do site sem que os dados mudem de lugar
+const DADOS = new URL("../data/", import.meta.url);
 const $ = (id) => document.getElementById(id);
 
 async function carregar(nome) {
