@@ -1,37 +1,34 @@
 /* Airbnb em Nova York, 2019 → 2026 — site público do projeto (Data Science 2 · ESEG).
- * Identidade da v0 do grupo (reports/v0): Fraunces + Inter, papel creme, cores
- * dos distritos. Contrastes medidos (WCAG): todo texto >= 4,5:1 nos três fundos
- * de cada tema; --ink-faint é só decorativo (2,5:1) e nunca vai em texto. */
+ * Identidade visual da ESEG, lida do site institucional (eseg.edu.br): Public Sans,
+ * navy #08223D e ciano #00A1B8 sobre branco. As cores dos DISTRITOS não são marca:
+ * são codificação de dado no mapa e na legenda, e por isso seguem inalteradas.
+ * Contrastes medidos (WCAG): todo texto >= 4,5:1 nos três fundos de cada tema;
+ * --ink-faint é só decorativo e nunca vai em texto. */
 
 @font-face {
-  font-family: "Fraunces";
+  font-family: "Public Sans";
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 300 900;
   font-display: swap;
-  src: url("../vendor/fontes/fraunces-latin.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("../vendor/fontes/inter-latin.woff2") format("woff2");
+  src: url("../vendor/fontes/public-sans-latin.woff2") format("woff2");
 }
 
 :root {
-  --paper: #FBF6EC;
-  --paper-2: #F4EEE1;
+  --paper: #FFFFFF;
+  --paper-2: #F5F7F9;
   --card: #FFFFFF;
-  --ink: #221E18;
-  --ink-soft: #6E6656;
-  --ink-faint: #A79E8A;
-  --line: rgba(34, 30, 24, 0.12);
-  --line-strong: rgba(34, 30, 24, 0.24);
-  --acento: #B8321F;
-  --foco: #2A5BD7;
+  --ink: #08223D;
+  --ink-soft: #474A56;
+  --ink-faint: #999BA1;
+  --line: #E5E6E7;
+  --line-strong: #C2C3C7;
+  --acento: #00A1B8;   /* ciano ESEG: marca, traco, fundo — nunca texto pequeno */
+  --foco: #0178E6;     /* anel de foco: 4,35:1, acima dos 3:1 exigidos */
+  --link: #0A6FD4;     /* passo mais escuro do azul ESEG: 4,96:1 em texto */
+  --erro: #B8321F;     /* estado de erro, nao e cor de marca: 5,98:1 */
   --aviso: #8A5A00;
   --aviso-fundo: #FBEFD2;
-  --sombra: 0 1px 2px rgba(34, 30, 24, 0.06), 0 8px 24px rgba(34, 30, 24, 0.08);
+  --sombra: 0 1px 2px rgba(8, 34, 61, 0.06), 0 8px 24px rgba(8, 34, 61, 0.10);
 
   --manhattan: #E14F3D;
   --brooklyn: #128F7C;
@@ -39,8 +36,8 @@
   --bronx: #5468D9;
   --staten: #A24C97;
 
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --raio: 16px;
   --painel: 420px;
   color-scheme: light;
@@ -50,16 +47,16 @@
  * e escolha explícita no botão), como na v0 */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #17140F;
-    --paper-2: #1E1A14;
-    --card: #221E17;
-    --ink: #F3EDE1;
-    --ink-soft: #B9AF9B;
-    --ink-faint: #7A705E;
-    --line: rgba(243, 237, 225, 0.12);
-    --line-strong: rgba(243, 237, 225, 0.24);
-    --acento: #F07A68;
-    --foco: #8FB0FF;
+    --paper: #08223D;
+    --paper-2: #0C2B4C;
+    --card: #0F3358;
+    --ink: #FFFFFF;
+    --ink-soft: #BCCBD9;
+    --ink-faint: #7D93A8;
+    --line: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.30);
+    --acento: #4FD0E0;
+    --foco: #7FB8FF;
     --aviso: #E0B35C;
     --aviso-fundo: #2E2412;
     --sombra: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -67,16 +64,18 @@
   }
 }
 :root[data-theme="dark"] {
-  --paper: #17140F;
-  --paper-2: #1E1A14;
-  --card: #221E17;
-  --ink: #F3EDE1;
-  --ink-soft: #B9AF9B;
-  --ink-faint: #7A705E;
-  --line: rgba(243, 237, 225, 0.12);
-  --line-strong: rgba(243, 237, 225, 0.24);
-  --acento: #F07A68;
-  --foco: #8FB0FF;
+  --paper: #08223D;
+  --paper-2: #0C2B4C;
+  --card: #0F3358;
+  --ink: #FFFFFF;
+  --ink-soft: #BCCBD9;
+  --ink-faint: #7D93A8;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.30);
+  --acento: #4FD0E0;
+  --foco: #7FB8FF;
+  --link: #9CC8FF;
+  --erro: #F07A68;
   --aviso: #E0B35C;
   --aviso-fundo: #2E2412;
   --sombra: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -95,7 +94,7 @@ body {
 }
 img, svg { max-width: 100%; }
 a { color: inherit; text-underline-offset: 3px; }
-a:hover { color: var(--acento); }
+a:hover { color: var(--link); }
 ::selection { background: rgba(225, 79, 61, 0.25); }
 
 :focus-visible {
@@ -217,7 +216,7 @@ select, input[type="number"], input[type="search"], input[type="text"] {
   padding: 8px 10px;
 }
 select { cursor: pointer; }
-input[aria-invalid="true"] { border-color: var(--acento); box-shadow: 0 0 0 1px var(--acento); }
+input[aria-invalid="true"] { border-color: var(--erro); box-shadow: 0 0 0 1px var(--erro); }
 
 .camadas { border: 0; margin: 0; padding: 0; display: grid; gap: 4px; }
 .camadas legend { padding: 0; }
@@ -318,7 +317,7 @@ input[aria-invalid="true"] { border-color: var(--acento); box-shadow: 0 0 0 1px 
 .form-imovel { display: grid; gap: 14px; }
 .campo label, .campo legend { display: block; font-size: 14px; font-weight: 600; margin: 0 0 6px; padding: 0; }
 .campo .ajuda, .campo .erro { font-size: 12.5px; color: var(--ink-soft); margin: 5px 0 0; line-height: 1.45; }
-.campo .erro { color: var(--acento); font-weight: 600; }
+.campo .erro { color: var(--erro); font-weight: 600; }
 .campo fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .campos-duplos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .segmentado { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
@@ -362,7 +361,7 @@ input[aria-invalid="true"] { border-color: var(--acento); box-shadow: 0 0 0 1px 
 
 details.como { margin: 14px 0 0; border-top: 1px solid var(--line); padding-top: 12px; }
 details.como summary { cursor: pointer; font-weight: 700; font-size: 14px; }
-details.como summary:hover { color: var(--acento); }
+details.como summary:hover { color: var(--link); }
 .como-corpo { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
 .como-corpo p { margin: 8px 0 0; }
 .como-corpo table { width: 100%; border-collapse: collapse; margin: 8px 0 0; font-size: 12.5px; }
@@ -373,7 +372,7 @@ details.como summary:hover { color: var(--acento); }
 .avisos { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin: 0; padding: 0 0 0 18px; }
 .avisos li + li { margin-top: 6px; }
 .avisos b { color: var(--ink); }
-.erro-carga { color: var(--acento); font-weight: 600; }
+.erro-carga { color: var(--erro); font-weight: 600; }
 
 /* ---------------------------------------------------------------- seções de texto */
 .secao { padding-block: clamp(40px, 6vw, 72px); }

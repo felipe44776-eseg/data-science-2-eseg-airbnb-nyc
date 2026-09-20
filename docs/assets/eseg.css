@@ -1,0 +1,38 @@
+/* Identidade visual da ESEG aplicada ao tema Material.
+ * Valores lidos do site institucional (eseg.edu.br), tokens do Elementor:
+ *   --e-global-color-primary   #08223D  navy
+ *   --e-global-color-secondary #00A1B8  ciano
+ *   tipografia                 Public Sans
+ * As cores dos DISTRITOS usadas nas figuras não são marca: são codificação de
+ * dado, e por isso não entram aqui. */
+
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:             #08223D;
+  --md-primary-fg-color--light:      #12406E;
+  --md-primary-fg-color--dark:       #05172B;
+  --md-primary-bg-color:             #FFFFFF;
+  --md-primary-bg-color--light:      #C9D8E5;
+
+  --md-accent-fg-color:              #00A1B8;
+  --md-accent-fg-color--transparent: rgba(0, 161, 184, 0.1);
+  --md-accent-bg-color:              #FFFFFF;
+
+  --md-typeset-a-color:              #0178E6;
+}
+
+/* o escuro herda o matiz do navy em vez do azul-violeta padrão do Material */
+[data-md-color-scheme="slate"] {
+  --md-hue: 209;
+  --md-primary-fg-color:             #08223D;
+  --md-primary-bg-color:             #FFFFFF;
+  --md-accent-fg-color:              #4FD0E0;
+  --md-accent-fg-color--transparent: rgba(79, 208, 224, 0.12);
+  --md-typeset-a-color:              #7FB8FF;
+}
+
+/* títulos com o peso da ESEG: uma família só, hierarquia pelo peso */
+.md-typeset h1 { font-weight: 800; letter-spacing: -0.03em; color: var(--md-primary-fg-color); }
+.md-typeset h2 { font-weight: 700; letter-spacing: -0.02em; }
+.md-typeset h3 { font-weight: 700; }
+[data-md-color-scheme="slate"] .md-typeset h1 { color: var(--md-default-fg-color); }
