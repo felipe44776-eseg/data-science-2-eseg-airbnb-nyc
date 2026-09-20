@@ -13,20 +13,20 @@ theme:
   name: material
   language: pt-BR
   font:
-    text: Inter
+    text: Public Sans
     code: JetBrains Mono
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep orange
-      accent: teal
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Modo escuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep orange
-      accent: teal
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Modo claro
@@ -100,6 +100,7 @@ extra_javascript:
 
 extra_css:
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
+  - assets/eseg.css
 
 extra:
   generator: false

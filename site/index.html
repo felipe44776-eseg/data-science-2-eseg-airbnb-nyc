@@ -6,9 +6,8 @@
 <title>Airbnb em Nova York, 2019 → 2026 · Data Science 2 · ESEG</title>
 <meta name="description" content="O projeto inteiro em uma página: o mapa e o simulador, as análises, as bases de dados, os gráficos e a documentação do CRISP-DM sobre o Airbnb em Nova York entre 2019 e 2026.">
 <meta name="color-scheme" content="light dark">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7-12-7V9z' fill='%23E14F3D'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FBF6EC'/%3E%3C/svg%3E">
-<link rel="preload" href="vendor/fontes/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="vendor/fontes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7-12-7V9z' fill='%2308223D'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2300A1B8'/%3E%3C/svg%3E">
+<link rel="preload" href="vendor/fontes/public-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>
   /* tema escolhido antes do primeiro desenho, para não piscar */
   try {
@@ -17,39 +16,37 @@
   } catch (e) { /* armazenamento bloqueado: segue o sistema */ }
 </script>
 <style>
-@font-face{font-family:"Fraunces";font-style:normal;font-weight:400 700;font-display:swap;
-  src:url("vendor/fontes/fraunces-latin.woff2") format("woff2")}
-@font-face{font-family:"Inter";font-style:normal;font-weight:400 700;font-display:swap;
-  src:url("vendor/fontes/inter-latin.woff2") format("woff2")}
+@font-face{font-family:"Public Sans";font-style:normal;font-weight:300 900;font-display:swap;
+  src:url("vendor/fontes/public-sans-latin.woff2") format("woff2")}
 
 :root{
-  --paper:#FBF6EC; --paper-2:#F4EEE1; --card:#FFFFFF;
-  --ink:#221E18; --ink-soft:#6E6656; --ink-faint:#A79E8A;
-  --line:rgba(34,30,24,.12); --line-strong:rgba(34,30,24,.24);
-  --acento:#B8321F; --foco:#2A5BD7;
-  --sombra:0 1px 2px rgba(34,30,24,.06), 0 8px 24px rgba(34,30,24,.08);
+  --paper:#FFFFFF; --paper-2:#F5F7F9; --card:#FFFFFF;
+  --ink:#08223D; --ink-soft:#474A56; --ink-faint:#999BA1;
+  --line:#E5E6E7; --line-strong:#C2C3C7;
+  --acento:#00A1B8; --navy:#08223D; --foco:#0178E6; --link:#0A6FD4;
+  --sombra:0 1px 2px rgba(8,34,61,.06), 0 8px 24px rgba(8,34,61,.10);
   --manhattan:#E14F3D; --brooklyn:#128F7C; --queens:#C98A1B; --bronx:#5468D9; --staten:#A24C97;
-  --font-display:"Fraunces",Georgia,"Times New Roman",serif;
-  --font-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-display:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --raio:16px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#17140F; --paper-2:#1E1A14; --card:#221E17;
-    --ink:#F3EDE1; --ink-soft:#B9AF9B; --ink-faint:#7A705E;
-    --line:rgba(243,237,225,.12); --line-strong:rgba(243,237,225,.24);
-    --acento:#F07A68; --foco:#8FB0FF;
+    --paper:#08223D; --paper-2:#0C2B4C; --card:#0F3358;
+    --ink:#FFFFFF; --ink-soft:#BCCBD9; --ink-faint:#7D93A8;
+    --line:rgba(255,255,255,.14); --line-strong:rgba(255,255,255,.30);
+    --acento:#4FD0E0; --navy:#08223D; --foco:#7FB8FF; --link:#9CC8FF;
     --sombra:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
     --manhattan:#F07A68; --brooklyn:#3FBFA8; --queens:#E0B35C; --bronx:#8FB0FF; --staten:#D08AC4;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#17140F; --paper-2:#1E1A14; --card:#221E17;
-  --ink:#F3EDE1; --ink-soft:#B9AF9B; --ink-faint:#7A705E;
-  --line:rgba(243,237,225,.12); --line-strong:rgba(243,237,225,.24);
-  --acento:#F07A68; --foco:#8FB0FF;
+  --paper:#08223D; --paper-2:#0C2B4C; --card:#0F3358;
+  --ink:#FFFFFF; --ink-soft:#BCCBD9; --ink-faint:#7D93A8;
+  --line:rgba(255,255,255,.14); --line-strong:rgba(255,255,255,.30);
+  --acento:#4FD0E0; --navy:#08223D; --foco:#7FB8FF; --link:#9CC8FF;
   --sombra:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
   --manhattan:#F07A68; --brooklyn:#3FBFA8; --queens:#E0B35C; --bronx:#8FB0FF; --staten:#D08AC4;
   color-scheme:dark;
@@ -60,8 +57,8 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0; background:var(--paper); color:var(--ink);
   font:16px/1.6 var(--font-body); -webkit-font-smoothing:antialiased}
 .wrap{max-width:1060px; margin:0 auto; padding-inline:20px}
-h1,h2,h3,h4{margin:0; font-family:var(--font-display); font-weight:600; text-wrap:balance; letter-spacing:-.01em}
-h1{font-size:clamp(2.2rem,6vw,3.5rem); line-height:1.04}
+h1,h2,h3,h4{margin:0; font-family:var(--font-display); font-weight:700; text-wrap:balance; letter-spacing:-.018em}
+h1{font-size:clamp(2.2rem,6vw,3.5rem); line-height:1.04; font-weight:800; letter-spacing:-.032em}
 h2{font-size:clamp(1.5rem,3.6vw,2rem); line-height:1.15}
 h3{font-size:1.05rem}
 h4{font-size:.95rem; font-family:var(--font-body); font-weight:600}
@@ -69,13 +66,25 @@ p{margin:0}
 a{color:inherit}
 a:focus-visible,button:focus-visible{outline:2px solid var(--foco); outline-offset:3px; border-radius:6px}
 .eyebrow{font-size:.74rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft)}
-.eyebrow .sw{display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--manhattan); margin-right:8px}
+.eyebrow .sw{display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--acento); margin-right:8px}
 .nota{font-size:.86rem; color:var(--ink-soft); max-width:74ch}
 .pular{position:absolute; left:-9999px}
 .pular:focus{left:20px; top:12px; z-index:50; background:var(--card); padding:10px 16px; border-radius:10px}
 
 /* -------- topo -------- */
-.topo{border-bottom:1px solid var(--line); background:var(--paper-2)}
+.topo{border-bottom:1px solid var(--line); background:var(--navy); color:#fff}
+.topo .eyebrow{color:#9FB6CB}
+.topo .capa .lead{color:#C9D8E5}
+.topo .botao-tema{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.28); color:#fff}
+.topo .retratos{background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.16); box-shadow:none; color:#fff}
+.topo .retrato .q{color:#8FA9C0}
+.topo .retrato .f{color:#B9CBDA}
+.topo .botao-sec{background:rgba(255,255,255,.10); color:#fff; border-color:rgba(255,255,255,.28)}
+.topo .botao-sec:hover{border-color:#fff}
+.topo .botao-pri{background:var(--acento); color:#04202B}
+:root[data-theme="dark"] .cartao .v, :root[data-theme="dark"] .est .v{color:var(--acento)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cartao .v,
+  :root:not([data-theme="light"]) .est .v{color:var(--acento)}}
 .topo-linha{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:18px}
 .botao-tema{display:grid; place-items:center; width:38px; height:38px; border-radius:50%;
   border:1px solid var(--line-strong); background:var(--card); color:var(--ink); cursor:pointer}
@@ -88,7 +97,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--foco); outline-offs
   box-shadow:var(--sombra); max-width:760px}
 .retrato{display:grid; gap:2px}
 .retrato .q{font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint)}
-.retrato .d{font-family:var(--font-display); font-size:1.25rem; font-weight:600}
+.retrato .d{font-family:var(--font-display); font-size:1.25rem; font-weight:700}
 .retrato .f{font-size:.82rem; color:var(--ink-soft)}
 .retrato.b{text-align:right}
 .seta{font-size:1.4rem; color:var(--ink-faint)}
@@ -96,7 +105,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--foco); outline-offs
 .botoes{display:flex; flex-wrap:wrap; gap:10px}
 .botao{display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:11px;
   font-weight:600; font-size:.92rem; text-decoration:none; border:1px solid transparent}
-.botao-pri{background:var(--acento); color:#fff}
+.botao-pri{background:var(--navy); color:#fff}
 .botao-pri:hover{filter:brightness(1.08)}
 .botao-sec{background:var(--card); color:var(--ink); border-color:var(--line-strong)}
 .botao-sec:hover{border-color:var(--ink-soft)}
@@ -126,7 +135,7 @@ section:last-of-type{border-bottom:0}
 .grupo{margin-bottom:34px}
 .gcab{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px}
 .gcab .n2{font-size:.74rem; font-weight:700; letter-spacing:.1em; color:var(--ink-faint)}
-.gcab h3{font-family:var(--font-display); font-size:1.2rem}
+.gcab h3{font-family:var(--font-display); font-size:1.2rem; font-weight:700}
 .gsub{font-size:.88rem; color:var(--ink-soft); max-width:68ch; margin-bottom:16px}
 .cartoes{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:14px}
 .cartao{display:flex; flex-direction:column; gap:9px; padding:20px; text-decoration:none;
@@ -134,12 +143,12 @@ section:last-of-type{border-bottom:0}
   box-shadow:var(--sombra); transition:border-color .15s, transform .15s}
 .cartao:hover{border-color:var(--ink-soft); transform:translateY(-2px)}
 .cartao .perg{font-weight:600; font-size:.94rem; line-height:1.35}
-.cartao .v{font-family:var(--font-display); font-size:1.85rem; font-weight:600; line-height:1;
-  font-variant-numeric:tabular-nums; color:var(--acento)}
+.cartao .v{font-family:var(--font-display); font-size:1.85rem; font-weight:700; line-height:1;
+  font-variant-numeric:tabular-nums; letter-spacing:-.03em; color:var(--navy)}
 .cartao .v small{font-family:var(--font-body); font-size:.82rem; font-weight:400; color:var(--ink-soft)}
 .cartao .resp{font-size:.86rem; color:var(--ink-soft); line-height:1.5}
 .cartao .ir{margin-top:auto; padding-top:10px; border-top:1px solid var(--line);
-  font-size:.76rem; font-weight:600; letter-spacing:.04em; color:var(--foco)}
+  font-size:.76rem; font-weight:600; letter-spacing:.04em; color:var(--link)}
 .cartao .ir::after{content:" →"}
 .cartao.nulo .v{color:var(--ink-soft)}
 
@@ -164,7 +173,7 @@ td.mono{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-s
 .fig .txt{padding:15px 17px; display:grid; gap:5px}
 .fig h4{font-size:.9rem}
 .fig p{font-size:.82rem; color:var(--ink-soft); line-height:1.5}
-.fig .onde{font-size:.73rem; font-weight:600; letter-spacing:.04em; color:var(--foco); margin-top:3px}
+.fig .onde{font-size:.73rem; font-weight:600; letter-spacing:.04em; color:var(--link); margin-top:3px}
 .fig .onde::after{content:" →"}
 
 /* -------- fases e estado -------- */
@@ -174,23 +183,23 @@ td.mono{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-s
   transition:background .15s}
 .fase:hover{background:var(--paper-2)}
 .fase .n2{font-size:.68rem; font-weight:700; letter-spacing:.1em; color:var(--ink-faint)}
-.fase h4{font-size:.9rem; font-family:var(--font-display); font-weight:600}
+.fase h4{font-size:.9rem; font-family:var(--font-display); font-weight:700}
 .fase p{font-size:.78rem; color:var(--ink-soft); line-height:1.45}
 
 .estado{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
   border:1px solid var(--line); border-radius:var(--raio); overflow:hidden; margin-bottom:20px}
 .est{background:var(--card); padding:18px 16px; display:grid; gap:4px}
-.est .v{font-family:var(--font-display); font-size:1.6rem; font-weight:600; line-height:1;
-  font-variant-numeric:tabular-nums}
+.est .v{font-family:var(--font-display); font-size:1.6rem; font-weight:700; line-height:1;
+  font-variant-numeric:tabular-nums; letter-spacing:-.03em; color:var(--navy)}
 .est .k{font-size:.79rem; color:var(--ink-soft); line-height:1.4}
 .criterios{display:flex; flex-wrap:wrap; gap:8px}
 .crit{display:inline-flex; align-items:center; gap:7px; padding:6px 13px; border-radius:999px;
   border:1px solid var(--line-strong); background:var(--card); font-size:.82rem; color:var(--ink-soft)}
-.crit i{width:7px; height:7px; border-radius:50%; background:var(--brooklyn); flex:none}
-.crit.falhou i{background:var(--manhattan)}
+.crit i{width:7px; height:7px; border-radius:50%; background:var(--acento); flex:none}
+.crit.falhou i{background:#F04438}
 .crit b{color:var(--ink); font-variant-numeric:tabular-nums}
 
-.aviso{border:1px solid var(--line); border-left:3px solid var(--manhattan);
+.aviso{border:1px solid var(--line); border-left:3px solid var(--acento);
   border-radius:4px var(--raio) var(--raio) 4px; background:var(--paper-2); padding:18px 22px; margin-top:24px}
 .aviso h4{margin-bottom:7px}
 .aviso p{font-size:.88rem; color:var(--ink-soft); max-width:74ch}
@@ -371,7 +380,7 @@ footer{background:var(--paper-2); border-top:1px solid var(--line); padding-bloc
     <div>
       <h2>Fontes e créditos</h2>
       <ul class="atribuicoes" id="atribuicoes"></ul>
-      <p style="margin-top:10px">Fontes tipográficas Fraunces, Inter e Figtree (SIL OFL 1.1).
+      <p style="margin-top:10px">Fontes tipográficas Public Sans e Figtree (SIL OFL 1.1).
         Código sob licença MIT; os dados pertencem às suas fontes.</p>
       <p id="gerado-em"></p>
     </div>

@@ -233,7 +233,7 @@ SHA-512 conferido contra o `dist.integrity` do registro:
 |---|---|---|---|
 | maplibre-gl | 6.10.0 | BSD-3-Clause | `maplibre-gl.mjs`, `-shared.mjs`, `-worker.mjs`, `.css`, `LICENSE.txt` |
 | h3-js | 4.5.0 | Apache-2.0 | `h3-js.es.js` (build de navegador), `LICENSE`, `NOTICE` |
-| Fraunces · Inter | Google Fonts (subconjunto latino) | SIL OFL 1.1 | `fontes/*.woff2`, `OFL-*.txt` |
+| Public Sans · Figtree | Google Fonts (subconjunto latino) | SIL OFL 1.1 | `fontes/*.woff2`, `OFL-*.txt` |
 
 ## Verificação feita
 
