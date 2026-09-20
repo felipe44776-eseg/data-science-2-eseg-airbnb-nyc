@@ -144,13 +144,6 @@ h1 {
 }
 .botao-tema svg { width: 16px; height: 16px; }
 
-.faixa-provisoria {
-  margin: 18px 0 0; padding: 12px 16px; border-radius: 12px;
-  background: var(--aviso-fundo); color: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--aviso) 40%, transparent);
-  font-size: 14px; line-height: 1.5;
-}
-.faixa-provisoria b { color: var(--aviso); }
 
 /* KPIs 2019 x 2026 */
 .kpis {

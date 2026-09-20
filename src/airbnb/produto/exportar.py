@@ -329,11 +329,16 @@ def metricas_celula() -> list[dict]:
          "descricao": "Preço de 2026 contra o de 2019 corrigido pela inflação de NYC.",
          "como": "Mediana 2026 ÷ mediana 2019 × CPI-U NY − 1. Mistura a mudança de preço com a "
                  "de composição (muito mais anúncios de 30+ noites hoje) — ver a métrica ajustada."},
-        {"chave": "valorizacao_ajustada_pct", "rotulo": "Valorização ajustada (modelo 2019)",
+        {"chave": "valorizacao_ajustada_pct",
+         "rotulo": "Valorização ajustada, estadia de 30+ noites",
          "tipo": "divergente", "unidade": "%",
-         "descricao": "Quanto a área cobra acima do que o mercado de 2019 previa para os mesmos anúncios.",
+         "descricao": "Quanto a área cobra acima do que o mercado de 2019 previa para os mesmos "
+                      "anúncios — só no regime de estadia longa, que é 82% do mercado atual.",
          "como": "Média de log(preço 2026) − log(previsão do modelo treinado em 2019, em dólar "
-                 "constante, com as mesmas features). Controla tipo, mínimo de noites e localização."},
+                 "constante), calculada DENTRO do estrato de 30+ noites. Sem estratificar, a "
+                 "métrica mediria onde a estadia curta sobreviveu (correlação de 0,47 com a "
+                 "fração de curta na célula) em vez de valorização; estratificada, essa "
+                 "correlação cai para −0,02."},
         {"chave": "pct_min30_2026", "rotulo": "Anúncios com mínimo de 30 noites (2026)",
          "tipo": "sequencial", "unidade": "fração",
          "descricao": "Efeito da Local Law 18: estadia curta passou a exigir registro.",

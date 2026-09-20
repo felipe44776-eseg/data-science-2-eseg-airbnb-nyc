@@ -22,6 +22,7 @@ import json
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 from airbnb import schema as S
 from airbnb.config import PROCESSED
@@ -93,13 +94,32 @@ def main() -> None:
                 "vies_log_medio": float((g["y"] - g["_p"]).mean()),
             }
 
+    # A valorizacao ajustada era calculada sobre TODOS os anuncios da celula. Isso
+    # violava a invariante 8 do projeto: o vies do modelo de 2019 e de +0,07 em log
+    # na estadia de 30+ noites e de +0,63 a +1,29 na curta (ver `por_estrato` acima),
+    # entao a media por celula media, em primeira ordem, ONDE A ESTADIA CURTA
+    # SOBREVIVEU — nao valorizacao. Medido: rho(metrica antiga, fracao de curta na
+    # celula) = 0,57. Agora o residuo e calculado DENTRO do estrato de 30+ noites,
+    # que e 82% do mercado atual e o unico regime comparavel entre as duas safras.
     d26["residuo_2019"] = d26["y"] - p
+    m30 = d26[E.MIN30].astype(bool)
     r8 = (d26.groupby(S.COL_H3_R8)["residuo_2019"].agg(["mean", "size"])
-              .rename(columns={"mean": "residuo_log", "size": "n"}).reset_index())
+              .rename(columns={"mean": "residuo_log_todos", "size": "n"}).reset_index())
+    longa = (d26[m30].groupby(S.COL_H3_R8)["residuo_2019"].agg(["mean", "size"])
+                     .rename(columns={"mean": "residuo_log", "size": "n_30mais"}).reset_index())
+    r8 = r8.merge(longa, on=S.COL_H3_R8, how="left")
     r8["valorizacao_ajustada_pct"] = np.where(
-        r8["n"] >= 5, 100 * (np.exp(r8["residuo_log"]) - 1), np.nan)
+        r8["n_30mais"] >= 5, 100 * (np.exp(r8["residuo_log"]) - 1), np.nan)
+    # a correlacao que motivou a mudanca, gravada no resultado e nao so no comentario
+    pct_curta = (~m30).groupby(d26[S.COL_H3_R8]).mean().rename("pct_curta")
+    diag = r8.join(pct_curta, on=S.COL_H3_R8).dropna(subset=["residuo_log_todos", "pct_curta"])
+    rho_antigo = float(stats.spearmanr(diag["residuo_log_todos"], diag["pct_curta"]).statistic)
+    rho_novo = float(stats.spearmanr(*diag.dropna(subset=["residuo_log"])[
+        ["residuo_log", "pct_curta"]].to_numpy().T).statistic)
     r8.to_parquet(SAIDA_R8, index=False)
-    bairros = (d26.groupby(E.BAIRRO)["residuo_2019"].agg(["mean", "size"])
+    # mesmo motivo da metrica do mapa: o ranking sai DENTRO do estrato de 30+ noites,
+    # senao ele ordena bairros por quanta estadia curta sobreviveu neles
+    bairros = (d26[m30].groupby(E.BAIRRO)["residuo_2019"].agg(["mean", "size"])
                   .query("size >= 30").sort_values("mean"))
 
     res = {
@@ -108,6 +128,15 @@ def main() -> None:
         "modelo_2019_cv_espacial_em_2019": m_19_em_19,
         "modelo_2026_cv_espacial_em_2026": m_ref,
         "modelo_2019_aplicado_a_2026": m_tempo,
+        "valorizacao_ajustada": {
+            "definicao": ("residuo medio de log(preco) contra a previsao do modelo de 2019, "
+                          "DENTRO do estrato de 30+ noites (82% do mercado atual)"),
+            "celulas_publicadas": int((r8["n_30mais"] >= 5).sum()),
+            "rho_com_fracao_de_curta_antes": round(rho_antigo, 3),
+            "rho_com_fracao_de_curta_depois": round(rho_novo, 3),
+            "por_que": ("sem estratificar, a metrica media onde a estadia curta sobreviveu "
+                        "em vez de valorizacao — invariante 8 do projeto"),
+        },
         "modelo_2026_aplicado_a_2019": m_inverso,
         "deriva_mdape_pp": round(100 * (m_tempo["mdape"] - m_ref["mdape"]), 2),
         "vies_log_medio_2026": float(d26["residuo_2019"].mean()),

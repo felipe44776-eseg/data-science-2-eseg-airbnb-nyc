@@ -133,6 +133,48 @@ def decomposicao(df: pd.DataFrame) -> dict:
     }
 
 
+def renovacao(df: pd.DataFrame) -> dict:
+    """Quanto do mercado de hoje ja estava la em 2019 — e quanto e gente nova.
+
+    "48.895 -> 30.257" parece atrito: o mercado encolheu e o que sobrou e um
+    subconjunto do que havia. O dado diz outra coisa. A maior parte dos anuncios
+    de hoje e de anfitriao que NAO EXISTIA em 2019. Houve substituicao, nao so
+    perda — e nenhuma leitura que so olhe o saldo enxerga isso.
+    """
+    a19 = df[df[S.COL_SNAPSHOT] == ROTULO_2019]
+    a26 = df[df[S.COL_SNAPSHOT] == ROTULO_ATUAL]
+    ids19, hosts19 = set(a19[S.COL_ID]), set(a19[S.COL_HOST_ID])
+    anuncio_antigo = a26[S.COL_ID].isin(ids19)
+    host_antigo = a26[S.COL_HOST_ID].isin(hosts19)
+    n26 = len(a26)
+    grupos = {
+        "sobreviveu de 2019": int(anuncio_antigo.sum()),
+        "novo, de anfitriao de 2019": int((~anuncio_antigo & host_antigo).sum()),
+        "de anfitriao que nao existia": int((~anuncio_antigo & ~host_antigo).sum()),
+    }
+    return {
+        "anuncios_2026": n26,
+        "composicao": {k: {"n": v, "pct": round(100 * v / n26, 2)} for k, v in grupos.items()},
+        "anfitrioes_2019_que_ficam": {
+            "n": len(hosts19 & set(a26[S.COL_HOST_ID])), "de": len(hosts19),
+            "pct": round(100 * len(hosts19 & set(a26[S.COL_HOST_ID])) / len(hosts19), 2)},
+    }
+
+
+def oferta_efetiva(df: pd.DataFrame) -> dict:
+    """A queda de 38% conta ANUNCIOS. Esta conta noites efetivamente ocupadas.
+
+    `ocupacao_modelo` e a fracao do ano ocupada, pela mesma formula nas duas
+    safras, entao a soma esta em "anuncios-ano equivalentes" e e comparavel.
+    A diferenca entre os dois numeros e o inventario dormente de 2026.
+    """
+    t = df.groupby(S.COL_SNAPSHOT, observed=True)[S.COL_OCUPACAO_MODELO].sum()
+    a, b = float(t.get(ROTULO_2019, float("nan"))), float(t.get(ROTULO_ATUAL, float("nan")))
+    return {"anuncios_ano_2019": round(a, 1), "anuncios_ano_2026": round(b, 1),
+            "var_pct": round(100 * (b / a - 1), 2),
+            "nota": "queda de anuncios: ver kpis; esta e a queda de oferta efetivamente operada"}
+
+
 def por_grupo(df: pd.DataFrame, coluna: str, minimo: int = 0) -> dict:
     """Contagem, variacao e preco real mediano por distrito/bairro e snapshot."""
     saida = {}
@@ -203,6 +245,8 @@ def main() -> None:
         "por_distrito": por_grupo(df, S.COL_DISTRITO),
         "por_bairro": por_grupo(df, S.COL_BAIRRO, minimo=30),
         "concentracao": concentracao(df),
+        "renovacao": renovacao(df),
+        "oferta_efetiva": oferta_efetiva(df),
         "celulas_r8": {
             "n": int(len(r8)),
             "com_preco_nos_dois": int(r8[["preco_real_2019", "preco_2026"]].notna().all(axis=1).sum()),

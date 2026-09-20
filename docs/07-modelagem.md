@@ -80,7 +80,7 @@ consistente; a que piora em 2 ou 3 é ruído.
 
 ![Ablação por fonte](assets/figuras/ablacao.svg)
 
-!!! warning "Resultado nulo, reportado como tal"
+!!! warning "Resultado nulo — e o mecanismo que o explica"
     **Para prever preço, as fontes externas não superam as coordenadas.** O M4 (com as
     externas) empata com o M3 (só latitude/longitude): 22,0% × 21,7%, melhor em 3 de 5
     folds — o critério C4, registrado antes da modelagem, **não foi atendido**. Só a
@@ -89,8 +89,16 @@ consistente; a que piora em 2 ou 3 é ruído.
 
     O que as externas fazem é **substituir** a coordenada quase sem perda (M4 sem
     coordenadas: 22,1%) — e, com isso, dizer *o que* no lugar importa. No M4, o modelo
-    prefere as externas às coordenadas: 25,5% da contribuição SHAP vai para
-    características do lugar e só 1,7% para latitude/longitude (seção 2.3). O ganho da
+    prefere as externas às coordenadas: **23,8%** da contribuição SHAP vai para as
+    fontes externas e 1,7% para latitude/longitude (seção 2.3). O ganho da
+    **Por que elas não somam.** Medimos: o η² de cada feature externa explicado pela
+    célula H3 r8 tem **mediana de 0,85**, e as distâncias a marcos chegam a 0,997–0,999
+    (são função do centroide, por construção). O aluguel do Zillow, terceira feature do
+    modelo, tem **η² = 0,94**. Em quase toda a sua variância, as externas *são a célula
+    com outro nome* — e um modelo que já recebeu a localização não ganha informação ao
+    recebê-la de novo. Isso não é falha da coleta: é o que se descobre ao medir.
+
+    O ganho da
     busca por dados fora do Kaggle, no preço, é de **interpretação e de transferência**
     (um modelo que fala em aluguel, renda e distância a marcos funciona em outra
     cidade; um que fala em latitude, não), não de acurácia. Onde elas mudam a conclusão
@@ -232,7 +240,8 @@ que o Bronx (0,75).
 
 **Quanto é previsível.** Pouco: AUC de **0,67** sob CV espacial, abaixo do limiar de 0,70
 registrado em docs/01 (**C5 não atendido**) — embora calibrado e melhor que o baseline no
-Brier (0,124 × 0,130). Tirar toda a localização não muda nada (AUC 0,67): **a saída do
+Brier (0,124 × 0,130). Tirar toda a localização não piora — na verdade **melhora**
+marginalmente (0,6676 × 0,6659), o que reforça a mesma leitura do C4: **a saída do
 mercado atingiu todos os lugares por igual**; o que diferencia os sobreviventes é o tipo de
 operação, não o endereço. Seguindo o pré-registro, o modelo fica **explicativo**: o mapa
 do site mostra a sobrevivência **observada** por célula, não a prevista.
@@ -261,8 +270,21 @@ anúncios do anfitrião (0,54) e o aluguel do entorno (ZORI, 0,62).
 
 O resíduo "preço de 2026 − previsão da estrutura de 2019", médio por célula, é a
 **valorização ajustada** do mapa: quanto a área ficou mais cara do que o mix dos
-seus anúncios e a sua localização fariam esperar em 2019. Na média, +29% em termos
-reais. Os bairros que mais se valorizaram além do esperado: Tribeca (+108%), South Ozone
-Park (+102%, junto ao aeroporto JFK), Theater District (+94%), Long Island City (+92%) e
-Financial District (+76%); os que menos: Little Italy, Inwood, Upper West Side, Chelsea e
-Nolita (+2% a +7%).
+seus anúncios e a sua localização fariam esperar em 2019.
+
+!!! danger "Corrigido depois da auditoria de método"
+    Até a revisão, esse resíduo era agregado sobre **todos** os anúncios da célula, o
+    que viola a invariante 8 do próprio projeto. O viés do modelo de 2019 é de +0,07 em
+    log na estadia de 30+ noites e de **+0,63 a +1,29** na curta (tabela acima), então a
+    média por célula media, em primeira ordem, *onde a estadia curta sobreviveu* — não
+    valorização. Medido: ρ entre a métrica antiga e a fração de estadia curta na célula
+    era **0,47**. Estratificada dentro do regime de 30+ noites, a correlação cai para
+    **−0,02**, e o número muda de patamar: a valorização mediana por célula é de
+    **+7,2%**, não os +29% que a versão anterior publicava. Os +29% eram composição.
+
+Com a métrica corrigida, os bairros que mais cobram acima do que a estrutura de 2019
+previa são Tribeca (+107%), Financial District (+47%), SoHo (+42%), Prospect Heights
+(+41%) e Flatiron District (+41%); os que menos, Little Italy (−26%), Hell's Kitchen
+(−11%), Upper West Side (−9%), Rosedale (−8%) e Chelsea (−5%). Note que quatro dos
+cinco primeiros da lista antiga — South Ozone Park, Theater District, Long Island City —
+desapareceram: eram concentração de estadia curta, não valorização.

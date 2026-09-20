@@ -59,6 +59,13 @@
     "rmse_log": 0.674757111194869,
     "r2_log": 0.3309934507816962
   },
+  "valorizacao_ajustada": {
+    "definicao": "residuo medio de log(preco) contra a previsao do modelo de 2019, DENTRO do estrato de 30+ noites (82% do mercado atual)",
+    "celulas_publicadas": 487,
+    "rho_com_fracao_de_curta_antes": 0.465,
+    "rho_com_fracao_de_curta_depois": -0.021,
+    "por_que": "sem estratificar, a metrica media onde a estadia curta sobreviveu em vez de valorizacao — invariante 8 do projeto"
+  },
   "modelo_2026_aplicado_a_2019": {
     "n": 48884,
     "mae_usd": 220.4158917958499,
@@ -160,27 +167,27 @@
     "dist_marco_km": 0.1498
   },
   "bairros_mais_valorizados": {
-    "Tribeca": 108.33190054394453,
-    "South Ozone Park": 101.74338695482659,
-    "Theater District": 94.03350501805451,
-    "Long Island City": 91.83019420867969,
-    "Financial District": 75.56124608126098,
-    "SoHo": 65.51671198265252,
-    "Prospect Heights": 58.965546589448834,
-    "Sunset Park": 57.88110127657744,
-    "Brownsville": 56.599071506115116,
-    "Midtown": 54.99986668164212
+    "Tribeca": 107.33877793095203,
+    "Financial District": 47.41768278363918,
+    "SoHo": 41.6593576755266,
+    "Prospect Heights": 41.11044245441677,
+    "Flatiron District": 41.04768012856748,
+    "West Village": 36.40762890318949,
+    "Theater District": 36.20420796719961,
+    "Greenwich Village": 32.475556041332744,
+    "Arverne": 31.987352553675798,
+    "Midtown": 31.390042198372893
   },
   "bairros_menos_valorizados": {
-    "Little Italy": 2.046041342149474,
-    "Inwood": 3.5829344357468873,
-    "Upper West Side": 5.100475436658924,
-    "Chelsea": 6.275765761619967,
-    "Nolita": 6.511657644975011,
-    "Far Rockaway": 6.74234401822531,
-    "Morningside Heights": 6.841360161988663,
-    "Hell's Kitchen": 7.7828457274316865,
-    "East Harlem": 9.939137030622147,
-    "Kips Bay": 10.425400321021172
+    "Little Italy": -26.371316372335684,
+    "Hell's Kitchen": -11.363479806079136,
+    "Upper West Side": -9.29326812792649,
+    "Rosedale": -7.8485019133074925,
+    "Chelsea": -4.694649247098182,
+    "Ozone Park": -4.687380859485957,
+    "Laurelton": -3.816537519301111,
+    "Richmond Hill": -3.4565760858795924,
+    "Bay Ridge": -2.7809090978850537,
+    "Woodhaven": -2.351860353333468
   }
 }

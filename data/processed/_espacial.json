@@ -277,5 +277,34 @@
     "imovel_M2_r2_fora_do_fold": 0.7157677284100976,
     "imovel_mais_local_M4_r2_fora_do_fold": 0.7598894268308665,
     "nota": "eta2 de grupos pequenos e otimista (cada celula usa a propria media); os R2 dos modelos sao fora do fold e nao tem esse vies"
+  },
+  "redundancia_das_externas": {
+    "definicao": "eta2 de cada feature externa explicado pela celula H3 r8",
+    "por_feature": {
+      "acs_renda_mediana": 0.7446875419991338,
+      "acs_aluguel_mediano": 0.6965616345123843,
+      "acs_pop_densidade": 0.6783595341572077,
+      "acs_pct_alugado": 0.7035890495109564,
+      "acs_pct_vago": 0.6984312475829357,
+      "acs_valor_imovel": 0.6441000726558069,
+      "crime_graves_km2": 0.7917318189317297,
+      "crime_total_km2": 0.7848513531081793,
+      "ruido_311_km2": 0.833131010723828,
+      "zori": 0.9416288494067727,
+      "metro_dist_m": 0.9770162407578782,
+      "metro_n_800m": 0.8627440993785792,
+      "metro_linhas_800m": 0.8752259155852025,
+      "poi_restaurantes_k1": 0.8971334682928882,
+      "poi_bares_k1": 0.887035530606173,
+      "poi_cafes_k1": 0.9021216257833509,
+      "poi_atracoes_k1": 0.7794037657381572,
+      "poi_hoteis_k1": 0.885118481937281,
+      "poi_parques_k1": 0.7882169587547433,
+      "dist_centro_km": 0.9985214674002769,
+      "dist_aeroporto_km": 0.9967600792489472,
+      "dist_marco_km": 0.9981748591069329
+    },
+    "nota": "eta2 alto = a feature nao carrega informacao alem de onde o anuncio esta",
+    "mediana_eta2": 0.8479375550512036
   }
 }

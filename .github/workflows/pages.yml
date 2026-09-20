@@ -52,7 +52,9 @@ jobs:
 
       # nao publica um modelo que diverge do Python
       - name: paridade do modelo publicado
-        run: node tests/paridade_js.mjs site/data/modelo_preco.json site/data/_casos_paridade_preco.json
+        run: |
+          node tests/paridade_js.mjs site/data/modelo_preco.json site/data/_casos_paridade_preco.json
+          node tests/paridade_js.mjs site/data/modelo_ocupacao.json site/data/_casos_paridade_ocupacao.json
 
       - name: montar o site
         run: |
@@ -72,8 +74,13 @@ jobs:
           for f in _site/index.html _site/mapa/index.html _site/apresentacao/index.html _site/docs/index.html _site/data/resumo.json _site/data/modelo_preco.json _site/data/celulas_r8.json _site/data/celulas_r9.json; do
             test -s "$f" || { echo "vazio ou ausente: $f"; exit 1; }
           done
-          if grep -l '"provisorio": *true' _site/data/*.json; then
-            echo "ha dado PROVISORIO em site/data — rode .\\tasks.ps1 site antes de publicar"
+          # o gate anterior procurava '"provisorio": true' em site/data — chave que
+          # NENHUM modulo do pipeline jamais escreveu: nunca podia disparar. A
+          # concordancia entre as superficies e o pipeline agora e testada de
+          # verdade em tests/test_superficies.py, que roda no ci.yml. Aqui fica
+          # so o resto de andaime, que ja foi removido e nao pode voltar.
+          if grep -rl 'Dados provisórios' _site --include='*.html'; then
+            echo "uma pagina publicada ainda anuncia dado provisorio"
             exit 1
           fi
 

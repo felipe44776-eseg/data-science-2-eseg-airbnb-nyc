@@ -210,7 +210,6 @@ async function iniciar() {
     return;
   }
 
-  if (Object.values(dados).some((d) => d && d.provisorio === true)) $("faixa-provisoria").hidden = false;
 
   // fator de exibição de cada medida (fração x pontos), a partir dos próprios valores
   for (const m of resumo.metricas_celula ?? []) {

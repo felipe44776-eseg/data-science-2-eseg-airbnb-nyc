@@ -95,6 +95,19 @@ def main() -> None:
                 "os R2 dos modelos sao fora do fold e nao tem esse vies",
     }
 
+    # Por que as fontes externas nao melhoram o preco (criterio C4): elas sao,
+    # em quase toda a sua variancia, a propria celula com outro nome. Um modelo
+    # que ja tem a localizacao nao ganha informacao ao receber de novo.
+    res["redundancia_das_externas"] = {
+        "definicao": "eta2 de cada feature externa explicado pela celula H3 r8",
+        "por_feature": {c: eta2(d26[c].dropna(), d26.loc[d26[c].notna(), S.COL_H3_R8])
+                        for c in E.externas() if c in d26.columns and d26[c].notna().sum() > 100},
+        "nota": "eta2 alto = a feature nao carrega informacao alem de onde o anuncio esta",
+    }
+    pf = res["redundancia_das_externas"]["por_feature"]
+    if pf:
+        res["redundancia_das_externas"]["mediana_eta2"] = float(np.median(list(pf.values())))
+
     r8 = pd.DataFrame({
         "premio_local_pct": 100 * (np.exp(premio) - 1),
         "preco_mediano_2026": np.exp(preco26),

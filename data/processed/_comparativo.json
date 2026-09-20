@@ -1450,6 +1450,34 @@
       }
     }
   },
+  "renovacao": {
+    "anuncios_2026": 30257,
+    "composicao": {
+      "sobreviveu de 2019": {
+        "n": 7515,
+        "pct": 24.84
+      },
+      "novo, de anfitriao de 2019": {
+        "n": 5353,
+        "pct": 17.69
+      },
+      "de anfitriao que nao existia": {
+        "n": 17389,
+        "pct": 57.47
+      }
+    },
+    "anfitrioes_2019_que_ficam": {
+      "n": 7123,
+      "de": 37457,
+      "pct": 19.02
+    }
+  },
+  "oferta_efetiva": {
+    "anuncios_ano_2019": 14021.4,
+    "anuncios_ano_2026": 5704.6,
+    "var_pct": -59.32,
+    "nota": "queda de anuncios: ver kpis; esta e a queda de oferta efetivamente operada"
+  },
   "celulas_r8": {
     "n": 921,
     "com_preco_nos_dois": 473
