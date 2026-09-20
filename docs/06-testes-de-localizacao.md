@@ -41,7 +41,7 @@ periféricos ([Comparativo](05-comparativo-2019-2026.md) §5).
 O Moran local classifica cada célula em Alto-Alto (cara cercada de caras),
 Baixo-Baixo, Alto-Baixo e Baixo-Alto (discrepantes). Com milhares de células, 5%
 delas sairiam "significativas" por acaso: a significância é corrigida por **FDR
-(Benjamini-Hochberg) a 5%**. Os aglomerados estão no [mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/), métrica
+(Benjamini-Hochberg) a 5%**. Os aglomerados estão no [mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/), métrica
 "Aglomerados de preço (LISA)".
 
 Com a correção, sobrevivem 19 aglomerados Alto-Alto e 2 Baixo-Baixo de prêmio de
@@ -87,7 +87,7 @@ toda a cidade fica perto da mediana, e o prêmio se concentra em poucas áreas.
 
 ## 6. O teste de localização do site
 
-O simulador do [mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/) é o mesmo teste, aplicado a um ponto: escolhido o lugar
+O simulador do [mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/) é o mesmo teste, aplicado a um ponto: escolhido o lugar
 e o imóvel, o modelo do produto (M5) devolve o preço esperado com intervalo de 80%,
 e o **prêmio de localização** = previsão aqui ÷ previsão do mesmo imóvel na célula
 de referência da cidade − 1.

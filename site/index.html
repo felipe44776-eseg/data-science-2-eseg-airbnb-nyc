@@ -3,14 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Airbnb em Nova York, 2019 → 2026 · Teste de localização</title>
-<meta name="description" content="Mapa interativo e simulador de preço por noite do Airbnb em Nova York: compare 2019 com 2026 e teste o valor de uma localização com o modelo do projeto, direto no navegador.">
+<title>Airbnb em Nova York, 2019 → 2026 · Data Science 2 · ESEG</title>
+<meta name="description" content="O projeto inteiro em uma página: o mapa e o simulador, as análises, as bases de dados, os gráficos e a documentação do CRISP-DM sobre o Airbnb em Nova York entre 2019 e 2026.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7-12-7V9z' fill='%23E14F3D'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FBF6EC'/%3E%3C/svg%3E">
 <link rel="preload" href="vendor/fontes/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="vendor/fontes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="vendor/maplibre-gl-6.10.0/maplibre-gl.css">
-<link rel="stylesheet" href="assets/style.css">
 <script>
   /* tema escolhido antes do primeiro desenho, para não piscar */
   try {
@@ -18,151 +16,343 @@
     if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
   } catch (e) { /* armazenamento bloqueado: segue o sistema */ }
 </script>
-<script type="module" src="assets/app.js"></script>
+<style>
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:400 700;font-display:swap;
+  src:url("vendor/fontes/fraunces-latin.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400 700;font-display:swap;
+  src:url("vendor/fontes/inter-latin.woff2") format("woff2")}
+
+:root{
+  --paper:#FBF6EC; --paper-2:#F4EEE1; --card:#FFFFFF;
+  --ink:#221E18; --ink-soft:#6E6656; --ink-faint:#A79E8A;
+  --line:rgba(34,30,24,.12); --line-strong:rgba(34,30,24,.24);
+  --acento:#B8321F; --foco:#2A5BD7;
+  --sombra:0 1px 2px rgba(34,30,24,.06), 0 8px 24px rgba(34,30,24,.08);
+  --manhattan:#E14F3D; --brooklyn:#128F7C; --queens:#C98A1B; --bronx:#5468D9; --staten:#A24C97;
+  --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --font-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --raio:16px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#17140F; --paper-2:#1E1A14; --card:#221E17;
+    --ink:#F3EDE1; --ink-soft:#B9AF9B; --ink-faint:#7A705E;
+    --line:rgba(243,237,225,.12); --line-strong:rgba(243,237,225,.24);
+    --acento:#F07A68; --foco:#8FB0FF;
+    --sombra:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    --manhattan:#F07A68; --brooklyn:#3FBFA8; --queens:#E0B35C; --bronx:#8FB0FF; --staten:#D08AC4;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#17140F; --paper-2:#1E1A14; --card:#221E17;
+  --ink:#F3EDE1; --ink-soft:#B9AF9B; --ink-faint:#7A705E;
+  --line:rgba(243,237,225,.12); --line-strong:rgba(243,237,225,.24);
+  --acento:#F07A68; --foco:#8FB0FF;
+  --sombra:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  --manhattan:#F07A68; --brooklyn:#3FBFA8; --queens:#E0B35C; --bronx:#8FB0FF; --staten:#D08AC4;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font:16px/1.6 var(--font-body); -webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px; margin:0 auto; padding-inline:20px}
+h1,h2,h3,h4{margin:0; font-family:var(--font-display); font-weight:600; text-wrap:balance; letter-spacing:-.01em}
+h1{font-size:clamp(2.2rem,6vw,3.5rem); line-height:1.04}
+h2{font-size:clamp(1.5rem,3.6vw,2rem); line-height:1.15}
+h3{font-size:1.05rem}
+h4{font-size:.95rem; font-family:var(--font-body); font-weight:600}
+p{margin:0}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--foco); outline-offset:3px; border-radius:6px}
+.eyebrow{font-size:.74rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft)}
+.eyebrow .sw{display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--manhattan); margin-right:8px}
+.nota{font-size:.86rem; color:var(--ink-soft); max-width:74ch}
+.pular{position:absolute; left:-9999px}
+.pular:focus{left:20px; top:12px; z-index:50; background:var(--card); padding:10px 16px; border-radius:10px}
+
+/* -------- topo -------- */
+.topo{border-bottom:1px solid var(--line); background:var(--paper-2)}
+.topo-linha{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:18px}
+.botao-tema{display:grid; place-items:center; width:38px; height:38px; border-radius:50%;
+  border:1px solid var(--line-strong); background:var(--card); color:var(--ink); cursor:pointer}
+.botao-tema svg{width:19px; height:19px}
+.capa{padding-block:14px 46px; display:grid; gap:20px}
+.capa .lead{font-size:1.12rem; color:var(--ink-soft); max-width:62ch}
+
+.retratos{display:grid; grid-template-columns:1fr auto 1fr; gap:18px; align-items:center;
+  padding:20px 24px; background:var(--card); border:1px solid var(--line); border-radius:var(--raio);
+  box-shadow:var(--sombra); max-width:760px}
+.retrato{display:grid; gap:2px}
+.retrato .q{font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint)}
+.retrato .d{font-family:var(--font-display); font-size:1.25rem; font-weight:600}
+.retrato .f{font-size:.82rem; color:var(--ink-soft)}
+.retrato.b{text-align:right}
+.seta{font-size:1.4rem; color:var(--ink-faint)}
+
+.botoes{display:flex; flex-wrap:wrap; gap:10px}
+.botao{display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:11px;
+  font-weight:600; font-size:.92rem; text-decoration:none; border:1px solid transparent}
+.botao-pri{background:var(--acento); color:#fff}
+.botao-pri:hover{filter:brightness(1.08)}
+.botao-sec{background:var(--card); color:var(--ink); border-color:var(--line-strong)}
+.botao-sec:hover{border-color:var(--ink-soft)}
+.botao .ext{font-size:.8em; opacity:.7}
+
+/* -------- seções -------- */
+section{padding-block:48px; border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.cab{display:grid; gap:8px; margin-bottom:26px}
+.cab p{max-width:68ch; color:var(--ink-soft)}
+
+/* -------- espinha -------- */
+.espinha{display:grid; gap:1px; background:var(--line); border:1px solid var(--line);
+  border-radius:var(--raio); overflow:hidden}
+.ei{background:var(--card); display:grid; grid-template-columns:minmax(0,1fr) 96px 28px 108px 92px;
+  gap:12px; align-items:center; padding:13px 20px}
+.ei>span:nth-child(n+2){text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.ei .rot{font-size:.9rem; color:var(--ink-soft); text-align:left}
+.ei .a{color:var(--ink-faint); font-size:.9rem}
+.ei .s{text-align:center; color:var(--ink-faint); font-size:.82rem}
+.ei .b{font-weight:700; font-size:1.02rem}
+.ei .d{font-size:.8rem; color:var(--ink-soft)}
+.ei.cabeca{background:var(--paper-2)}
+.ei.cabeca span{font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint)}
+
+/* -------- análises -------- */
+.grupo{margin-bottom:34px}
+.gcab{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+.gcab .n2{font-size:.74rem; font-weight:700; letter-spacing:.1em; color:var(--ink-faint)}
+.gcab h3{font-family:var(--font-display); font-size:1.2rem}
+.gsub{font-size:.88rem; color:var(--ink-soft); max-width:68ch; margin-bottom:16px}
+.cartoes{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:14px}
+.cartao{display:flex; flex-direction:column; gap:9px; padding:20px; text-decoration:none;
+  background:var(--card); border:1px solid var(--line); border-radius:var(--raio);
+  box-shadow:var(--sombra); transition:border-color .15s, transform .15s}
+.cartao:hover{border-color:var(--ink-soft); transform:translateY(-2px)}
+.cartao .perg{font-weight:600; font-size:.94rem; line-height:1.35}
+.cartao .v{font-family:var(--font-display); font-size:1.85rem; font-weight:600; line-height:1;
+  font-variant-numeric:tabular-nums; color:var(--acento)}
+.cartao .v small{font-family:var(--font-body); font-size:.82rem; font-weight:400; color:var(--ink-soft)}
+.cartao .resp{font-size:.86rem; color:var(--ink-soft); line-height:1.5}
+.cartao .ir{margin-top:auto; padding-top:10px; border-top:1px solid var(--line);
+  font-size:.76rem; font-weight:600; letter-spacing:.04em; color:var(--foco)}
+.cartao .ir::after{content:" →"}
+.cartao.nulo .v{color:var(--ink-soft)}
+
+/* -------- tabela -------- */
+.tab-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--raio); background:var(--card)}
+table{border-collapse:collapse; width:100%; font-size:.86rem; min-width:620px}
+th,td{padding:10px 16px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{font-size:.7rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--ink-faint); white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--paper-2)}
+td.mono{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-soft)}
+
+/* -------- galeria -------- */
+.galeria{display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:16px}
+.fig{display:flex; flex-direction:column; background:var(--card); border:1px solid var(--line);
+  border-radius:var(--raio); overflow:hidden; box-shadow:var(--sombra); text-decoration:none;
+  transition:border-color .15s, transform .15s}
+.fig:hover{border-color:var(--ink-soft); transform:translateY(-2px)}
+.fig .tela{background:#fff; padding:14px; display:grid; place-items:center; border-bottom:1px solid var(--line)}
+.fig img{display:block; width:100%; height:auto; max-height:230px; object-fit:contain}
+.fig .txt{padding:15px 17px; display:grid; gap:5px}
+.fig h4{font-size:.9rem}
+.fig p{font-size:.82rem; color:var(--ink-soft); line-height:1.5}
+.fig .onde{font-size:.73rem; font-weight:600; letter-spacing:.04em; color:var(--foco); margin-top:3px}
+.fig .onde::after{content:" →"}
+
+/* -------- fases e estado -------- */
+.fases{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--raio); overflow:hidden}
+.fase{background:var(--card); padding:17px 16px; display:grid; gap:5px; text-decoration:none;
+  transition:background .15s}
+.fase:hover{background:var(--paper-2)}
+.fase .n2{font-size:.68rem; font-weight:700; letter-spacing:.1em; color:var(--ink-faint)}
+.fase h4{font-size:.9rem; font-family:var(--font-display); font-weight:600}
+.fase p{font-size:.78rem; color:var(--ink-soft); line-height:1.45}
+
+.estado{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+  border:1px solid var(--line); border-radius:var(--raio); overflow:hidden; margin-bottom:20px}
+.est{background:var(--card); padding:18px 16px; display:grid; gap:4px}
+.est .v{font-family:var(--font-display); font-size:1.6rem; font-weight:600; line-height:1;
+  font-variant-numeric:tabular-nums}
+.est .k{font-size:.79rem; color:var(--ink-soft); line-height:1.4}
+.criterios{display:flex; flex-wrap:wrap; gap:8px}
+.crit{display:inline-flex; align-items:center; gap:7px; padding:6px 13px; border-radius:999px;
+  border:1px solid var(--line-strong); background:var(--card); font-size:.82rem; color:var(--ink-soft)}
+.crit i{width:7px; height:7px; border-radius:50%; background:var(--brooklyn); flex:none}
+.crit.falhou i{background:var(--manhattan)}
+.crit b{color:var(--ink); font-variant-numeric:tabular-nums}
+
+.aviso{border:1px solid var(--line); border-left:3px solid var(--manhattan);
+  border-radius:4px var(--raio) var(--raio) 4px; background:var(--paper-2); padding:18px 22px; margin-top:24px}
+.aviso h4{margin-bottom:7px}
+.aviso p{font-size:.88rem; color:var(--ink-soft); max-width:74ch}
+
+/* -------- rodapé -------- */
+footer{background:var(--paper-2); border-top:1px solid var(--line); padding-block:40px 28px}
+.rodape{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:32px}
+.rodape h2{font-size:1.05rem; margin-bottom:12px}
+.equipe{list-style:none; margin:0 0 12px; padding:0; display:grid; gap:5px; font-size:.88rem}
+.equipe .ra{color:var(--ink-faint); font-variant-numeric:tabular-nums}
+.rodape p{font-size:.82rem; color:var(--ink-soft); line-height:1.55}
+.rodape .links{display:flex; flex-wrap:wrap; gap:9px; margin-top:14px}
+.atribuicoes{list-style:none; margin:0; padding:0; display:grid; gap:5px; font-size:.79rem; color:var(--ink-soft)}
+
+@media (max-width:820px){
+  .retratos{grid-template-columns:1fr; gap:12px}
+  .retrato.b{text-align:left}
+  .seta{transform:rotate(90deg); width:fit-content}
+  .estado{grid-template-columns:repeat(2,1fr)}
+  .ei{grid-template-columns:minmax(0,1fr) 84px; gap:3px 10px; padding:14px 16px}
+  .ei .rot{grid-column:1/-1; font-weight:600; color:var(--ink)}
+  .ei .s{display:none}
+  .ei>span:nth-child(n+2){text-align:left}
+  .ei .d{grid-column:2; text-align:right}
+  .ei.cabeca{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 <body>
-<a class="pular" href="#simulador">Pular para o teste de localização</a>
+<a class="pular" href="#analises">Pular para as análises</a>
 
 <header class="topo"><div class="wrap">
   <div class="topo-linha">
-    <p class="eyebrow"><span class="sw" aria-hidden="true"></span>Data Science 2 · ESEG · Airbnb em Nova York</p>
-    <button class="botao-tema" id="botao-tema" type="button">
+    <p class="eyebrow"><span class="sw" aria-hidden="true"></span>Data Science 2 · ESEG · Prof. Marino Catarino</p>
+    <button class="botao-tema" id="botao-tema" type="button" aria-label="Alternar tema">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 000 16z" fill="currentColor"/></svg>
-      <span id="botao-tema-rotulo">Tema: automático</span>
     </button>
   </div>
-  <h1>Quanto vale uma noite em cada canto de Nova York?</h1>
-  <p class="lede">Comparamos os anúncios do Airbnb de <span data-snapshot="2019">2019</span> com os de hoje
-    (<span data-snapshot="2026">2026</span>) e treinamos um modelo que estima o preço por noite a partir do
-    lugar e das características do imóvel. Escolha um ponto no mapa e faça o teste — tudo roda no seu
-    navegador.</p>
-  <div class="faixa-provisoria" id="faixa-provisoria" role="note" hidden>
-    <b>Dados provisórios.</b> Estes números vêm de uma versão de teste da base e do modelo, usada para
-    montar o site. Eles serão substituídos pelos resultados finais do projeto.
+  <div class="capa">
+    <h1>Airbnb em Nova York,<br>2019 → 2026</h1>
+    <p class="lead">Entre um retrato e outro do mercado passaram sete anos, uma pandemia e uma lei que
+    mudou o que um anúncio <em>é</em> na cidade. Este é o projeto inteiro: o mapa, as análises, as
+    bases, os gráficos e a documentação.</p>
+
+    <div class="retratos">
+      <div class="retrato">
+        <span class="q">Retrato 1 · 08/07/2019</span>
+        <span class="d">48.895 anúncios</span>
+        <span class="f">Kaggle · <i>NYC Airbnb Open Data</i> · 16 colunas</span>
+      </div>
+      <span class="seta" aria-hidden="true">→</span>
+      <div class="retrato b">
+        <span class="q">Retrato 2 · 14/06/2026</span>
+        <span class="d">30.257 anúncios</span>
+        <span class="f">Inside Airbnb · 90 colunas · mais 8 fontes externas</span>
+      </div>
+    </div>
+
+    <div class="botoes">
+      <a class="botao botao-pri" href="./mapa/">Abrir o mapa e o simulador</a>
+      <a class="botao botao-sec" href="./apresentacao/">Ver a apresentação</a>
+      <a class="botao botao-sec" href="./docs/">Documentação</a>
+      <a class="botao botao-sec" href="https://github.com/felipe44776-eseg/data-science-2-eseg-airbnb-nyc" target="_blank" rel="noopener">Código <span class="ext">↗</span></a>
+    </div>
   </div>
-  <ul class="kpis" id="kpis" aria-label="O mercado em 2019 e em 2026"></ul>
-  <p class="nota-kpis" id="nota-kpis"></p>
 </div></header>
 
-<main id="conteudo">
-  <section class="app" id="app" aria-label="Mapa e teste de localização">
-    <div class="mapa-area">
-      <div id="mapa"></div>
-      <svg class="mira" id="mira" viewBox="0 0 34 34" aria-hidden="true">
-        <circle cx="17" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
-        <path d="M17 1v10M17 23v10M1 17h10M23 17h10" stroke="currentColor" stroke-width="2"/>
-      </svg>
+<main class="wrap">
 
-      <details class="cartao-mapa mapa-controles" id="mapa-controles" open>
-        <summary>Camadas e legenda</summary>
-        <div class="controles-corpo">
-          <div class="campo-mapa">
-            <label for="metrica">O que os hexágonos mostram</label>
-            <select id="metrica"></select>
-          </div>
-          <div class="legenda" id="legenda"></div>
-          <fieldset class="camadas">
-            <legend class="grupo-rotulo">Camadas</legend>
-            <label class="alternar"><input type="checkbox" id="camada-hex" checked> Hexágonos (a medida acima)</label>
-            <label class="alternar"><input type="checkbox" id="camada-bairros" checked> Contorno dos bairros</label>
-            <label class="alternar"><input type="checkbox" id="camada-anuncios"> Anúncios de 2026</label>
-            <label class="alternar"><input type="checkbox" id="camada-metro"> Estações de metrô</label>
-          </fieldset>
-          <ul class="legenda-pontos" id="legenda-pontos" hidden></ul>
-        </div>
-      </details>
+<!-- ================= ESPINHA ================= -->
+<section id="espinha">
+  <div class="cab">
+    <h2>O que separa os dois retratos</h2>
+    <p>Sete indicadores comparáveis: o preço em dólar de 2026 e cada proporção sobre a mesma base.</p>
+  </div>
+  <div class="espinha">
+    <div class="ei cabeca"><span class="rot">Indicador</span><span class="a">2019</span><span class="s"></span><span class="b">2026</span><span class="d">Variação</span></div>
+    <div id="espinha-linhas"></div>
+  </div>
+  <div class="aviso">
+    <h4>A leitura que não se pode fazer</h4>
+    <p>A diária mediana sobe 29% — e é a única linha que engana. Em 2026, 82% dos anúncios exigem 30
+    noites ou mais, e neles o preço já vem com desconto mensal embutido: é outra mercadoria.
+    Separando os regimes, a estadia longa custa <b>o mesmo</b> de 2019 e a curta, <b>duas a três vezes
+    mais</b>. Toda comparação aqui é em dólar constante e dentro do mesmo estrato de mínimo de noites.</p>
+  </div>
+</section>
 
-      <div class="cartao-mapa aviso-mapa" id="aviso-mapa" role="status" hidden></div>
-    </div>
+<!-- ================= ANÁLISES ================= -->
+<section id="analises">
+  <div class="cab">
+    <h2>As análises</h2>
+    <p>Doze perguntas com resposta medida. Cada cartão leva ao capítulo da documentação onde o método
+    e os números estão por extenso.</p>
+  </div>
+  <div id="grupos"></div>
+</section>
 
-    <aside class="painel" id="simulador" aria-labelledby="sim-titulo" data-estado="fechado" tabindex="-1">
-      <button class="alca" id="alca" type="button" aria-expanded="false" aria-controls="painel-corpo"><span>Ver detalhes</span></button>
-      <div class="painel-corpo" id="painel-corpo">
-        <div>
-          <h2 id="sim-titulo">Teste de localização</h2>
-          <p class="painel-intro">Clique num ponto do mapa ou busque um endereço. O modelo estima o preço por noite
-            de um imóvel como o descrito abaixo, naquele lugar.</p>
-        </div>
+<!-- ================= BASES ================= -->
+<section id="bases">
+  <div class="cab">
+    <h2>As bases</h2>
+    <p>Dez fontes, oito delas buscadas fora do Kaggle. Cada uma com safra declarada, licença e hash
+    conferido no manifesto — dado não entra no repositório, o hash entra.</p>
+  </div>
+  <div class="tab-wrap">
+    <table>
+      <thead><tr><th>Fonte</th><th>O que traz</th><th>Safra</th><th>Licença</th></tr></thead>
+      <tbody id="tfontes"></tbody>
+    </table>
+  </div>
+  <p class="nota" style="margin-top:14px">Detalhamento, limitações e anacronismos declarados em
+  <a href="./docs/03-fontes-externas/">Fontes externas</a>; o significado de cada coluna, no
+  <a href="./docs/dicionario-dados/">dicionário de dados</a>.</p>
+</section>
 
-        <div>
-          <form class="busca" id="form-busca" role="search" aria-label="Buscar endereço">
-            <label for="busca">Buscar endereço em Nova York</label>
-            <input id="busca" name="q" type="search" placeholder="ex.: 200 Kent Ave, Brooklyn" autocomplete="off" enterkeyhint="search">
-            <button class="botao" id="botao-busca" type="submit">Buscar</button>
-          </form>
-          <p class="busca-status" id="busca-status" aria-live="polite"></p>
-          <ul class="busca-resultados" id="busca-resultados"></ul>
-          <p class="creditos-busca">Busca de endereços:
-            <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener">Nominatim</a> ·
-            © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">colaboradores do OpenStreetMap</a></p>
-        </div>
+<!-- ================= GRÁFICOS ================= -->
+<section id="graficos">
+  <div class="cab">
+    <h2>Os gráficos</h2>
+    <p>Todos gerados pelo pipeline, nunca desenhados à mão: <code>.\tasks.ps1 figuras</code> os
+    reconstrói a partir dos resultados. Se um número muda, a figura muda junto.</p>
+  </div>
+  <div class="galeria" id="galeria"></div>
+</section>
 
-        <div class="linha-centro">
-          <button class="botao botao-sec" id="usar-centro" type="button">Usar o centro do mapa</button>
-          <span>pelo teclado: mova o mapa com as setas e use este botão</span>
-        </div>
+<!-- ================= COMO FOI FEITO ================= -->
+<section id="metodo">
+  <div class="cab">
+    <h2>Como foi feito</h2>
+    <p>CRISP-DM completo, em treze etapas encadeadas. <code>.\tasks.ps1 status</code> diz o que está
+    desatualizado; <code>.\tasks.ps1 all</code> refaz só o que precisa.</p>
+  </div>
+  <div class="fases" id="fases"></div>
+  <p class="nota" style="margin-top:14px">As decisões de método que mudariam o resultado se fossem
+  outras ficaram registradas em cinco <a href="./docs/adr/">ADRs</a>: a célula H3 no lugar do ponto, a
+  validação espacial, o modelo que o site roda, a ausência de CDN e a comparação em dólar constante.</p>
+</section>
 
-        <div class="ponto-escolhido" id="ponto-escolhido">Nenhum ponto escolhido ainda.</div>
+<!-- ================= ESTADO ================= -->
+<section id="estado">
+  <div class="cab">
+    <h2>Estado do projeto</h2>
+    <p>Sete critérios de sucesso foram registrados <b>antes</b> da modelagem, com limiar e
+    consequência. Cinco foram atingidos; dois não, e estão publicados como resultado.</p>
+  </div>
+  <div class="estado">
+    <div class="est"><span class="v">13/13</span><span class="k">etapas do pipeline em dia</span></div>
+    <div class="est"><span class="v">171</span><span class="k">testes, ruff limpo, CI verde</span></div>
+    <div class="est"><span class="v">0</span><span class="k">erro de paridade entre o modelo em Python e o do navegador</span></div>
+    <div class="est"><span class="v">7.219</span><span class="k">hexágonos com features de localização</span></div>
+  </div>
+  <div class="criterios" id="criterios"></div>
+  <div class="aviso">
+    <h4>A frente que continua aberta</h4>
+    <p>Tudo aqui é <b>"mudou junto com"</b>. Provar que a Local Law 18 <i>causou</i> a mudança exige um
+    painel de snapshots trimestrais e um desenho de diferenças-em-diferenças, com os anúncios de 30+
+    noites como grupo de controle. Está em <a href="./docs/08-avaliacao/">Avaliação §5</a>.</p>
+  </div>
+</section>
 
-        <section class="resultado" id="resultado" data-estado="vazio" aria-labelledby="res-titulo">
-          <h3 id="res-titulo">Resultado</h3>
-          <div id="res-resumo" aria-live="polite" aria-atomic="true">
-            <p class="res-sub">Escolha um ponto no mapa para ver a estimativa.</p>
-          </div>
-          <div id="res-detalhes"></div>
-        </section>
-
-        <form class="form-imovel" id="form-imovel" novalidate aria-labelledby="form-titulo">
-          <h3 id="form-titulo">O imóvel</h3>
-          <p class="res-sub" style="margin:-4px 0 0">Mude qualquer campo: o resultado acima se atualiza sozinho.</p>
-          <div id="campos"></div>
-        </form>
-
-        <ul class="avisos" aria-label="Avisos sobre os dados">
-          <li><b>A coordenada do Airbnb é aproximada:</b> o site desloca a posição publicada de cada anúncio
-            em até ~150 m. Por isso o modelo usa a área (hexágono de ~0,1 km²), não o ponto exato.</li>
-          <li><b>Preço anunciado não é preço pago:</b> é o valor pedido por noite, sem descontos, taxas
-            nem a ocupação real.</li>
-          <li><b>Regra nova desde 2023 (Local Law 18):</b> estadias com menos de 30 noites exigem registro na
-            prefeitura, e a maioria dos anúncios de hoje exige 30 noites ou mais.</li>
-        </ul>
-      </div>
-    </aside>
-  </section>
-
-  <section class="secao" id="como-ler" aria-labelledby="como-ler-titulo"><div class="wrap">
-    <h2 id="como-ler-titulo">Como ler o mapa</h2>
-    <p class="lede">Cada hexágono cobre cerca de 0,7 km² e resume os anúncios que caem dentro dele. Escolha a
-      medida no seletor do mapa; passe o mouse (ou toque) num hexágono para ver o bairro e o valor.
-      Hexágonos tracejados, sem cor, não têm dado suficiente para aquela medida.</p>
-    <div class="grade-cartoes" id="cartoes-metricas"></div>
-  </div></section>
-
-  <section class="secao" id="modelo" aria-labelledby="modelo-titulo"><div class="wrap">
-    <h2 id="modelo-titulo">O modelo por trás do teste</h2>
-    <p class="lede">Um conjunto de árvores de decisão (LightGBM) aprendeu, com os anúncios de hoje, como o
-      preço varia com o imóvel e com a área ao redor. A validação separou regiões inteiras da cidade para
-      testar o modelo em lugares que ele não viu no treino.</p>
-    <ul class="metricas-modelo" id="metricas-modelo"></ul>
-    <div class="grade-cartoes">
-      <div class="cartao">
-        <h3>Roda no seu navegador</h3>
-        <p>O modelo foi exportado do Python para um arquivo de dados e é calculado aqui, em JavaScript, sem
-          servidor. Nenhuma informação que você digita sai do seu computador (só a busca de endereço consulta
-          o Nominatim).</p>
-      </div>
-      <div class="cartao">
-        <h3>O mesmo número do Python</h3>
-        <p>A cada atualização, um teste automático compara centenas de previsões do JavaScript com as do
-          modelo original. Se um único número divergir, a publicação é barrada.</p>
-      </div>
-      <div class="cartao">
-        <h3>Uma faixa, não só um número</h3>
-        <p>A faixa de 80% mostra onde ficam, em geral, os preços de imóveis parecidos naquele lugar. Ela foi
-          calibrada nos testes por região: em cerca de 8 a cada 10 anúncios reais, o preço caiu dentro dela.</p>
-      </div>
-    </div>
-  </div></section>
 </main>
 
 <footer><div class="wrap">
@@ -172,25 +362,187 @@
       <ul class="equipe" id="equipe"></ul>
       <p id="credito"></p>
       <div class="links">
-        <a class="botao botao-sec" href="./apresentacao/">Apresentação do projeto</a>
-        <a class="botao botao-sec" href="./docs/">Documentação do projeto</a>
-        <a class="botao botao-sec" id="link-repositorio" href="#" target="_blank" rel="noopener">Código no GitHub</a>
+        <a class="botao botao-sec" href="./mapa/">Mapa e simulador</a>
+        <a class="botao botao-sec" href="./apresentacao/">Apresentação</a>
+        <a class="botao botao-sec" href="./docs/">Documentação</a>
+        <a class="botao botao-sec" href="https://github.com/felipe44776-eseg/data-science-2-eseg-airbnb-nyc" target="_blank" rel="noopener">GitHub <span class="ext">↗</span></a>
       </div>
     </div>
     <div>
       <h2>Fontes e créditos</h2>
       <ul class="atribuicoes" id="atribuicoes"></ul>
-      <p style="margin-top:10px">Mapa: <a href="https://maplibre.org/" target="_blank" rel="noopener">MapLibre GL JS</a> (BSD-3),
-        hexágonos <a href="https://h3geo.org/" target="_blank" rel="noopener">H3</a> (Apache-2.0), mapa-base
-        <a href="https://openfreemap.org/" target="_blank" rel="noopener">OpenFreeMap</a> ·
-        © <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> ·
-        © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">colaboradores do OpenStreetMap</a>.
-        Fontes tipográficas Fraunces, Inter e Figtree (SIL OFL 1.1).</p>
+      <p style="margin-top:10px">Fontes tipográficas Fraunces, Inter e Figtree (SIL OFL 1.1).
+        Código sob licença MIT; os dados pertencem às suas fontes.</p>
       <p id="gerado-em"></p>
     </div>
   </div>
 </div></footer>
 
-<noscript><p class="wrap" style="padding:16px 0">Este site precisa de JavaScript para o mapa e o teste de localização.</p></noscript>
+<script type="module">
+/* O portal lê os mesmos site/data/*.json que o mapa: equipe, créditos e
+   atribuições têm uma única fonte de verdade (produto/autoria.py). */
+const DADOS = new URL("./data/", import.meta.url);
+
+/* ---------- tema ---------- */
+const botao = document.getElementById("botao-tema");
+botao.addEventListener("click", () => {
+  const escuro = getComputedStyle(document.documentElement).colorScheme.includes("dark");
+  const novo = escuro ? "light" : "dark";
+  document.documentElement.dataset.theme = novo;
+  try { localStorage.setItem("tema", novo); } catch (e) { /* bloqueado: só nesta aba */ }
+});
+
+/* ---------- espinha ---------- */
+const espinha = [
+  ["Anúncios", "48.895", "30.257", "−38,1%"],
+  ["Anfitriões distintos", "37.457", "16.472", "−56,0%"],
+  ["Exigem 30 noites ou mais", "9,2%", "81,7%", "+72,5 p.p."],
+  ["Parcela do 1% maior dos anfitriões", "10,1%", "25,0%", "+14,9 p.p."],
+  ["Anfitriões com mais de um anúncio", "33,9%", "56,1%", "+22,2 p.p."],
+  ["Imóvel inteiro", "52,0%", "55,5%", "+3,5 p.p."],
+  ["Diária mediana, em dólar de 2026", "US$ 137", "US$ 177", "+29,3%"],
+];
+document.getElementById("espinha-linhas").innerHTML = espinha.map(e =>
+  `<div class="ei"><span class="rot">${e[0]}</span><span class="a">${e[1]}</span>` +
+  `<span class="s">→</span><span class="b">${e[2]}</span><span class="d">${e[3]}</span></div>`).join("");
+
+/* ---------- análises ---------- */
+const D = "./docs/";
+const grupos = [
+  {n:"01", t:"Por que mudou", sub:"A regulação não é contexto de fundo: é a variável que explica quase tudo o que separa os dois retratos.", cards:[
+    {p:"Que leis existem por causa do Airbnb?", v:"05/09/2023", vs:"o marco",
+     r:"Nova York levou dezesseis anos até achar o mecanismo que funciona: obrigar a plataforma a não processar o pagamento de anúncio sem registro.",
+     ir:"Fontes externas §5", h:D+"03-fontes-externas/"},
+    {p:"A lei pegou?", v:"93,4%", vs:"dos anúncios curtos",
+     r:"Dos 5.540 anúncios de estadia curta, só 367 estão sem registro nem isenção. Mas 24.605 migraram para 30+ noites: saíram do alcance da lei em vez de cumpri-la.",
+     ir:"Entendimento dos dados", h:D+"02-entendimento-dos-dados/"},
+    {p:"Por que isso muda toda comparação?", v:"ADR 0005", vs:"",
+     r:"Depois da lei, o preço de um anúncio de 30+ noites é cotação com desconto mensal. Comparar sem estratificar mede composição, não preço.",
+     ir:"A decisão registrada", h:D+"adr/0005-comparabilidade-2019-2026/"},
+  ]},
+  {n:"02", t:"O que mudou no preço", sub:"Corrigido pela inflação de Nova York e separado por regime — sem as duas coisas, mede-se composição.", cards:[
+    {p:"O preço subiu?", v:"+22,8%", vs:"em dólar constante",
+     r:"Toda a alta vem de dentro dos estratos; a mudança de composição contribui negativamente. A estadia curta dobrou ou triplicou, a longa está onde estava.",
+     ir:"Comparativo 2019 → 2026", h:D+"05-comparativo-2019-2026/"},
+    {p:"O mercado de 2019 ainda explica o de hoje?", v:"33,3%", vs:"de erro, contra 25,3%",
+     r:"O modelo treinado em 2019, aplicado a 2026, perde oito pontos. O resíduo por área vira a valorização ajustada do mapa.",
+     ir:"Modelagem §deriva", h:D+"07-modelagem/"},
+  ]},
+  {n:"03", t:"Quem ficou", sub:"De 48.895 anúncios de 2019, 7.516 ainda existem. A pergunta é o que separou esses dos outros.", cards:[
+    {p:"Quem sobreviveu até 2026?", v:"15,4%", vs:"dos anúncios de 2019",
+     r:"Não foi quem cobrava mais nem quem estava no bairro nobre: foi quem já operava no regime que a lei ia exigir (2,08×) e quem tinha o calendário fechado (1,64×).",
+     ir:"Modelagem §sobrevivência", h:D+"07-modelagem/"},
+    {p:"Estar caro em 2019 previu sair?", v:"não", vs:"", nulo:true,
+     r:"A sobrevivência por quintil de preço vai de 12,9% a 16,9%, sem tendência. E o prêmio do bairro em 2019 não tem relação com sua sobrevivência: correlação 0,05, p = 0,72.",
+     ir:"Avaliação", h:D+"08-avaliacao/"},
+  ]},
+  {n:"04", t:"Quanto vale", sub:"Preço previsto, prêmio do lugar e a distância entre o que se cobra e o que o mercado equivalente cobraria.", cards:[
+    {p:"Quanto um imóvel deveria cobrar?", v:"25,0%", vs:"de erro mediano",
+     r:"Com faixa de 80% calibrada por tipo de acomodação, cobrindo 79,6% de verdade. Contra 46,6% da mediana por bairro × tipo, que é o que a análise descritiva sabe.",
+     ir:"Modelagem §escada", h:D+"07-modelagem/"},
+    {p:"A localização importa mesmo?", v:"0,44", vs:"de I de Moran",
+     r:"O resíduo de um modelo que só enxerga o imóvel se agrupa fortemente no espaço. O mesmo apartamento vale de −15% ao dobro da mediana, conforme o hexágono.",
+     ir:"Testes de localização", h:D+"06-testes-de-localizacao/"},
+    {p:"Quanto rende, e compensa contra o aluguel?", v:"0,55×", vs:"um ano de aluguel",
+     r:"Só 27,7% dos apartamentos inteiros ativos superam doze meses de contrato. Na estadia curta registrada são 1,69×; na de 30+ noites, 0,42×.",
+     ir:"Implantação", h:D+"09-implantacao/"},
+  ]},
+  {n:"05", t:"O que não fechou", sub:"Critério registrado antes de modelar que não foi atingido vira resultado publicado, não escopo removido.", cards:[
+    {p:"As fontes externas melhoraram a previsão?", v:"não", vs:"critério C4", nulo:true,
+     r:"No agregado pioram o erro em 0,35 p.p. frente ao mesmo modelo só com coordenadas. Sozinhas substituem as coordenadas quase sem perda: explicam o lugar, não preveem melhor.",
+     ir:"Avaliação §critérios", h:D+"08-avaliacao/"},
+    {p:"Dá para prever quem sobrevive?", v:"0,666", vs:"de AUC, alvo 0,70", nulo:true,
+     r:"Abaixo do limiar registrado. O modelo ficou explicativo: o mapa mostra a sobrevivência observada, não a prevista.",
+     ir:"Avaliação §critérios", h:D+"08-avaliacao/"},
+    {p:"O que a versão anterior errou?", v:"−0,11", vs:"de correlação",
+     r:"A 'ocupação de 69%' da v0 era calendário fechado, não ocupação: tem correlação negativa com a ocupação estimada pelas avaliações.",
+     ir:"Da v0 à v1", h:D+"00-v0-e-o-que-muda/"},
+  ]},
+];
+document.getElementById("grupos").innerHTML = grupos.map(g => `
+  <div class="grupo">
+    <div class="gcab"><span class="n2">${g.n}</span><h3>${g.t}</h3></div>
+    <p class="gsub">${g.sub}</p>
+    <div class="cartoes">${g.cards.map(c => `
+      <a class="cartao${c.nulo ? " nulo" : ""}" href="${c.h}">
+        <span class="perg">${c.p}</span>
+        <span class="v">${c.v}${c.vs ? ` <small>${c.vs}</small>` : ""}</span>
+        <span class="resp">${c.r}</span>
+        <span class="ir">${c.ir}</span>
+      </a>`).join("")}</div>
+  </div>`).join("");
+
+/* ---------- bases ---------- */
+const fontes = [
+  ["Kaggle — <i>NYC Airbnb Open Data</i>", "48.895 anúncios, 16 colunas. A base de partida do trabalho.", "08/07/2019", "CC0"],
+  ["Inside Airbnb — NYC", "30.257 anúncios, 90 colunas, com calendário, avaliações, licença e ocupação estimada.", "14/06/2026", "CC BY 4.0"],
+  ["US Census — ACS 5 anos", "Renda, aluguel e valor do imóvel medianos, densidade, vacância e proporção de alugados por setor censitário.", "2015–19 e 2020–24", "domínio público"],
+  ["Zillow — ZORI", "Índice de aluguel de longo prazo pedido, por CEP. É o denominador da comparação com o aluguel.", "até 06/2026", "com atribuição"],
+  ["NYC Open Data — NYPD", "Queixas de crime, separando crime grave, nos 12 meses antes de cada snapshot.", "2018–19 e 2025–26", "NYC Open Data"],
+  ["NYC Open Data — 311", "Reclamações de barulho georreferenciadas.", "2018–19 e 2025–26", "NYC Open Data"],
+  ["MTA — data.ny.gov", "Estações de metrô: distância à mais próxima, estações e linhas em 800 m.", "atual", "NY Open Data"],
+  ["OpenStreetMap — Overpass", "Restaurantes, bares, cafés, atrações, hotéis e parques no anel de células vizinhas.", "atual", "ODbL"],
+  ["BLS / FRED — CPI-U NY", "Inflação da região metropolitana. É o deflator que torna 2019 comparável: fator 1,2931.", "07/2019 → 06/2026", "domínio público"],
+  ["NYC OSE", "Relatórios anuais da Local Law 18: registros ativos, negados e revogados, por distrito do Conselho.", "FY23 a FY26", "domínio público"],
+];
+document.getElementById("tfontes").innerHTML = fontes.map(f =>
+  `<tr><td><b>${f[0]}</b></td><td>${f[1]}</td><td class="mono">${f[2]}</td><td class="mono">${f[3]}</td></tr>`).join("");
+
+/* ---------- gráficos ---------- */
+const figuras = [
+  ["escada.svg", "A escada de modelos", "O erro mediano cai de 53,5% (a mediana da cidade) a 21,7% no melhor modelo. O M5, que roda no navegador, erra 25,0% — e usa só o que alguém consegue informar.", "07-modelagem"],
+  ["estratos.svg", "Preço real por estrato", "A diária de 2019 em dólar constante contra a de 2026, separada por tipo e por mínimo de noites. A estadia longa não subiu; a curta dobrou.", "05-comparativo-2019-2026"],
+  ["min30_distritos.svg", "O mínimo de 30 noites por distrito", "De 9,2% para 81,7% dos anúncios, em todos os cinco distritos. É a Local Law 18 aparecendo no dado.", "05-comparativo-2019-2026"],
+  ["mapa_premio.png", "O prêmio de localização", "Quanto o mesmo apartamento de referência valeria em cada hexágono, contra a mediana da cidade: de −15% ao dobro.", "07-modelagem"],
+  ["shap_grupos.svg", "Contribuição por grupo de features", "O próprio anúncio responde por 74,5% do que o modelo usa. Entre as fontes externas, o aluguel de longo prazo do Zillow lidera.", "07-modelagem"],
+  ["ablacao.svg", "Ablação por fonte externa", "Quanto o erro muda ao remover cada fonte. É o número que responde o critério C4 — e que o reprovou.", "07-modelagem"],
+  ["dependencia.svg", "Dependência das variáveis de localização", "Como o preço previsto reage ao aluguel do entorno, à distância do centro e às demais variáveis do lugar.", "07-modelagem"],
+  ["sobrevivencia.svg", "Sobrevivência 2019 → 2026", "A taxa por tipo, por regime de noites, por recência de avaliação e por tamanho do anfitrião.", "07-modelagem"],
+  ["calibracao_sobrevivencia.svg", "Calibração da sobrevivência", "Previsto contra observado, por decil. O modelo calibra bem mesmo sem atingir o limiar de discriminação.", "07-modelagem"],
+  ["deriva.svg", "Deriva do modelo no tempo", "O erro do modelo de 2019 aplicado a 2026, contra o teto do que essas features explicam no mercado atual.", "07-modelagem"],
+];
+document.getElementById("galeria").innerHTML = figuras.map(f => `
+  <a class="fig" href="./docs/${f[3]}/">
+    <span class="tela"><img src="./docs/assets/figuras/${f[0]}" alt="${f[1]}" loading="lazy" decoding="async"></span>
+    <span class="txt"><h4>${f[1]}</h4><p>${f[2]}</p><span class="onde">no capítulo</span></span>
+  </a>`).join("");
+
+/* ---------- fases ---------- */
+const fases = [
+  ["FASE 1", "Negócio", "Sete critérios registrados antes de modelar e as seis perguntas herdadas da v0.", "01-entendimento-do-negocio"],
+  ["FASE 2", "Dados", "Hash conferido, quarentena com motivo para cada linha removida, nada descartado em silêncio.", "02-entendimento-dos-dados"],
+  ["FASE 3", "Preparação", "Oito fontes externas agregadas em 7.219 hexágonos, com a safra de cada feature declarada.", "04-preparacao-dos-dados"],
+  ["FASE 4", "Modelagem", "A escada, o intervalo conformal, o SHAP por fonte e a ablação deixando-uma-de-fora.", "07-modelagem"],
+  ["FASE 5", "Avaliação", "C1, C2, C3, C6 e C7 atendidos; C4 e C5 não — publicados como resultado nulo.", "08-avaliacao"],
+  ["FASE 6", "Implantação", "Site com mapa e simulador, documentação, CI e a paridade Python ↔ JavaScript.", "09-implantacao"],
+];
+document.getElementById("fases").innerHTML = fases.map(f =>
+  `<a class="fase" href="./docs/${f[3]}/"><span class="n2">${f[0]}</span><h4>${f[1]}</h4><p>${f[2]}</p></a>`).join("");
+
+/* ---------- critérios ---------- */
+const criterios = [["C1","modelo bate o baseline",1],["C2","erro utilizável",1],["C3","intervalo calibrado",1],
+  ["C4","dados externos agregam",0],["C5","sobrevivência prevê",0],["C6","site fiel ao modelo",1],["C7","reprodutível",1]];
+document.getElementById("criterios").innerHTML = criterios.map(c =>
+  `<span class="crit${c[2] ? "" : " falhou"}"><i></i><b>${c[0]}</b> ${c[1]}</span>`).join("");
+
+/* ---------- equipe e créditos, do mesmo JSON que o mapa usa ---------- */
+try {
+  const r = await fetch(new URL("resumo.json", DADOS));
+  if (r.ok) {
+    const d = await r.json();
+    document.getElementById("equipe").innerHTML = (d.equipe || []).map(p =>
+      `<li>${p.nome}${p.ra ? ` <span class="ra">${p.ra}</span>` : ""}</li>`).join("");
+    document.getElementById("credito").textContent = d.credito || "";
+    document.getElementById("atribuicoes").innerHTML = (d.atribuicoes || []).map(a =>
+      `<li><a href="${a.url}" target="_blank" rel="noopener">${a.texto}</a></li>`).join("");
+    if (d.gerado_em) {
+      document.getElementById("gerado-em").textContent = `Números gerados pelo pipeline em ${d.gerado_em}.`;
+    }
+  }
+} catch (e) {
+  /* sem os dados o portal continua legível: a equipe também está no repositório */
+  document.getElementById("credito").textContent = "Data Science 2 · ESEG · Prof. Marino Catarino";
+}
+</script>
 </body>
 </html>

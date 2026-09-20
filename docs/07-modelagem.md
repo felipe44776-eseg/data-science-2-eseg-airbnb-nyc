@@ -196,7 +196,7 @@ aluguel —, enquanto o aluguel mensal mobiliado pelo Airbnb fatura, na mediana,
 da metade de um aluguel tradicional. Parte dessa distância é método: a ocupação
 estimada de 30+ noites conta 60 noites por avaliação, e hóspedes de estadia longa
 avaliam menos — a receita desse grupo tende a estar subestimada. Por distrito e no
-[mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/) (métrica
+[mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/) (métrica
 "Airbnb × aluguel de longo prazo").
 
 ## 4. Sobrevivência 2019 → 2026

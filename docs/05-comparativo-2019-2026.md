@@ -91,6 +91,6 @@ Conselho está no mapa.
 ## 7. No mapa
 
 As métricas por célula H3 r8 (anúncios, variação, preço, 30+ noites, sobrevivência,
-valorização ajustada) estão no [mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/) — seletor "métrica". A variação de preço
+valorização ajustada) estão no [mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/) — seletor "métrica". A variação de preço
 bruta por célula mistura composição; a **valorização ajustada** (resíduo do modelo de
 2019, ver [Modelagem](07-modelagem.md) §5) é a leitura correta.
