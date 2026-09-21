@@ -31,8 +31,8 @@ Três leituras:
 - **De estadia curta a aluguel mensal.** O mínimo de 30 noites passou de exceção (9%)
   a regra (82%), em todos os distritos. É o efeito que a Local Law 18 desenhou, e ele
   aparece no dado — ver a ressalva causal em [Avaliação](08-avaliacao.md) §2.
-- **Não foi atrito: foi substituição.** "48.895 → 30.257" sugere que o mercado de hoje
-  é um subconjunto do de 2019. Não é. Só **24,8%** dos anúncios atuais existiam em
+- **Não foi só encolher: foi substituição.** O mercado encolheu — 38% menos anúncios.
+  Mas "48.895 → 30.257" sugere que o de hoje é um subconjunto do de 2019, e não é. Só **24,8%** dos anúncios atuais existiam em
   2019; outros 17,7% são novos de anfitriões que já estavam lá; e **57,5% são de
   anfitriões que não existiam em 2019**. Dos 37.457 anfitriões de 2019, só **19%**
   ainda anunciam. Mais da metade do mercado atual é gente que chegou depois da lei.
@@ -103,11 +103,18 @@ Enforcement (OSE). No snapshot, **7,7% dos anúncios exibem número de registro*
 (`OSE-STRREG-…`) e 9,8% se declaram isentos (hotéis e similares); 82,5% não informam —
 e quase todos esses são de 30+ noites, que não exigem registro. Entre os anúncios de
 estadia curta, 41% são registrados, 52% isentos e **6,6% não têm registro nem isenção**.
+A conta de cumprimento se faz **dentro da base**, com a mesma unidade dos dois lados:
+dos anúncios de estadia curta que precisam de registro — os que não se declaram
+isentos —, **86% exibem o número** (2.268 de 2.635); só 367 não. Somando os isentos,
+**93,4%** dos anúncios de estadia curta estão dentro da regra. A lei é cumprida por quem
+está no alcance dela; o que ela fez foi empurrar o mercado para fora desse alcance.
+
 Os relatórios anuais da OSE contam 105 registros ativos ao fim do primeiro ano fiscal da
-lei (jun/2023) e 3.338 em jun/2026. O denominador desses 3.338 **não são os 30 mil
-anúncios** — 82% deles exigem 30+ noites e não precisam de registro. São os 5.540 de
-estadia curta: **3.338 sobre 5.540 é 60%**, não 11%. A lei é cumprida por quem está no
-alcance dela; o que ela fez foi empurrar o mercado para fora desse alcance. Fonte e linha do tempo em
+lei (jun/2023) e 3.338 em jun/2026. **Esse número não se divide por contagem de
+anúncios**: é um cadastro de registros da cidade inteira, e registro não é anúncio — um
+anúncio pode não estar no snapshot, e um isento não precisa de registro. Uma versão
+anterior deste texto dividia os 3.338 pelos 5.540 anúncios de estadia curta e publicava
+"60%"; a conta misturava unidades e foi retirada. Fonte e linha do tempo em
 [Fontes externas](03-fontes-externas.md); a densidade de registros por distrito do
 Conselho está no mapa.
 

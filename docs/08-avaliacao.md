@@ -58,8 +58,9 @@ lugar. O modelo fica explicativo, como previsto no pré-registro.
       **todo o aparato espacial e as oito fontes externas compram 4,4 pontos de R².**
 
     A localização importa para o *nível* de preço — o I de Moran de 0,44 e o prêmio
-    que vai de −15% ao dobro não são ilusão. O que ela não faz é acrescentar
-    informação depois que o modelo já sabe onde o anúncio está.
+    que, em 95% das células, vai de −15% ao dobro (e passa disso nos 5% mais caros,
+    até +445%) não são ilusão. O que ela não faz é acrescentar informação depois que o
+    modelo já sabe onde o anúncio está.
 
 ### Quanto do encolhimento a Local Law 18 explica
 
@@ -75,13 +76,28 @@ resto:
 Se os expostos tivessem morrido à taxa dos controles, **2.823 anúncios a mais** teriam
 sobrevivido — sobre 41.379 mortes observadas, uma fração atribuível de **6,8%**.
 
-!!! warning "Isto é um piso sob um desenho contestável, não um efeito causal"
+!!! warning "Isto é uma ordem de grandeza sob um desenho contestável, não um efeito causal"
     Em 2019 o grupo de 30+ noites era 9,2% do mercado e atípico: estadia longa
     mobiliada, outro público, outra sazonalidade. A hipótese de tendências paralelas
     não é testável com dois pontos no tempo, e a pandemia atravessa o intervalo inteiro.
+
+    **O viés pode ir para os dois lados**, e por isso o número não é nem piso nem teto:
+
+    - o anúncio de estadia longa é, por natureza, um negócio mais estável — ele
+      sobreviveria mais mesmo sem lei nenhuma, o que **infla** a diferença e faz os
+      6,8% superestimarem o efeito da lei;
+    - parte do grupo de controle pode ter sido atingida de forma indireta (varreduras
+      da plataforma, anúncios que mudaram de regime depois de 2019), o que **reduz** a
+      diferença e faz os 6,8% subestimarem.
+
     O número **não** mede o efeito da lei. Ele serve para descartar uma afirmação forte
-    demais: que a LL18 explica *quase tudo* do encolhimento. Os outros 93% das saídas
-    aconteceram também entre quem a lei não alcançava.
+    demais: que a LL18 explica *quase tudo* do encolhimento. Para chegar de 7% a "quase
+    tudo", a lei teria de ter derrubado também a maior parte dos anúncios que ela nem
+    alcançava. As outras saídas aconteceram entre quem a lei não alcançava tanto quanto
+    entre quem ela alcançava.
+
+    Versões anteriores deste texto chamavam o número de "piso" aqui e de "no máximo" no
+    portal. As duas leituras não podiam estar certas ao mesmo tempo; nenhuma está.
 
 **O que muda no negócio:**
 

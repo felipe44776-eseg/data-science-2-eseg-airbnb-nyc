@@ -316,7 +316,7 @@
     "mortes_observadas": 41379.0,
     "sobreviventes_no_contrafactual": 2823.0,
     "fracao_atribuivel_pct": 6.82,
-    "limite": "controle atipico (9,2% do mercado de 2019) e tendencias paralelas nao testaveis com dois snapshots: e um piso, nao um efeito causal"
+    "limite": "controle atipico (9,2% do mercado de 2019) e tendencias paralelas nao testaveis com dois snapshots: e uma ordem de grandeza, nem piso nem teto, e nao um efeito causal"
   },
   "criterio_C5": {
     "auc_minimo": 0.7,

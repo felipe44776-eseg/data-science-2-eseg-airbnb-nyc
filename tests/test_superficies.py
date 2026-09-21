@@ -23,7 +23,9 @@ from airbnb.config import RAIZ, SITE_DADOS
 
 PORTAL = RAIZ / "site" / "index.html"
 DECK = RAIZ / "site" / "apresentacao" / "index.html"
+EXECUTIVA = RAIZ / "site" / "executiva" / "index.html"
 MAPA = RAIZ / "site" / "mapa" / "index.html"
+DECKS = [p for p in (DECK, EXECUTIVA)]
 
 
 def _pt(valor: float, casas: int = 1) -> str:
@@ -102,7 +104,8 @@ def test_o_preco_publicado_e_o_comparavel():
         "deck: ainda publica a variacao calculada com o preco descontado"
 
 
-def test_cada_slide_tem_o_proprio_frame():
+@pytest.mark.parametrize("deck", DECKS, ids=lambda p: p.parent.name)
+def test_cada_slide_tem_o_proprio_frame(deck):
     """Um slide fora do seu `.frame` divide a tela com o vizinho.
 
     Aconteceu: ao trocar um slide, o `</div>` que fechava o frame dele e o
@@ -112,9 +115,9 @@ def test_cada_slide_tem_o_proprio_frame():
     nao acusou nada.
     """
     import re
-    if not DECK.exists():
-        pytest.skip("deck ausente")
-    html = DECK.read_text(encoding="utf-8")
+    if not deck.exists():
+        pytest.skip(f"{deck.parent.name} ausente")
+    html = deck.read_text(encoding="utf-8")
     slide = re.compile(r'<section class="[^"]*\bslide\b')
     blocos = re.split(r'<div class="frame"', html)[1:]
     assert blocos, "o deck nao tem nenhum .frame"
@@ -123,6 +126,27 @@ def test_cada_slide_tem_o_proprio_frame():
         f"frames com numero de slides diferente de 1: "
         f"{[(i + 1, n) for i, n in enumerate(por_frame) if n != 1]}")
     assert len(slide.findall(html)) == len(blocos)
+
+
+def test_a_executiva_nao_escreve_nome_de_integrante(resumo):
+    """Nome de integrante so existe em produto/autoria.py (CLAUDE.md, invariante da
+    equipe). A versao executiva le os nomes de site/data/resumo.json em tempo de
+    execucao; se algum aparecer escrito no HTML, ele vai envelhecer sozinho."""
+    if not EXECUTIVA.exists():
+        pytest.skip("versao executiva ausente")
+    html = EXECUTIVA.read_text(encoding="utf-8")
+    escritos = [p["nome"] for p in resumo["equipe"] if p["nome"] in html]
+    assert not escritos, f"nomes escritos a mao na versao executiva: {escritos}"
+    assert "data-equipe-cartoes" in html and "resumo.json" in html
+
+
+def test_nenhuma_superficie_diz_que_o_mercado_nao_encolheu():
+    """O mercado encolheu: -38% de anuncios, -59% de oferta operada. O que o dado
+    mostra ALEM disso e que ele foi trocado. "Nao encolheu" confundiu quem leu."""
+    for p in (PORTAL, DECK, EXECUTIVA):
+        if p.exists():
+            assert "não encolheu" not in p.read_text(encoding="utf-8").lower(), \
+                f"{p.parent.name}: diz que o mercado nao encolheu"
 
 
 def test_o_deck_nao_inventa_precisao_na_cobertura(resumo, paginas):

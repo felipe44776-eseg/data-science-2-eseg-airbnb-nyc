@@ -136,9 +136,10 @@ def fracao_atribuivel_ll18(df: pd.DataFrame) -> dict:
     LIMITE, que vai publicado junto com o numero: em 2019 o grupo de 30+ noites
     era 9,2% do mercado e atipico — estadia longa mobiliada, outro publico, outra
     sazonalidade. Tendencias paralelas nao e testavel com dois pontos no tempo.
-    O resultado e um PISO sob um desenho contestavel, nao um efeito causal
-    estimado. Serve para dizer o que NAO se sustenta: que a lei explica "quase
-    tudo" do encolhimento.
+    O resultado e uma ORDEM DE GRANDEZA, nem piso nem teto: o controle e um negocio
+    mais estavel por natureza (infla a diferenca) e pode ter sido atingido de forma
+    indireta (reduz). Serve para dizer o que NAO se sustenta: que a lei explica
+    "quase tudo" do encolhimento.
     """
     m30 = df[S.COL_MIN30].astype(bool)
     exp, ctl = df.loc[~m30, E.SOBREVIVEU], df.loc[m30, E.SOBREVIVEU]
@@ -154,7 +155,8 @@ def fracao_atribuivel_ll18(df: pd.DataFrame) -> dict:
         "sobreviventes_no_contrafactual": round(salvos, 0),
         "fracao_atribuivel_pct": round(100 * salvos / mortes, 2),
         "limite": ("controle atipico (9,2% do mercado de 2019) e tendencias paralelas "
-                   "nao testaveis com dois snapshots: e um piso, nao um efeito causal"),
+                   "nao testaveis com dois snapshots: e uma ordem de grandeza, nem piso "
+                   "nem teto, e nao um efeito causal"),
     }
 
 

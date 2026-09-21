@@ -11,7 +11,8 @@ validados espacialmente e um site público com mapa e teste de localização.
     Escolha um ponto de Nova York e as características de um imóvel: o modelo devolve o
     preço por noite esperado, com faixa de erro, e quanto um anúncio ativo fatura ali.
 
-- :material-presentation-play: **[A apresentação do projeto](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/apresentacao/)**
+- :material-presentation-play: **[A apresentação executiva](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/executiva/)** ·
+  [versão técnica](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/apresentacao/)
 
     Vinte slides com os gráficos dos achados e o passo a passo de cada análise, da linha
     do tempo da Local Law 18 à escada de modelos. Setas para navegar, `F` para tela cheia.
