@@ -40,7 +40,7 @@ class Autor:
 #: Ordem alfabetica pelo primeiro nome, de proposito: nao ha primeiro autor.
 GRUPO: tuple[Autor, ...] = (
     Autor("Felipe Marins", "44776", "felipe44776-eseg"),
-    Autor("Otavio Bonfochi", None, "otaviobonfochisilva1-rgb"),
+    Autor("Otavio Bonfochi", "44585", "otaviobonfochisilva1-rgb"),
     Autor("Phelipe Torres Pamponet da França", "46643", "phelipe-061"),
     Autor("Tadeu Radovan Graça", "46305", "tadeu46305-prog"),
 )
