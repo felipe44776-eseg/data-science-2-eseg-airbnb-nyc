@@ -90,12 +90,23 @@ sobrevivido — sobre 41.379 mortes observadas, uma fração atribuível de **6,
 - **para a política pública**, a oferta de estadia curta encolheu junto com a LL18
   (−38% de anúncios, estadia curta de 91% para 18%) — embora só ~6,8% do encolhimento
   se sustente como atribuível a ela pelo controle acima. No mesmo período o mercado
-  concentrou-se (o 1% maior de anfitriões passou de 10% para 25% dos anúncios) e
-  sobrou um nicho de estadia curta legal que fatura 1,7 vez o aluguel tradicional;
+  concentrou-se (o 1% de anfitriões com mais anúncios passou de 10% para 25% dos
+  anúncios) e sobrou um nicho de estadia curta legal que fatura 1,7 vez o aluguel
+  tradicional;
 - **para o hóspede**, a diária da estadia curta que **restou legal** custa de 2 a 3
-  vezes mais que a de 2019 em termos reais (+96% em apartamento inteiro, +173% em
+  vezes mais que a de 2019 em termos reais (+97% em apartamento inteiro, +175% em
   quarto privativo, +318% em compartilhado). É o preço do que sobrou, não o preço da
-  mesma coisa: o estrato perdeu 87% dos anúncios no caminho.
+  mesma coisa: o estrato perdeu 87% dos anúncios no caminho. Na estadia longa, o
+  apartamento inteiro subiu **4,0%** em sete anos.
+
+!!! note "Os preços comparam a mesma definição nos dois anos"
+    O `price` de 2019 é a diária anunciada; o de 2026 é a cotação de uma estadia do
+    mínimo de noites **já com desconto** — 4,4% na mediana da estadia de 30+ noites.
+    Toda comparação de preço entre os dois anos usa, para 2026, o `preco_cheio`: a
+    diária sem desconto, que tem a mesma definição de 2019 e foi separada para isso
+    ainda no [entendimento dos dados](02-entendimento-dos-dados.md). Com o preço
+    descontado, o apartamento inteiro de 30+ noites parecia **6,4% mais barato** que em
+    2019; na mesma definição, está **4,0% mais caro**. O desconto escondia a alta.
 
 ## 3. Ameaças à validade
 

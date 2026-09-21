@@ -49,11 +49,21 @@ Três leituras:
 
 ![Preço real por estrato](assets/figuras/estratos.svg)
 
-A leitura por estrato desfaz a impressão da mediana agregada. **Quem aluga por 30+
-noites cobra hoje, em dólar constante, praticamente o mesmo que em 2019.** A alta está
-toda na **estadia curta** — que depois da LL18 ficou legal só para anfitrião
-registrado, morando no imóvel, ou para hotel: oferta escassa e cara. Os intervalos de
-confiança (bootstrap da mediana) mostram que as variações não são ruído.
+A leitura por estrato desfaz a impressão da mediana agregada. **O apartamento inteiro
+de 30+ noites cobra hoje, em dólar constante, praticamente o mesmo que em 2019: +4,0%
+em sete anos.** Os quartos de estadia longa subiram mais — +28% o privativo, +19% o
+compartilhado. A alta grande está toda na **estadia curta** — que depois da LL18 ficou
+legal só para anfitrião registrado, morando no imóvel, ou para hotel: oferta escassa e
+cara. Os intervalos de confiança (bootstrap da mediana) mostram que as variações não
+são ruído.
+
+!!! warning "Mesma definição de preço nos dois anos"
+    Em 2026 a tabela usa o `preco_cheio` — a diária **sem** desconto —, porque essa é a
+    definição do `price` de 2019. O `price` publicado em 2026 é a cotação de uma estadia
+    do mínimo de noites já com desconto mensal: 4,4% na mediana da estadia longa. Com
+    ele, o apartamento inteiro de 30+ noites parecia **6,4% mais barato** que em 2019; na
+    mesma definição, está **4,0% mais caro**. Até a revisão de método, esta seção
+    publicava a primeira versão.
 
 ## 4. Composição × preço: a decomposição
 

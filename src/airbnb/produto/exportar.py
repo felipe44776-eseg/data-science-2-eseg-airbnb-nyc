@@ -320,15 +320,20 @@ def metricas_celula() -> list[dict]:
         {"chave": "var_n_pct", "rotulo": "Variação de anúncios 2019 → 2026", "tipo": "divergente",
          "unidade": "%", "descricao": "Quanto o número de anúncios mudou desde 2019.",
          "como": "(anúncios 2026 ÷ anúncios 2019 − 1). Só células com 5+ anúncios em 2019."},
-        {"chave": "preco_2026", "rotulo": "Preço mediano por noite (2026)", "tipo": "sequencial",
-         "unidade": "US$", "descricao": "Metade dos anúncios cobra menos, metade mais.",
-         "como": "Mediana do preço anunciado. Em 2026 é a cotação de uma estadia do mínimo de "
-                 "noites, já com desconto mensal. Só células com 5+ anúncios com preço."},
-        {"chave": "var_preco_real_pct", "rotulo": "Variação do preço mediano (real)",
+        {"chave": "preco_2026", "rotulo": "Diária mediana, sem desconto (2026)",
+         "tipo": "sequencial", "unidade": "US$",
+         "descricao": "Metade dos anúncios cobra menos, metade mais.",
+         "como": "Mediana da diária anunciada SEM desconto (preco_cheio): a mesma definição do "
+                 "preço de 2019, para que as duas safras sejam comparáveis. A cotação que o "
+                 "hóspede paga em 2026 vem com desconto mensal — 4,4% na mediana da estadia "
+                 "de 30+ noites. Só células com 5+ anúncios com preço."},
+        {"chave": "var_preco_real_pct", "rotulo": "Variação da diária mediana (real)",
          "tipo": "divergente", "unidade": "%",
-         "descricao": "Preço de 2026 contra o de 2019 corrigido pela inflação de NYC.",
-         "como": "Mediana 2026 ÷ mediana 2019 × CPI-U NY − 1. Mistura a mudança de preço com a "
-                 "de composição (muito mais anúncios de 30+ noites hoje) — ver a métrica ajustada."},
+         "descricao": "Diária de 2026 contra a de 2019, corrigida pela inflação de NYC e na mesma "
+                      "definição (sem desconto).",
+         "como": "Mediana 2026 ÷ (mediana 2019 × CPI-U NY) − 1. Corrige inflação e desconto, mas "
+                 "ainda mistura composição (muito mais anúncios de 30+ noites hoje) — ver a "
+                 "valorização ajustada."},
         {"chave": "valorizacao_ajustada_pct",
          "rotulo": "Valorização ajustada, estadia de 30+ noites",
          "tipo": "divergente", "unidade": "%",

@@ -9,4 +9,4 @@
 | nas mãos do 1% maiores anfitriões | 10,1% | 25,0% |
 | calendário 100% fechado (availability_365 = 0) | 35,9% | 22,4% |
 | preço mediano nominal | US$ 106 | US$ 177 |
-| preço mediano real (US$ de 2026-06) | US$ 137 | US$ 177 |
+| preço mediano real (US$ de 2026-06) | US$ 137 | US$ 194 |

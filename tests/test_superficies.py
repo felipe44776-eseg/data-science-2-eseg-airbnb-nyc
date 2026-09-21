@@ -79,6 +79,52 @@ def test_nenhuma_superficie_anuncia_dado_provisorio():
             assert "faixa-provisoria" not in texto, f"{p.name} ainda tem a faixa provisoria"
 
 
+def test_o_preco_publicado_e_o_comparavel():
+    """O portal e o deck exibem a diaria de 2026 SEM desconto, a definicao de 2019.
+
+    Com o preco descontado, o apartamento inteiro de 30+ noites parecia 6,4% mais
+    barato que em 2019; na mesma definicao, esta 4,0% mais caro. Este teste amarra
+    o numero publicado ao resultado do pipeline, para que ele nao volte a escorregar.
+    """
+    comp = RAIZ / "data" / "processed" / "_comparativo.json"
+    if not (comp.exists() and PORTAL.exists() and DECK.exists()):
+        pytest.skip("_comparativo.json ou superficie ausente")
+    estratos = {(e["estrato"], e["tipo"]): e
+                for e in json.loads(comp.read_text(encoding="utf-8"))["preco_por_estrato"]}
+    longa = estratos[("30+ noites", "Entire home/apt")]
+    esperado = _pt(longa["variacao_real_pct"]) + "%"
+    for nome, p in (("portal", PORTAL), ("deck", DECK)):
+        html = p.read_text(encoding="utf-8")
+        assert esperado in html, f"{nome}: a variacao comparavel ({esperado}) nao aparece"
+    # no deck, "−6,4%" so poderia ser rotulo de grafico com o preco descontado. No
+    # portal ele aparece de proposito, no texto que explica a correcao.
+    assert "−6,4%" not in DECK.read_text(encoding="utf-8"), \
+        "deck: ainda publica a variacao calculada com o preco descontado"
+
+
+def test_cada_slide_tem_o_proprio_frame():
+    """Um slide fora do seu `.frame` divide a tela com o vizinho.
+
+    Aconteceu: ao trocar um slide, o `</div>` que fechava o frame dele e o
+    `<div class="frame">` que abria o seguinte sairam junto. Os dois slides
+    ficaram lado a lado no mesmo frame, o contador passou a dizer 19 em vez de 20
+    — e nenhum slide transbordava a propria caixa, entao a medicao de geometria
+    nao acusou nada.
+    """
+    import re
+    if not DECK.exists():
+        pytest.skip("deck ausente")
+    html = DECK.read_text(encoding="utf-8")
+    slide = re.compile(r'<section class="[^"]*\bslide\b')
+    blocos = re.split(r'<div class="frame"', html)[1:]
+    assert blocos, "o deck nao tem nenhum .frame"
+    por_frame = [len(slide.findall(b)) for b in blocos]
+    assert all(n == 1 for n in por_frame), (
+        f"frames com numero de slides diferente de 1: "
+        f"{[(i + 1, n) for i, n in enumerate(por_frame) if n != 1]}")
+    assert len(slide.findall(html)) == len(blocos)
+
+
 def test_o_deck_nao_inventa_precisao_na_cobertura(resumo, paginas):
     """0,79578 exibido como '80%' vira a tautologia 'a faixa de 80% acerta 80%'."""
     cobertura = _pt(100 * resumo["modelo_preco"]["cobertura_80"]) + "%"
