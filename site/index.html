@@ -261,7 +261,8 @@ footer{background:var(--paper-2); border-top:1px solid var(--line); padding-bloc
 
     <div class="botoes">
       <a class="botao botao-pri" href="./mapa/">Abrir o mapa e o simulador</a>
-      <a class="botao botao-sec" href="./apresentacao/">Ver a apresentação</a>
+      <a class="botao botao-sec" href="./executiva/">Ver a apresentação</a>
+      <a class="botao botao-sec" href="./apresentacao/">Apresentação técnica</a>
       <a class="botao botao-sec" href="./docs/">Documentação</a>
       <a class="botao botao-sec" href="https://github.com/felipe44776-eseg/data-science-2-eseg-airbnb-nyc" target="_blank" rel="noopener">Código <span class="ext">↗</span></a>
     </div>
@@ -307,7 +308,8 @@ footer{background:var(--paper-2); border-top:1px solid var(--line); padding-bloc
 <section id="bases">
   <div class="cab">
     <h2>As bases</h2>
-    <p>Dez fontes, oito delas buscadas fora do Kaggle. Cada uma com safra declarada, licença e hash
+    <p>Dez fontes: as duas bases do Airbnb — Kaggle para 2019, Inside Airbnb para 2026 — e oito
+    fontes públicas externas. Cada uma com safra declarada, licença e hash
     conferido no manifesto — dado não entra no repositório, o hash entra.</p>
   </div>
   <div class="tab-wrap">
@@ -376,7 +378,8 @@ footer{background:var(--paper-2); border-top:1px solid var(--line); padding-bloc
       <p id="credito"></p>
       <div class="links">
         <a class="botao botao-sec" href="./mapa/">Mapa e simulador</a>
-        <a class="botao botao-sec" href="./apresentacao/">Apresentação</a>
+        <a class="botao botao-sec" href="./executiva/">Apresentação</a>
+        <a class="botao botao-sec" href="./apresentacao/">Apresentação técnica</a>
         <a class="botao botao-sec" href="./docs/">Documentação</a>
         <a class="botao botao-sec" href="https://github.com/felipe44776-eseg/data-science-2-eseg-airbnb-nyc" target="_blank" rel="noopener">GitHub <span class="ext">↗</span></a>
       </div>
@@ -425,13 +428,13 @@ const D = "./docs/";
 const grupos = [
   {n:"01", t:"Por que mudou", sub:"A regulação redesenhou o mercado — mas quanto dela explica o encolhimento é outra pergunta, e a resposta é bem menor do que parece.", cards:[
     {p:"Que leis existem por causa do Airbnb?", v:"05/09/2023", vs:"o marco",
-     r:"Nova York levou dezesseis anos até achar o mecanismo que funciona: obrigar a plataforma a não processar o pagamento de anúncio sem registro.",
+     r:"Nova York levou treze anos, da lei de 2010 à fiscalização de 2023, até achar o mecanismo que funciona: obrigar a plataforma a não processar o pagamento de anúncio sem registro.",
      ir:"Fontes externas §5", h:D+"03-fontes-externas/"},
     {p:"A lei pegou?", v:"93,4%", vs:"dos anúncios curtos",
      r:"Dos 5.540 anúncios de estadia curta, só 367 estão sem registro nem isenção. Mas 24.605 migraram para 30+ noites: saíram do alcance da lei em vez de cumpri-la.",
      ir:"Entendimento dos dados", h:D+"02-entendimento-dos-dados/"},
-    {p:"Quanto do encolhimento a lei explica?", v:"6,8%", vs:"no máximo",
-     r:"O grupo de controle sempre esteve na base: quem já exigia 30+ noites em 2019 nunca esteve no alcance do registro, e sobreviveu 21,1% contra 14,8%. A diferença responde por 6,8% das saídas — os outros 93% atingiram os dois grupos igualmente.",
+    {p:"Quanto do encolhimento a lei explica?", v:"~7%", vs:"pela conta mais simples",
+     r:"O grupo de controle sempre esteve na base: quem já exigia 30+ noites em 2019 nunca esteve no alcance do registro, e sobreviveu 21,1% contra 14,8%. A diferença responde por 6,8% das saídas; as outras aconteceram também entre quem a lei nem alcançava. É uma ordem de grandeza, não um efeito medido — mas está longe de 'quase tudo'.",
      ir:"Avaliação §2, com a ressalva", h:D+"08-avaliacao/"},
     {p:"Por que isso muda toda comparação?", v:"ADR 0005", vs:"",
      r:"Depois da lei, o preço de um anúncio de 30+ noites é cotação com desconto mensal. Comparar sem estratificar mede composição, não preço.",
@@ -449,7 +452,7 @@ const grupos = [
      ir:"Modelagem §deriva", h:D+"07-modelagem/"},
   ]},
   {n:"03", t:"Quem ficou — e quem chegou", sub:"De 48.895 anúncios de 2019, 7.516 ainda existem. Mas o mercado de hoje não é o que sobrou daquele: é outro.", cards:[
-    {p:"O mercado encolheu ou foi trocado?", v:"57,5%", vs:"são gente nova",
+    {p:"O mercado só encolheu, ou também foi trocado?", v:"57,5%", vs:"são gente nova",
      r:"Só 24,8% dos anúncios de hoje existiam em 2019. Outros 17,7% são novos de anfitriões antigos, e 57,5% vêm de anfitriões que não existiam. Dos 37.457 anfitriões de 2019, só 19% ainda anunciam. E a oferta efetivamente operada caiu 59,3%, não 38%.",
      ir:"Comparativo §2", h:D+"05-comparativo-2019-2026/"},
     {p:"Quem sobreviveu até 2026?", v:"15,4%", vs:"dos anúncios de 2019",
@@ -464,7 +467,7 @@ const grupos = [
      r:"Com faixa de 80% calibrada por tipo de acomodação, cobrindo 79,6% de verdade. Contra 46,6% da mediana por bairro × tipo, que é o que a análise descritiva sabe.",
      ir:"Modelagem §escada", h:D+"07-modelagem/"},
     {p:"A localização importa mesmo?", v:"0,44", vs:"de I de Moran",
-     r:"O resíduo de um modelo que só enxerga o imóvel se agrupa fortemente no espaço. O mesmo apartamento vale de −15% ao dobro da mediana, conforme o hexágono.",
+     r:"O resíduo de um modelo que só enxerga o imóvel se agrupa fortemente no espaço. Em 95% da cidade, o mesmo apartamento vale de −15% ao dobro da mediana, conforme o hexágono; nos 5% mais caros, passa disso.",
      ir:"Testes de localização", h:D+"06-testes-de-localizacao/"},
     {p:"Quanto rende, e compensa contra o aluguel?", v:"0,55×", vs:"um ano de aluguel",
      r:"Só 27,7% dos apartamentos inteiros ativos superam doze meses de contrato. Na estadia curta registrada são 1,69×; na de 30+ noites, 0,42×.",
@@ -516,7 +519,7 @@ const figuras = [
   ["escada.svg", "A escada de modelos", "O erro mediano cai de 53,5% (a mediana da cidade) a 21,7% no melhor modelo. O M5, que roda no navegador, erra 25,0% — e usa só o que alguém consegue informar.", "07-modelagem"],
   ["estratos.svg", "Preço real por estrato", "A diária de 2019 em dólar constante contra a de 2026, separada por tipo e por mínimo de noites. A estadia longa não subiu; a curta dobrou.", "05-comparativo-2019-2026"],
   ["min30_distritos.svg", "O mínimo de 30 noites por distrito", "De 9,2% para 81,7% dos anúncios, em todos os cinco distritos. É a Local Law 18 aparecendo no dado.", "05-comparativo-2019-2026"],
-  ["mapa_premio.png", "O prêmio de localização", "Quanto o mesmo apartamento de referência valeria em cada hexágono, contra a mediana da cidade: de −15% ao dobro.", "07-modelagem"],
+  ["mapa_premio.png", "O prêmio de localização", "Quanto o mesmo apartamento de referência valeria em cada hexágono, contra a mediana da cidade: de −15% ao dobro em 95% das células, e bem mais nas mais caras.", "07-modelagem"],
   ["shap_grupos.svg", "Contribuição por grupo de features", "O próprio anúncio responde por 74,5% do que o modelo usa. Entre as fontes externas, o aluguel de longo prazo do Zillow lidera.", "07-modelagem"],
   ["ablacao.svg", "Ablação por fonte externa", "Quanto o erro muda ao remover cada fonte. É o número que responde o critério C4 — e que o reprovou.", "07-modelagem"],
   ["dependencia.svg", "Dependência das variáveis de localização", "Como o preço previsto reage ao aluguel do entorno, à distância do centro e às demais variáveis do lugar.", "07-modelagem"],

@@ -1,0 +1,1476 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Airbnb em Nova York · versão executiva · ESEG</title>
+<meta name="description" content="Versão executiva: o que uma lei fez com o Airbnb de Nova York entre 2019 e 2026. ESEG, Data Science 2. Análise acadêmica independente, não afiliada ao Airbnb, Inc.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7-12-7V9z' fill='%23FF5A5F'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FFFFFF'/%3E%3C/svg%3E">
+<link rel="preload" href="../vendor/fontes/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Figtree servida pelo proprio site (ADR 0004): a apresentacao roda offline,
+   e a paginacao dos slides nao depende de terceiro no ar. SIL OFL 1.1 —
+   ../vendor/fontes/OFL-Figtree.txt */
+@font-face{
+  font-family:"Figtree";
+  font-style:normal;
+  font-weight:300 900;
+  font-display:swap;
+  src:url("../vendor/fontes/figtree-latin.woff2") format("woff2");
+}
+
+/* ============================================================
+   Tokens
+   ============================================================ */
+:root{
+  --slide-w:1280px;
+  --slide-h:720px;
+  --s:1;
+
+  --rausch:#FF5A5F;        /* primaria / acento  */
+  --rausch-texto:#E61E4D;  /* variante p/ texto pequeno (contraste 4,5:1) */
+  --babu:#00A699;          /* secundaria (teal)  */
+  --arches:#FC642D;        /* decorativo apenas  */
+  --hof:#484848;
+  --foggy:#767676;
+  --branco:#FFFFFF;
+  --cinza:#F7F7F7;
+  --linha:#EBEBEB;
+  --grad:linear-gradient(135deg,#E61E4D,#D70466);
+
+  --mono:ui-monospace,"Cascadia Mono","Cascadia Code",Consolas,"SFMono-Regular",Menlo,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#26262b}
+body{
+  font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--hof);
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,p,li{hyphens:none}
+
+/* ============================================================
+   Geometria: palco, moldura, slide
+   ============================================================ */
+#deck{
+  height:100vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scroll-snap-type:y mandatory;
+}
+.frame{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
+.slide{
+  position:relative;
+  flex:none;
+  width:var(--slide-w);
+  height:var(--slide-h);
+  overflow:hidden;
+  background:var(--branco);
+  transform:scale(var(--s));
+  box-shadow:0 14px 56px rgba(0,0,0,.42);
+  padding:52px 72px 44px;
+  display:flex;
+  flex-direction:column;
+}
+.slide.cinza{background:var(--cinza)}
+
+/* ============================================================
+   Tipografia
+   ============================================================ */
+.eyebrow{
+  font-size:12.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--rausch-texto);margin-bottom:12px;
+}
+.eyebrow.neutro{color:var(--foggy)}
+.h1{font-size:40px;font-weight:800;line-height:1.1;letter-spacing:-.021em;color:var(--hof);max-width:24ch}
+.h1.larga{max-width:34ch}
+.h2{font-size:23px;font-weight:800;line-height:1.2;letter-spacing:-.015em}
+.h3{font-size:16px;font-weight:800;letter-spacing:-.005em}
+.lede{font-size:18px;line-height:1.46;color:var(--foggy);max-width:92ch;font-weight:400}
+.body{font-size:14.5px;line-height:1.52}
+.caption{font-size:12px;line-height:1.45;color:var(--foggy)}
+.mono{font-family:var(--mono);font-size:13px;letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.forte{font-weight:800}
+.rausch{color:var(--rausch-texto)}
+.foggy{color:var(--foggy)}
+.head{margin-bottom:26px}
+.head .lede{margin-top:12px}
+
+/* rodape impresso */
+.foot{
+  position:absolute;left:72px;right:72px;bottom:20px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9a9a9a;
+  border-top:1px solid var(--linha);padding-top:9px;
+}
+.corpo{flex:1;min-height:0}
+
+/* ============================================================
+   Capa e divisorias
+   ============================================================ */
+.capa,.divisoria{
+  background:var(--grad);color:var(--branco);
+  justify-content:center;
+}
+.capa::after,.divisoria::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 80% 18%,rgba(255,255,255,.17),transparent 52%),
+             radial-gradient(circle at 8% 96%,rgba(0,0,0,.14),transparent 46%);
+}
+.capa > *,.divisoria > *{position:relative;z-index:1}
+.capa .titulo{font-size:66px;font-weight:800;line-height:1.02;letter-spacing:-.032em}
+.capa .sub{font-size:25px;font-weight:600;line-height:1.28;margin-top:16px;color:rgba(255,255,255,.93);max-width:26ch}
+.capa .regua{width:96px;height:5px;background:rgba(255,255,255,.85);border-radius:3px;margin:30px 0 26px}
+.capa .meta{font-size:15px;line-height:1.7;color:rgba(255,255,255,.95)}
+.capa .meta .rot{font-size:11.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.72);display:block;margin-bottom:2px}
+.capa .equipe{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.capa .equipe span{
+  font-size:13.5px;font-weight:600;padding:6px 13px;border-radius:999px;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+}
+.aviso{
+  font-size:11px;line-height:1.5;color:rgba(255,255,255,.8);
+  border-top:1px solid rgba(255,255,255,.3);padding-top:11px;margin-top:26px;max-width:62ch;
+}
+.aviso.escuro{color:var(--foggy);border-top-color:var(--linha)}
+
+.divisoria .kicker{font-size:13px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.divisoria .titulo{font-size:62px;font-weight:800;line-height:1.04;letter-spacing:-.03em;margin-top:14px}
+.divisoria .apoio{font-size:19px;line-height:1.45;color:rgba(255,255,255,.9);margin-top:20px;max-width:58ch}
+.divisoria .passo{
+  position:absolute;right:72px;bottom:56px;z-index:1;
+  font-size:120px;font-weight:800;color:rgba(255,255,255,.17);line-height:1;letter-spacing:-.04em;
+}
+
+/* ============================================================
+   Cartoes, grades, chips
+   ============================================================ */
+.grade{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+
+.card{
+  background:var(--branco);border:1px solid var(--linha);border-radius:14px;
+  padding:18px 20px;
+}
+.card.solida{background:var(--cinza);border-color:transparent}
+.card .rot{font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--foggy);margin-bottom:10px}
+.card .titulo{font-size:17px;font-weight:800;line-height:1.25;margin-bottom:7px}
+
+.chip{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12px;font-weight:800;letter-spacing:.02em;
+  padding:5px 11px;border-radius:999px;background:var(--cinza);color:var(--hof);
+}
+.chip.rausch{background:rgba(255,90,95,.14);color:var(--rausch-texto)}
+.chip.babu{background:rgba(0,166,153,.14);color:#00716A}
+
+.num-xl{font-size:52px;font-weight:800;line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.num-lg{font-size:33px;font-weight:800;line-height:1.02;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.num-md{font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+
+/* cartao de comparacao 2019 -> 2026 (slide 3) */
+.comp{
+  background:var(--branco);border:1px solid var(--linha);border-radius:16px;
+  padding:20px 18px 18px;display:flex;flex-direction:column;height:100%;
+}
+.comp .rot{font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--foggy);line-height:1.35;min-height:32px}
+.comp .antes{display:flex;align-items:center;gap:9px;margin-top:14px}
+.comp .depois{display:flex;align-items:center;gap:9px;margin-top:8px}
+.comp .antes .v{font-size:24px;font-weight:600;color:var(--foggy);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.comp .depois .v{font-size:34px;font-weight:800;color:var(--hof);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.comp .ano{font-size:11px;font-weight:800;color:var(--foggy);letter-spacing:.08em}
+.comp .rodape{margin-top:auto;padding-top:14px}
+
+/* marcadores de serie */
+.mk{display:inline-block;width:13px;height:13px;border-radius:50%;flex:none}
+.mk-2019{background:var(--branco);border:2.5px solid var(--foggy)}
+.mk-2026{background:var(--rausch)}
+.mk-quad{border-radius:3px}
+.mk-base{background:var(--foggy)}
+.mk-mod{background:var(--rausch)}
+.mk-babu{background:var(--babu)}
+.mk-hof{background:var(--hof)}
+.legend{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.legend .lg{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--hof)}
+
+/* ============================================================
+   Graficos — HTML/CSS puro
+   ============================================================ */
+.chart{position:relative}
+.plot-layer{
+  position:absolute;top:0;
+  bottom:var(--plotbot,22px);   /* 22px = eixo; 40px quando ha legenda de eixo */
+  left:calc(var(--labw) + 14px);
+  right:var(--rightgutter,0px);
+  pointer-events:none;
+}
+.gl{position:absolute;top:0;bottom:0;width:1px;background:var(--linha)}
+.gl-zero{position:absolute;top:0;bottom:0;width:1px;background:var(--foggy)}
+.base-line{position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--linha)}
+
+.rows{display:flex;flex-direction:column;gap:var(--rowgap,16px);position:relative;z-index:1}
+.row{display:grid;grid-template-columns:var(--labw) 1fr var(--extraw,0px);gap:14px;align-items:center}
+.row-lab{font-size:13.5px;line-height:1.25;text-align:right;color:var(--hof);font-weight:600}
+.row-lab small{display:block;font-size:11.5px;font-weight:400;color:var(--foggy)}
+.row-extra{font-size:13px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.grupo{
+  grid-column:1 / -1;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--foggy);padding-top:4px;
+}
+
+.track{position:relative;height:var(--bh,24px)}
+.bar{position:absolute;top:0;height:100%;border-radius:0 3px 3px 0;background:var(--rausch)}
+.bar.esq{border-radius:3px 0 0 3px}
+.bar.base{background:var(--foggy)}
+.bar.babu{background:var(--babu)}
+.bar.hof{background:var(--hof)}
+.bar-v{
+  position:absolute;top:50%;transform:translateY(-50%);
+  font-size:13px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;
+  padding-left:10px;color:var(--hof);
+}
+.bar-v.l{transform:translate(-100%,-50%);padding-left:0;padding-right:10px}
+
+.axis{display:grid;grid-template-columns:var(--labw) 1fr var(--extraw,0px);gap:14px;margin-top:6px}
+.axis-line{position:relative;height:16px;grid-column:2}
+.axis-line span{
+  position:absolute;top:0;font-size:11.5px;color:var(--foggy);font-variant-numeric:tabular-nums;
+  transform:translateX(-50%);white-space:nowrap;
+}
+.axis-line span.ini{transform:none}
+.axis-line span.fim{transform:translateX(-100%)}
+.axis-tit{font-size:11.5px;color:var(--foggy);margin-top:2px}
+
+/* halteres */
+.db-line{position:absolute;top:50%;height:3px;transform:translateY(-50%);background:#DCDCDC;border-radius:2px}
+.db-p{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;transform:translate(-50%,-50%)}
+.db-2019{background:var(--branco);border:2.5px solid var(--foggy);z-index:2}
+.db-2026{background:var(--rausch);z-index:3}
+.db-v{
+  position:absolute;top:50%;font-size:12.5px;font-weight:800;white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.db-v.l{transform:translate(-100%,-50%);padding-right:11px}
+.db-v.r{transform:translateY(-50%);padding-left:11px}
+.db-v.v19{color:var(--foggy)}
+.db-v.v26{color:var(--rausch-texto)}
+
+/* colunas verticais */
+.cols{display:flex;align-items:flex-end;gap:26px;height:190px;position:relative;z-index:1}
+.col{width:58px;position:relative;height:100%;display:flex;align-items:flex-end}
+.col .fill{width:100%;background:var(--rausch);border-radius:4px 4px 0 0}
+.col .v{
+  position:absolute;left:0;right:0;text-align:center;font-size:13px;font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+.hl{position:absolute;left:0;right:0;height:1px;background:var(--linha)}
+.hl-rot{position:absolute;right:calc(100% + 8px);font-size:11.5px;color:var(--foggy);transform:translateY(-50%);font-variant-numeric:tabular-nums}
+
+/* ============================================================
+   Blocos especificos
+   ============================================================ */
+/* linha do tempo */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--linha)}
+.tl-item{position:relative;padding-bottom:17px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{
+  content:"";position:absolute;left:-26px;top:5px;width:12px;height:12px;border-radius:50%;
+  background:var(--branco);border:2.5px solid var(--foggy);
+}
+.tl-item.forte-no::before{background:var(--rausch);border-color:var(--rausch)}
+.tl-data{font-size:11.5px;font-weight:800;letter-spacing:.07em;color:var(--rausch-texto);text-transform:uppercase}
+.tl-data .esc{color:var(--foggy);font-weight:600}
+.tl-tit{font-size:15px;font-weight:800;line-height:1.25;margin-top:2px}
+.tl-txt{font-size:12.5px;line-height:1.45;color:var(--foggy);margin-top:3px}
+.tl-item.destaque{
+  background:rgba(255,90,95,.08);border-left:3px solid var(--rausch);
+  border-radius:0 10px 10px 0;padding:11px 14px 12px;margin:4px 0 13px -14px;
+}
+.tl-item.destaque::before{left:-12px;top:16px;background:var(--rausch);border-color:var(--rausch)}
+.tl-item.destaque .tl-tit{font-size:16.5px}
+.tl-item.destaque .tl-txt{color:var(--hof)}
+
+/* fluxo (mecanismo) */
+.fluxo{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:12px}
+.no{
+  font-size:13px;font-weight:800;padding:9px 14px;border-radius:10px;
+  background:var(--branco);border:1px solid var(--linha);white-space:nowrap;
+}
+.no.forte{background:var(--rausch);border-color:var(--rausch);color:var(--branco)}
+.no.teal{background:var(--babu);border-color:var(--babu);color:var(--branco)}
+.seta{color:var(--foggy);font-size:17px;font-weight:800;line-height:1}
+
+/* listas */
+ul.lista{list-style:none}
+ul.lista li{
+  font-size:13.5px;line-height:1.4;padding-left:19px;position:relative;margin-bottom:8px;
+}
+ul.lista li::before{
+  content:"";position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--rausch);
+}
+ul.lista.teal li::before{background:var(--babu)}
+ul.lista.cinza li::before{background:#C9C9C9}
+ul.lista.num{counter-reset:it}
+ul.lista.num li{counter-increment:it;padding-left:30px;margin-bottom:11px}
+ul.lista.num li::before{
+  content:counter(it);width:21px;height:21px;border-radius:50%;background:var(--cinza);
+  color:var(--hof);font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  top:0;
+}
+
+/* tabela compacta */
+table.tb{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.tb th{
+  font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--foggy);
+  text-align:right;padding:0 0 7px;border-bottom:1px solid var(--linha);
+}
+table.tb th:first-child{text-align:left}
+table.tb td{font-size:13.5px;padding:9px 0;border-bottom:1px solid var(--linha);text-align:right}
+table.tb td:first-child{text-align:left;font-weight:600}
+table.tb td small{display:block;font-size:11px;color:var(--foggy);font-weight:400}
+table.tb tr:last-child td{border-bottom:none}
+
+/* passos do pipeline */
+.etapas{display:flex;flex-direction:column;gap:5px}
+.etapa{
+  font-family:var(--mono);font-size:12.5px;display:flex;align-items:center;gap:10px;
+  background:var(--branco);border:1px solid var(--linha);border-radius:7px;padding:5px 11px;
+}
+.etapa i{font-style:normal;color:var(--foggy);font-size:10.5px;width:16px}
+
+/* links de fecho */
+.link{
+  font-family:var(--mono);font-size:12.5px;background:var(--cinza);border-radius:8px;
+  padding:9px 13px;display:flex;align-items:center;gap:9px;
+}
+.link b{font-family:"Figtree",sans-serif;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--foggy)}
+
+/* ============================================================
+   HUD de apresentacao (fora do PDF)
+   ============================================================ */
+.hud{
+  position:fixed;right:18px;bottom:16px;z-index:50;
+  display:flex;align-items:center;gap:12px;
+  background:rgba(20,20,24,.78);color:#fff;border-radius:999px;
+  padding:8px 16px;font-size:12.5px;font-weight:600;letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;backdrop-filter:blur(6px);
+}
+.hud .dica{color:rgba(255,255,255,.62);font-weight:400;font-size:11px}
+.barra{
+  position:fixed;left:0;top:0;height:3px;width:100%;z-index:50;background:rgba(255,255,255,.14);
+}
+.barra i{display:block;height:100%;width:0;background:var(--rausch);transition:width .22s ease}
+
+/* ============================================================
+   Escala de tela / impressao
+   ============================================================ */
+@page{size:1280px 720px;margin:0}
+
+@media print{
+  html,body{background:#fff;margin:0;padding:0}
+  #deck{height:auto;overflow:visible;display:block;scroll-snap-type:none}
+  .frame{height:auto;display:block;page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid}
+  .frame:last-child{page-break-after:avoid;break-after:auto}
+  .slide{transform:none !important;box-shadow:none;border-radius:0}
+  .no-print{display:none !important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="barra no-print"><i id="barra-fill"></i></div>
+
+<main id="deck">
+
+<!-- ========== 01 · CAPA ========== -->
+<div class="frame"><section class="slide capa">
+  <div style="font-size:13px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:14px">2019 → 2026</div>
+  <div class="titulo">Airbnb em<br>Nova York</div>
+  <div class="sub">O que uma lei fez com um mercado em sete anos</div>
+  <div class="regua"></div>
+  <div class="meta">
+    <span class="rot">Data Science 2 · ESEG · Prof. Marino Catarino</span>
+  </div>
+  <!-- nomes: preenchidos por script a partir de site/data/resumo.json (fonte única: produto/autoria.py) -->
+  <div class="equipe" data-equipe-linha></div>
+  <div class="aviso">Análise acadêmica independente. Não afiliada ao Airbnb, Inc.</div>
+</section></div>
+
+<!-- ========== 02 · A EQUIPE ========== -->
+<div class="frame"><section class="slide" style="justify-content:center;padding-bottom:96px">
+  <div class="head">
+    <div class="eyebrow">A equipe</div>
+    <h1 class="h1 larga">Quem fez</h1>
+  </div>
+
+  <div class="corpo" style="flex:none">
+    <!-- cartões: preenchidos por script a partir de site/data/resumo.json (fonte única: produto/autoria.py) -->
+    <div class="grade g4" data-equipe-cartoes></div>
+    <p class="body foggy" style="margin-top:26px">Data Science 2 · ESEG · Prof. Marino Catarino</p>
+  </div>
+
+  <div class="foot"><span>Apresentação · a equipe</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== 03 · O QUE FIZEMOS ========== -->
+<div class="frame"><section class="slide cinza">
+  <div class="head">
+    <div class="eyebrow">O que fizemos</div>
+    <h1 class="h1 larga">Dois retratos, oito fontes públicas e um mapa que qualquer um pode usar.</h1>
+  </div>
+
+  <div class="corpo">
+    <div style="position:relative;display:flex;flex-direction:column;gap:12px">
+      <!-- fio que liga os passos: fica atrás dos cartões e aparece só nos vãos -->
+      <span style="position:absolute;left:39px;top:30px;bottom:30px;width:2px;background:#DCDCDC"></span>
+
+      <div class="card" style="position:relative;padding:15px 22px;display:grid;grid-template-columns:36px 318px 1fr;gap:24px;align-items:center">
+        <span class="num" style="width:36px;height:36px;border-radius:50%;background:var(--rausch-texto);color:var(--branco);font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">1</span>
+        <div>
+          <div class="titulo" style="margin-bottom:3px">Juntamos dois retratos</div>
+          <p class="body foggy">O mesmo mercado em dois momentos, com sete anos entre eles.</p>
+        </div>
+        <div style="display:flex;gap:48px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="mk mk-2019"></span>
+            <div>
+              <div class="num-md foggy">48.895</div>
+              <div class="caption">anúncios · julho de 2019 · Kaggle</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="mk mk-2026"></span>
+            <div>
+              <div class="num-md" style="color:var(--rausch-texto)">30.257</div>
+              <div class="caption">anúncios · junho de 2026 · Inside Airbnb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;padding:15px 22px;display:grid;grid-template-columns:36px 318px 1fr;gap:24px;align-items:center">
+        <span class="num" style="width:36px;height:36px;border-radius:50%;background:var(--rausch-texto);color:var(--branco);font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span>
+        <div>
+          <div class="titulo" style="margin-bottom:3px">Enriquecemos com dados públicos</div>
+          <p class="body foggy">Oito fontes além das bases do Airbnb: o bairro, a economia e a própria lei.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px">
+          <span class="chip">Censo: renda e aluguel</span>
+          <span class="chip">Crimes</span>
+          <span class="chip">Queixas de barulho</span>
+          <span class="chip">Metrô</span>
+          <span class="chip">Zillow: aluguel de longo prazo</span>
+          <span class="chip">Inflação de Nova York</span>
+          <span class="chip">OpenStreetMap: pontos de interesse</span>
+          <span class="chip">Registros da fiscalização</span>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;padding:15px 22px;display:grid;grid-template-columns:36px 318px 1fr;gap:24px;align-items:center">
+        <span class="num" style="width:36px;height:36px;border-radius:50%;background:var(--rausch-texto);color:var(--branco);font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">3</span>
+        <div>
+          <div class="titulo" style="margin-bottom:3px">Construímos modelos</div>
+          <p class="body foggy">Que estimam, para qualquer ponto da cidade:</p>
+        </div>
+        <div class="grade g3" style="gap:22px">
+          <div style="border-left:3px solid var(--rausch);padding-left:12px">
+            <div class="h3">Preço justo</div>
+            <p class="caption" style="margin-top:2px">a diária que o imóvel deveria cobrar</p>
+          </div>
+          <div style="border-left:3px solid var(--rausch);padding-left:12px">
+            <div class="h3">Noites alugadas</div>
+            <p class="caption" style="margin-top:2px">quantas noites por ano ele aluga</p>
+          </div>
+          <div style="border-left:3px solid var(--rausch);padding-left:12px">
+            <div class="h3">Rendimento</div>
+            <p class="caption" style="margin-top:2px">quanto rende contra um aluguel tradicional</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;padding:15px 22px;display:grid;grid-template-columns:36px 318px 1fr;gap:24px;align-items:center">
+        <span class="num" style="width:36px;height:36px;border-radius:50%;background:var(--rausch-texto);color:var(--branco);font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">4</span>
+        <div>
+          <div class="titulo" style="margin-bottom:3px">Publicamos tudo</div>
+          <p class="body foggy">Aberto para qualquer pessoa usar ou conferir.</p>
+        </div>
+        <div class="grade g3" style="gap:22px">
+          <div style="border-left:3px solid var(--babu);padding-left:12px">
+            <div class="h3">Mapa e simulador</div>
+            <p class="caption" style="margin-top:2px">um site que calcula na hora, com o mesmo modelo</p>
+          </div>
+          <div style="border-left:3px solid var(--babu);padding-left:12px">
+            <div class="h3">Documentação</div>
+            <p class="caption" style="margin-top:2px">cada decisão explicada, inclusive o que não deu certo</p>
+          </div>
+          <div style="border-left:3px solid var(--babu);padding-left:12px">
+            <div class="h3">Código</div>
+            <p class="caption" style="margin-top:2px">público, para qualquer um refazer a análise</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Apresentação · o que fizemos</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== 04 · A PERGUNTA ========== -->
+<div class="frame"><section class="slide">
+  <div class="head">
+    <div class="eyebrow">A pergunta</div>
+    <h1 class="h1 larga">Já sabíamos como era em 2019. Faltava saber o que veio depois.</h1>
+    <p class="lede">A primeira versão do trabalho descreveu a base de 2019. Esta volta à mesma cidade em 2026 com quatro perguntas.</p>
+  </div>
+
+  <div class="corpo">
+    <div class="grade g4" style="margin-bottom:30px">
+      <div class="card solida" style="padding:22px 22px 24px">
+        <div class="rot">Pergunta 1</div>
+        <div class="h2" style="margin-bottom:8px">O que mudou?</div>
+        <p class="body">Anúncios, anfitriões e o preço da diária, de 2019 até hoje.</p>
+      </div>
+      <div class="card solida" style="padding:22px 22px 24px">
+        <div class="rot">Pergunta 2</div>
+        <div class="h2" style="margin-bottom:8px">Por quê?</div>
+        <p class="body">O que a lei de registro de 2023 tem a ver com isso.</p>
+      </div>
+      <div class="card solida" style="padding:22px 22px 24px">
+        <div class="rot">Pergunta 3</div>
+        <div class="h2" style="margin-bottom:8px">Quem ficou?</div>
+        <p class="body">Quais anúncios de 2019 ainda existem — e o que eles tinham em comum.</p>
+      </div>
+      <div class="card solida" style="padding:22px 22px 24px">
+        <div class="rot">Pergunta 4</div>
+        <div class="h2" style="margin-bottom:8px">Ainda compensa?</div>
+        <p class="body">Quanto rende um Airbnb em Nova York contra um aluguel comum no mesmo lugar.</p>
+      </div>
+    </div>
+
+    <!-- régua do tempo: 08/07/2019 → 05/09/2023 → 14/06/2026; a fiscalização cai em 60% do intervalo (1.520 de 2.533 dias) -->
+    <div class="card" style="padding:24px 32px 20px">
+      <div style="position:relative;height:22px">
+        <span style="position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:#DCDCDC;border-radius:2px"></span>
+        <span class="db-p db-2019" style="left:0%"></span>
+        <span style="position:absolute;left:60%;top:0;width:3px;height:22px;margin-left:-1.5px;background:var(--hof);border-radius:2px"></span>
+        <span class="db-p db-2026" style="left:100%"></span>
+      </div>
+      <div style="position:relative;height:40px;margin-top:10px;white-space:nowrap">
+        <div style="position:absolute;left:0;top:0">
+          <div class="tl-data" style="color:var(--foggy)">Julho de 2019</div>
+          <div class="caption">o retrato que a primeira versão descreveu</div>
+        </div>
+        <div style="position:absolute;left:60%;top:0;transform:translateX(-50%);text-align:center">
+          <div class="tl-data" style="color:var(--hof)">Setembro de 2023</div>
+          <div class="caption">a fiscalização da lei começa</div>
+        </div>
+        <div style="position:absolute;right:0;top:0;text-align:right">
+          <div class="tl-data">Junho de 2026</div>
+          <div class="caption">o retrato de hoje</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Apresentação · a pergunta</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== 05 · OS DOIS RETRATOS ========== -->
+<div class="frame"><section class="slide cinza">
+  <div class="head">
+    <div class="eyebrow">Os dois retratos</div>
+    <h1 class="h1 larga">Em sete anos, o mercado perdeu 38% dos anúncios e 56% dos anfitriões.</h1>
+    <p class="lede">O que restou é sobretudo de estadia longa, mais concentrado e, na estadia curta, bem mais caro.</p>
+  </div>
+
+  <div class="corpo">
+    <div class="grade g5" style="gap:16px;align-items:stretch">
+
+      <div class="comp">
+        <div class="rot" style="min-height:47px">Anúncios</div>
+        <div class="antes"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num">48.895</span></div>
+        <div class="depois"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num">30.257</span></div>
+        <div class="rodape"><span class="chip rausch">−38%</span></div>
+      </div>
+
+      <div class="comp">
+        <div class="rot" style="min-height:47px">Anfitriões</div>
+        <div class="antes"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num">37.457</span></div>
+        <div class="depois"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num">16.472</span></div>
+        <div class="rodape"><span class="chip rausch">−56%</span></div>
+      </div>
+
+      <div class="comp">
+        <div class="rot" style="min-height:47px">Anúncios que exigem 30 noites ou mais</div>
+        <div class="antes"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num">9,2%</span></div>
+        <div class="depois"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num">81,7%</span></div>
+        <div class="rodape"><span class="chip rausch">▲ virou regra</span></div>
+      </div>
+
+      <div class="comp">
+        <div class="rot" style="min-height:47px">Anúncios nas mãos do 1% de anfitriões com mais anúncios</div>
+        <div class="antes"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num">10,1%</span></div>
+        <div class="depois"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num">25,0%</span></div>
+        <div class="rodape"><span class="chip rausch">▲ concentra</span></div>
+      </div>
+
+      <div class="comp">
+        <div class="rot" style="min-height:47px">Diária típica, estadia curta</div>
+        <div class="antes"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num"><span style="font-size:.6em;letter-spacing:0">US$</span> 129</span></div>
+        <div class="depois"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num"><span style="font-size:.6em;letter-spacing:0">US$</span> 313</span></div>
+        <div class="rodape"><span class="chip rausch">▲ mais que dobrou</span></div>
+      </div>
+
+    </div>
+
+    <!-- mesmo cartão de comparação, deitado: a segunda medida de concentração -->
+    <div class="comp" style="flex-direction:row;align-items:center;height:auto;gap:26px;margin-top:16px;padding:16px 24px">
+      <div class="rot" style="min-height:0;max-width:22ch">Anúncios de quem tem mais de um anúncio</div>
+      <div class="antes" style="margin-top:0"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num">33,9%</span></div>
+      <span class="seta">→</span>
+      <div class="depois" style="margin-top:0"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num">56,1%</span></div>
+      <p class="body" style="margin-left:auto">Hoje, a maioria dos anúncios é de quem tem mais de um.</p>
+    </div>
+
+    <p class="caption" style="margin-top:20px;max-width:96ch">
+      Estadia curta: menos de 30 noites. Diária típica: metade dos anúncios cobra menos, metade cobra mais — sem desconto,
+      em dólar de 2026, com o valor de 2019 corrigido pela inflação de Nova York. Anúncios e anfitriões são contagens diretas de cada retrato.
+    </p>
+  </div>
+
+  <div class="foot"><span>Apresentação · os dois retratos</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== B1 · DIVISÓRIA · POR QUE MUDOU ========== -->
+<div class="frame"><section class="slide divisoria">
+  <div class="kicker">Parte 1</div>
+  <div class="titulo">Por que mudou</div>
+  <p class="apoio">Treze anos de leis até achar o único ponto de fiscalização que funcionou.</p>
+  <div class="passo num">01</div>
+</section></div>
+
+<!-- ========== B2 · A LINHA DO TEMPO DAS LEIS ========== -->
+<div class="frame"><section class="slide">
+  <div class="head">
+    <div class="eyebrow">A lei</div>
+    <h1 class="h1 larga">Proibir foi fácil em 2010.<br>Fazer valer levou 13 anos.</h1>
+    <p class="lede">Nova York proibiu alugar, depois proibiu anunciar, tentou exigir os dados da plataforma e perdeu na Justiça. Só funcionou quando o pagamento de quem não tem registro passou a ser barrado.</p>
+  </div>
+
+  <div class="corpo">
+    <div class="grade g2" style="gap:44px">
+
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-data">16/07/2010 <span class="esc">· estadual</span></div>
+          <div class="tl-tit">Proíbe alugar por menos de 30 dias</div>
+          <p class="tl-txt">Apartamento inteiro, sem o morador em casa. Mas era preciso flagrar o infrator.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-data">21/10/2016 <span class="esc">· estadual</span></div>
+          <div class="tl-tit">Proíbe até anunciar</div>
+          <p class="tl-txt">O anúncio vira infração. Multa de US$ 1.000 a US$ 7.500.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-data">2018–2021 <span class="esc">· municipal</span></div>
+          <div class="tl-tit">Tenta exigir os dados — e perde na Justiça</div>
+          <p class="tl-txt">Suspensa pela Justiça federal em 2019; terminou num acordo em 2020.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-data">09/01/2022 <span class="esc">· municipal</span></div>
+          <div class="tl-tit">Nasce a Local Law 18</div>
+          <p class="tl-txt">Vira lei sem a assinatura do prefeito.</p>
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-data">09/01/2023 · 06/03/2023</div>
+          <div class="tl-tit">A lei vale e o registro abre</div>
+          <p class="tl-txt">Em janeiro entra em vigor; em março abre o cadastro dos anfitriões.</p>
+        </div>
+        <div class="tl-item destaque forte-no">
+          <div class="tl-data">05/09/2023 <span class="esc">· a virada</span></div>
+          <div class="tl-tit">Sem registro, sem pagamento</div>
+          <p class="tl-txt">A plataforma não pode mais processar a reserva de anúncio sem registro. Ninguém precisa achar o infrator: a cobrança simplesmente não acontece.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-data">Hoje</div>
+          <div class="tl-tit">A regra segue igual</div>
+          <p class="tl-txt">Dois projetos para afrouxá-la não chegaram a voto.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="foot"><span>Por que mudou · as leis</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== B3 · O MECANISMO ========== -->
+<div class="frame"><section class="slide cinza">
+  <div class="head">
+    <div class="eyebrow">O mecanismo</div>
+    <h1 class="h1 larga">A regra saiu da porta do prédio e foi para o checkout.</h1>
+  </div>
+
+  <div class="corpo">
+    <div class="grade g2" style="margin-bottom:22px">
+      <div class="card">
+        <div class="rot">Antes · até 2023</div>
+        <div class="titulo">Fiscal atrás de infrator</div>
+        <div class="fluxo">
+          <span class="no">Denúncia</span><span class="seta">→</span>
+          <span class="no">Fiscal na rua</span><span class="seta">→</span>
+          <span class="no">Multa, caso a caso</span>
+        </div>
+        <p class="caption" style="margin-top:12px">Cada caso exige uma visita. Quanto maior o mercado, mais fiscal é preciso.</p>
+      </div>
+      <div class="card">
+        <div class="rot">Depois · 05/09/2023</div>
+        <div class="titulo">A plataforma barra o pagamento</div>
+        <div class="fluxo">
+          <span class="no">Anúncio sem registro</span><span class="seta">→</span>
+          <span class="no forte">Pagamento bloqueado</span>
+        </div>
+        <p class="caption" style="margin-top:12px">A checagem é automática, a cada reserva. Funciona igual, seja qual for o tamanho do mercado.</p>
+      </div>
+    </div>
+
+    <div class="grade g2">
+      <div class="card">
+        <div class="rot">Para alugar por menos de 30 noites</div>
+        <ul class="lista">
+          <li>O morador se registra na prefeitura.</li>
+          <li>O anfitrião fica em casa durante toda a estadia.</li>
+          <li>No máximo 2 hóspedes por vez.</li>
+          <li>Nenhum cômodo trancado para o hóspede.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="rot">Quem não pode se registrar</div>
+        <ul class="lista cinza">
+          <li>Apartamentos de aluguel regulado.</li>
+          <li>Habitação pública.</li>
+          <li>Prédios em que o dono vetou a estadia curta.</li>
+        </ul>
+        <p class="caption" style="margin-top:10px">Para esses, o único caminho legal é alugar por 30 noites ou mais.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Por que mudou · o mecanismo</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== B4 · A LEI NO DADO ========== -->
+<div class="frame"><section class="slide">
+  <div class="head">
+    <div class="eyebrow">A lei no dado</div>
+    <h1 class="h1 larga">Quase ninguém descumpre a lei: os anúncios saíram do alcance dela.</h1>
+  </div>
+
+  <div class="corpo">
+    <div class="grade g2" style="gap:26px;margin-bottom:24px">
+
+      <div class="card">
+        <div class="rot">Estadia curta · menos de 30 noites</div>
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <span class="num-lg">5.540</span>
+          <span class="body">anúncios precisam seguir a regra</span>
+        </div>
+
+        <div style="position:relative;height:30px;margin:18px 0 12px;display:flex;border-radius:5px;overflow:hidden">
+          <div style="width:52.44%;background:var(--babu)"></div>
+          <div style="width:40.94%;background:var(--hof)"></div>
+          <div style="width:6.62%;background:var(--rausch)"></div>
+        </div>
+
+        <div style="display:flex;gap:18px;flex-wrap:wrap">
+          <span class="legend"><span class="lg"><i class="mk mk-quad mk-babu"></i><b class="num">2.905</b>&nbsp;isentos</span></span>
+          <span class="legend"><span class="lg"><i class="mk mk-quad mk-hof"></i><b class="num">2.268</b>&nbsp;registrados</span></span>
+          <span class="legend"><span class="lg"><i class="mk mk-quad mk-mod"></i><b class="num">367</b>&nbsp;irregulares</span></span>
+        </div>
+
+        <p class="body" style="margin-top:14px"><span class="forte rausch num">93,4%</span> estão dentro da regra. Irregulares, só <span class="forte num">367</span> em toda a cidade.</p>
+      </div>
+
+      <div class="card">
+        <div class="rot">E o resto</div>
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <span class="num-lg">24.605</span>
+          <span class="body">anúncios sem registro pedem 30 noites ou mais</span>
+        </div>
+        <p class="body" style="margin-top:16px">
+          Não descumprem a lei: <span class="forte">saíram do alcance dela</span>.
+          A partir de 30 noites, a estadia deixa de ser curta e o registro não é exigido.
+        </p>
+        <p class="caption" style="margin-top:14px">
+          Por isso, daqui em diante, estadia curta e estadia longa são sempre comparadas em separado.
+        </p>
+      </div>
+    </div>
+
+    <div class="card solida">
+      <div class="rot">Registros ativos na cidade</div>
+      <div style="display:flex;align-items:flex-end;gap:38px;flex-wrap:wrap">
+        <div><div class="num-md foggy">105</div><div class="caption">jun/2023</div></div>
+        <span class="seta" style="padding-bottom:9px">→</span>
+        <div><div class="num-md foggy">2.290</div><div class="caption">2024</div></div>
+        <span class="seta" style="padding-bottom:9px">→</span>
+        <div><div class="num-md foggy">2.952</div><div class="caption">2025</div></div>
+        <span class="seta" style="padding-bottom:9px">→</span>
+        <div><div class="num-md" style="color:var(--rausch-texto)">3.338</div><div class="caption">jun/2026</div></div>
+        <p class="caption" style="margin-left:auto;max-width:42ch;padding-bottom:4px">
+          O cadastro cresceu rápido: de 105 para 3.338 registros em três anos.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Por que mudou · a lei no dado</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== B5 · DIVISÓRIA · O QUE MUDOU NO PREÇO ========== -->
+<div class="frame"><section class="slide divisoria">
+  <div class="kicker">Parte 2</div>
+  <div class="titulo">O que mudou<br>no preço</div>
+  <p class="apoio">Com a inflação descontada e a estadia curta separada da longa — senão a conta confunde preço com tipo de anúncio.</p>
+  <div class="passo num">02</div>
+</section></div>
+
+<!-- ========== B6 · OS PREÇOS POR TIPO DE ESTADIA ========== -->
+<div class="frame"><section class="slide">
+  <div class="head" style="margin-bottom:18px">
+    <div class="eyebrow">A diária por tipo de estadia</div>
+    <h1 class="h1 larga">Estadia longa: o apartamento custa o mesmo. Curta: a diária dobrou, ou mais.</h1>
+  </div>
+
+  <div class="corpo">
+    <div class="legend" style="margin-bottom:16px">
+      <span class="lg"><i class="mk mk-2019"></i>2019</span>
+      <span class="lg"><i class="mk mk-2026"></i>2026</span>
+      <span class="caption" style="margin-left:6px">Em dólares de 2026: valores de 2019 corrigidos pela inflação de Nova York; diária sem desconto nos dois anos.</span>
+    </div>
+
+    <div class="chart" style="--labw:182px;--extraw:92px;--rowgap:15px;--plotbot:40px">
+      <div class="plot-layer" style="right:106px">
+        <span class="gl" style="left:0%"></span>
+        <span class="gl" style="left:20%"></span>
+        <span class="gl" style="left:40%"></span>
+        <span class="gl" style="left:60%"></span>
+        <span class="gl" style="left:80%"></span>
+        <span class="gl" style="left:100%"></span>
+        <span class="base-line"></span>
+      </div>
+
+      <div class="rows">
+        <div class="row"><div class="grupo">Estadia curta · menos de 30 noites</div></div>
+
+        <div class="row">
+          <div class="row-lab">Apartamento inteiro</div>
+          <div class="track" style="--bh:26px">
+            <span class="db-line" style="left:45.98%;width:44.69%"></span>
+            <span class="db-p db-2019" style="left:45.98%"></span>
+            <span class="db-p db-2026" style="left:90.67%"></span>
+            <span class="db-v v19 l num" style="left:45.98%">206,89</span>
+            <span class="db-v v26 r num" style="left:90.67%">408,00</span>
+          </div>
+          <div class="row-extra num" style="color:var(--rausch-texto)">+97,2%</div>
+        </div>
+
+        <div class="row">
+          <div class="row-lab">Quarto privativo</div>
+          <div class="track" style="--bh:26px">
+            <span class="db-line" style="left:20.11%;width:35.26%"></span>
+            <span class="db-p db-2019" style="left:20.11%"></span>
+            <span class="db-p db-2026" style="left:55.37%"></span>
+            <span class="db-v v19 l num" style="left:20.11%">90,51</span>
+            <span class="db-v v26 r num" style="left:55.37%">249,17</span>
+          </div>
+          <div class="row-extra num" style="color:var(--rausch-texto)">+175,3%</div>
+        </div>
+
+        <div class="row">
+          <div class="row-lab">Quarto compartilhado</div>
+          <div class="track" style="--bh:26px">
+            <span class="db-line" style="left:14.37%;width:45.63%"></span>
+            <span class="db-p db-2019" style="left:14.37%"></span>
+            <span class="db-p db-2026" style="left:60.00%"></span>
+            <span class="db-v v19 l num" style="left:14.37%">64,65</span>
+            <span class="db-v v26 r num" style="left:60.00%">270,00</span>
+          </div>
+          <div class="row-extra num" style="color:var(--rausch-texto)">+317,6%</div>
+        </div>
+
+        <div class="row"><div class="grupo">Estadia longa · 30 noites ou mais</div></div>
+
+        <div class="row">
+          <div class="row-lab">Apartamento inteiro</div>
+          <div class="track" style="--bh:26px">
+            <span class="db-line" style="left:48.85%;width:1.96%"></span>
+            <span class="db-p db-2019" style="left:48.85%"></span>
+            <span class="db-p db-2026" style="left:50.81%"></span>
+            <span class="db-v v19 l num" style="left:48.85%">219,82</span>
+            <span class="db-v v26 r num" style="left:50.81%">228,63</span>
+          </div>
+          <div class="row-extra num foggy">+4,0%</div>
+        </div>
+
+        <div class="row">
+          <div class="row-lab">Quarto privativo</div>
+          <div class="track" style="--bh:26px">
+            <span class="db-line" style="left:15.23%;width:4.30%"></span>
+            <span class="db-p db-2019" style="left:15.23%"></span>
+            <span class="db-p db-2026" style="left:19.53%"></span>
+            <span class="db-v v19 l num" style="left:15.23%">68,53</span>
+            <span class="db-v v26 r num" style="left:19.53%">87,88</span>
+          </div>
+          <div class="row-extra num" style="color:var(--rausch-texto)">+28,2%</div>
+        </div>
+
+        <div class="row">
+          <div class="row-lab">Quarto compartilhado</div>
+          <div class="track" style="--bh:26px">
+            <span class="db-line" style="left:10.06%;width:1.93%"></span>
+            <span class="db-p db-2019" style="left:10.06%"></span>
+            <span class="db-p db-2026" style="left:11.98%"></span>
+            <span class="db-v v19 l num" style="left:10.06%">45,26</span>
+            <span class="db-v v26 r num" style="left:11.98%">53,92</span>
+          </div>
+          <div class="row-extra num" style="color:var(--rausch-texto)">+19,1%</div>
+        </div>
+      </div>
+
+      <div class="axis">
+        <div class="axis-line">
+          <span class="ini num" style="left:0%">0</span>
+          <span class="num" style="left:20%">90</span>
+          <span class="num" style="left:40%">180</span>
+          <span class="num" style="left:60%">270</span>
+          <span class="num" style="left:80%">360</span>
+          <span class="fim num" style="left:100%">450</span>
+        </div>
+      </div>
+      <p class="axis-tit" style="margin-left:196px">Diária típica, em US$ de 2026</p>
+    </div>
+
+    <p class="body" style="margin-top:14px">
+      Na estadia curta sobrou pouca oferta dentro da regra — e o que é raro fica caro.
+      <span class="forte">É preço de escassez, não um produto melhor.</span>
+    </p>
+  </div>
+
+  <div class="foot"><span>O que mudou no preço · por tipo de estadia</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== B7 · PREÇO OU MIX ========== -->
+<div class="frame"><section class="slide cinza">
+  <div class="head">
+    <div class="eyebrow">Preço ou mix?</div>
+    <h1 class="h1 larga">A alta é de preço mesmo — a mudança no tipo de anúncio até segurou um pouco.</h1>
+    <p class="lede">A diária média subiu <span class="forte" style="color:var(--rausch-texto)">35%</span> de 2019 para 2026 — corrigida pela inflação e sem desconto nos dois anos.</p>
+  </div>
+
+  <div class="corpo">
+    <!-- escala: -10% a +50% (60 pontos); zero em 16,667% -->
+    <div class="chart" style="--labw:0px;--plotbot:40px">
+      <div class="plot-layer" style="left:0">
+        <span class="gl" style="left:0%"></span>
+        <span class="gl" style="left:33.333%"></span>
+        <span class="gl" style="left:50.000%"></span>
+        <span class="gl" style="left:66.667%"></span>
+        <span class="gl" style="left:83.333%"></span>
+        <span class="gl" style="left:100%"></span>
+        <span class="gl-zero" style="left:16.667%"></span>
+        <span class="base-line"></span>
+      </div>
+
+      <div class="rows" style="--rowgap:26px">
+        <div>
+          <div class="h3" style="display:inline-block;background:var(--cinza);padding-right:8px;margin-bottom:7px">Com o mix de anúncios de 2019 <span class="caption" style="font-weight:400">— cada tipo de anúncio comparado com ele mesmo</span></div>
+          <div class="track" style="--bh:40px">
+            <span class="bar" style="left:16.667%;width:62.333%"></span>
+            <span class="bar-v num" style="left:79.000%;font-size:17px">+37%</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="h3" style="display:inline-block;background:var(--cinza);padding-right:8px;margin-bottom:7px">A mudança de mix <span class="caption" style="font-weight:400">— muito mais anúncios de 30 noites ou mais, que são mais baratos</span></div>
+          <div class="track" style="--bh:40px">
+            <span class="bar babu esq" style="left:13.333%;width:3.333%"></span>
+            <span class="bar-v l num" style="left:13.333%;font-size:17px">−2%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="axis" style="display:block">
+        <div class="axis-line" style="grid-column:auto">
+          <span class="ini num" style="left:0%">−10%</span>
+          <span class="num" style="left:16.667%">0</span>
+          <span class="num" style="left:33.333%">+10%</span>
+          <span class="num" style="left:50.000%">+20%</span>
+          <span class="num" style="left:66.667%">+30%</span>
+          <span class="num" style="left:83.333%">+40%</span>
+          <span class="fim num" style="left:100%">+50%</span>
+        </div>
+      </div>
+      <p class="axis-tit">Efeito sobre a diária média, 2019 → 2026, corrigido pela inflação</p>
+    </div>
+
+    <div class="grade g2" style="margin-top:22px">
+      <div class="card">
+        <div class="rot">Na conta final</div>
+        <p class="body">O preço subiu <span class="forte">37%</span>; a troca por anúncios mais baratos segurou um pouco a conta, e a diária média fecha em <span class="forte rausch">+35%</span>.</p>
+      </div>
+      <div class="card">
+        <div class="rot">Um cuidado</div>
+        <p class="body">Na estadia curta, o preço é o do que <span class="forte">restou legal</span>: quase 9 em cada 10 anúncios de estadia curta saíram no caminho.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>O que mudou no preço · preço ou mix</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== C1 · DIVISÓRIA · QUEM FICOU E QUEM CHEGOU ========== -->
+<div class="frame"><section class="slide divisoria">
+  <div class="kicker">Parte 3</div>
+  <div class="titulo">Quem ficou —<br>e quem chegou</div>
+  <p class="apoio">Nova York tem menos Airbnb do que em 2019. E boa parte do que existe hoje é de gente que nem estava lá.</p>
+  <div class="passo num">03</div>
+</section></div>
+
+<!-- ========== C2 · O MERCADO ENCOLHEU E FOI TROCADO ========== -->
+<div class="frame"><section class="slide">
+  <div class="head" style="margin-bottom:22px">
+    <div class="eyebrow">Encolheu e foi trocado</div>
+    <h1 class="h1 larga">O mercado encolheu — e quem está nele hoje é, em boa parte, gente nova.</h1>
+    <p class="lede">Encolher é mudar de tamanho. Ser trocado é mudar quem está dentro. Aconteceram as duas coisas.</p>
+  </div>
+
+  <div class="corpo">
+    <div class="grade g2" style="gap:22px;margin-bottom:24px">
+      <div class="card solida" style="padding:16px 22px">
+        <div class="rot">Encolheu · o tamanho</div>
+        <div style="display:flex;align-items:center;gap:18px">
+          <span class="num-xl">−59,3%</span>
+          <p class="body">nas noites alugadas de fato. Contando anúncios, a queda é de 38% — mas dois em cada três anúncios de hoje não recebem hóspede.</p>
+        </div>
+      </div>
+      <div class="card solida" style="padding:16px 22px">
+        <div class="rot">Foi trocado · quem está nele</div>
+        <div style="display:flex;align-items:center;gap:18px">
+          <span class="num-xl">19%</span>
+          <p class="body">dos 37.457 anfitriões de 2019 continuam anunciando. Quatro em cada cinco saíram — e chegou gente nova no lugar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="h3" style="margin-bottom:10px">O que sobrou não é o mercado de 2019 em tamanho menor <span class="caption" style="font-weight:400">— os 30.257 anúncios de junho de 2026, pela origem</span></div>
+    <div style="display:flex;gap:2px;height:28px;border-radius:6px;overflow:hidden;background:var(--branco)">
+      <div style="width:24.8%;background:var(--hof)"></div>
+      <div style="width:17.7%;background:var(--babu)"></div>
+      <div style="width:57.5%;background:var(--rausch)"></div>
+    </div>
+
+    <div class="grade g3" style="gap:22px;margin-top:16px">
+      <div class="card" style="padding:18px 22px">
+        <div class="num-xl">24,8%</div>
+        <div class="h3" style="margin-top:12px;display:flex;align-items:center;gap:9px"><span style="width:12px;height:12px;border-radius:3px;background:var(--hof);flex:none"></span>os mesmos de 2019</div>
+        <p class="caption" style="margin-top:6px">7.515 anúncios de 2019 ainda no ar.</p>
+      </div>
+      <div class="card" style="padding:18px 22px">
+        <div class="num-xl">17,7%</div>
+        <div class="h3" style="margin-top:12px;display:flex;align-items:center;gap:9px"><span style="width:12px;height:12px;border-radius:3px;background:var(--babu);flex:none"></span>anúncio novo, anfitrião antigo</div>
+        <p class="caption" style="margin-top:6px">5.353 anúncios criados depois por quem já anunciava em 2019.</p>
+      </div>
+      <div class="card" style="padding:18px 22px">
+        <div class="num-xl rausch">57,5%</div>
+        <div class="h3" style="margin-top:12px;display:flex;align-items:center;gap:9px"><span style="width:12px;height:12px;border-radius:3px;background:var(--rausch);flex:none"></span>gente nova</div>
+        <p class="caption" style="margin-top:6px">17.389 anúncios de quem nem anunciava em 2019.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Quem ficou · o mercado trocado</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== C3 · DIVISÓRIA · COMPENSA? ========== -->
+<div class="frame"><section class="slide divisoria">
+  <div class="kicker">Parte 4</div>
+  <div class="titulo">Compensa?</div>
+  <p class="apoio">Um ano de Airbnb contra um ano de aluguel tradicional, no mesmo lugar.</p>
+  <div class="passo num">04</div>
+</section></div>
+
+<!-- ========== C4 · AIRBNB CONTRA ALUGUEL ========== -->
+<div class="frame"><section class="slide">
+  <div class="head" style="margin-bottom:18px">
+    <div class="eyebrow">Airbnb × aluguel</div>
+    <h1 class="h1 larga">Na média, o Airbnb rende metade de um aluguel.</h1>
+    <p class="lede">Um ano de receita no Airbnb dividido por um ano de aluguel tradicional, no mesmo lugar. Acima de 1,00×, o Airbnb ganha.</p>
+  </div>
+
+  <div class="corpo">
+    <div style="display:grid;grid-template-columns:620px 1fr;gap:44px">
+
+      <div>
+        <div class="legend" style="margin-bottom:14px">
+          <span class="lg"><i class="mk mk-quad mk-mod"></i>rende mais que o aluguel</span>
+          <span class="lg"><i class="mk mk-quad mk-babu"></i>rende menos que o aluguel</span>
+        </div>
+
+        <div class="chart" style="--labw:170px;--rowgap:14px;--plotbot:40px;--rightgutter:14px">
+          <div class="plot-layer">
+            <span class="gl" style="left:0%"></span><span class="gl" style="left:25%"></span>
+            <span class="gl" style="left:75%"></span><span class="gl" style="left:100%"></span>
+            <span class="gl-zero" style="left:50%"></span><span class="base-line"></span>
+          </div>
+          <div class="rows">
+            <div class="row"><div class="row-lab">Estadia curta</div><div class="track" style="--bh:22px">
+              <span class="bar" style="left:50%;width:34.5%"></span><span class="bar-v num" style="left:84.5%">1,69×</span></div></div>
+            <div class="row"><div class="row-lab">Brooklyn</div><div class="track" style="--bh:22px">
+              <span class="bar babu esq" style="left:31.5%;width:18.5%"></span><span class="bar-v l num" style="left:31.5%">0,63×</span></div></div>
+            <div class="row"><div class="row-lab">Queens</div><div class="track" style="--bh:22px">
+              <span class="bar babu esq" style="left:28.5%;width:21.5%"></span><span class="bar-v l num" style="left:28.5%">0,57×</span></div></div>
+            <div class="row"><div class="row-lab">Manhattan</div><div class="track" style="--bh:22px">
+              <span class="bar babu esq" style="left:26.0%;width:24.0%"></span><span class="bar-v l num" style="left:26.0%">0,52×</span></div></div>
+            <div class="row"><div class="row-lab">Bronx</div><div class="track" style="--bh:22px">
+              <span class="bar babu esq" style="left:21.0%;width:29.0%"></span><span class="bar-v l num" style="left:21.0%">0,42×</span></div></div>
+            <div class="row"><div class="row-lab">30 noites ou mais</div><div class="track" style="--bh:22px">
+              <span class="bar babu esq" style="left:21.0%;width:29.0%"></span><span class="bar-v l num" style="left:21.0%">0,42×</span></div></div>
+            <div class="row"><div class="row-lab">Staten Island</div><div class="track" style="--bh:22px">
+              <span class="bar babu esq" style="left:19.5%;width:30.5%"></span><span class="bar-v l num" style="left:19.5%">0,39×</span></div></div>
+          </div>
+          <div class="axis"><div class="axis-line">
+            <span class="ini num" style="left:0%">0</span><span class="num" style="left:25%">0,50×</span>
+            <span class="num" style="left:50%">1,00×</span><span class="num" style="left:75%">1,50×</span>
+            <span class="fim num" style="left:100%">2,00×</span>
+          </div></div>
+          <p class="axis-tit" style="margin-left:184px">Um ano de Airbnb ÷ um ano de aluguel, no mesmo lugar</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="card solida" style="padding:16px 20px;margin-bottom:12px">
+          <div class="rot">O apartamento típico</div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span class="num-xl">0,55×</span>
+            <p class="body">rende <span class="forte">metade</span> do que renderia alugado do jeito tradicional.</p>
+          </div>
+        </div>
+        <div class="card solida" style="padding:16px 20px;margin-bottom:18px">
+          <div class="rot">A exceção</div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span class="num-xl rausch">1,69×</span>
+            <p class="body">a estadia curta <span class="forte">registrada</span> é a única que ganha do aluguel.</p>
+          </div>
+        </div>
+
+        <table class="tb">
+          <thead><tr><th>Por ano</th><th>Airbnb</th><th>Aluguel</th><th>Ganham</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Estadia curta<small>255 noites alugadas</small></td>
+              <td class="forte num">US$ 80 mil</td>
+              <td class="num foggy">US$ 53 mil</td>
+              <td class="forte num" style="color:var(--rausch-texto)">3 em 4</td>
+            </tr>
+            <tr>
+              <td>30 noites ou mais<small>120 noites alugadas</small></td>
+              <td class="forte num">US$ 20 mil</td>
+              <td class="num foggy">US$ 51 mil</td>
+              <td class="forte num" style="color:#00716A">1 em 11</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="caption" style="margin-top:12px">
+          Receita bruta, antes de taxas e custos — a conta favorece o Airbnb. De onde ela vem: próximo slide.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="foot"><span>Compensa? · Airbnb × aluguel</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== C5 · DE ONDE VEM A CONTA E ONDE ELA VIRA ========== -->
+<div class="frame"><section class="slide cinza">
+  <div class="head" style="margin-bottom:18px">
+    <div class="eyebrow">De onde vem a conta</div>
+    <h1 class="h1 larga">Para empatar com o aluguel, seria preciso alugar o dobro de noites.</h1>
+  </div>
+
+  <div class="corpo">
+    <div style="display:grid;grid-template-columns:400px 1fr;gap:40px">
+
+      <div>
+        <div class="card" style="padding:14px 18px;margin-bottom:12px">
+          <div class="rot">O aluguel · Zillow</div>
+          <p class="body">O aluguel típico pedido por um imóvel inteiro no mesmo CEP — o ZORI, índice que o Zillow publica todo mês. Junho de 2026, vezes 12: um ano de aluguel.</p>
+        </div>
+        <div class="card" style="padding:14px 18px;margin-bottom:14px">
+          <div class="rot">A receita do Airbnb · Inside Airbnb</div>
+          <p class="body">Diária × noites ocupadas no último ano, estimadas pelas avaliações. É receita <span class="forte">bruta</span>, sem descontar taxa da plataforma nem limpeza: a conta já é generosa com o Airbnb.</p>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <span class="num-md">5.069</span>
+          <p class="body">apartamentos inteiros com hóspede no último ano. Só eles entram na conta.</p>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--foggy);margin-bottom:10px">
+          Por bairro: onde a conta vira
+        </div>
+
+        <div class="chart" style="--labw:180px;--rowgap:10px;--plotbot:40px;--rightgutter:14px">
+          <div class="plot-layer">
+            <span class="gl" style="left:0%"></span><span class="gl" style="left:33.333%"></span>
+            <span class="gl" style="left:100%"></span>
+            <span class="gl-zero" style="left:66.667%"></span><span class="base-line"></span>
+          </div>
+          <div class="rows">
+            <div class="row"><div class="grupo" style="display:flex;align-items:center;gap:8px"><i class="mk mk-quad mk-mod"></i>Ganham do aluguel</div></div>
+            <div class="row"><div class="row-lab">Fort Hamilton<small>US$ 165 a diária · 255 noites</small></div><div class="track" style="--bh:24px">
+              <span class="bar" style="left:66.667%;width:9.333%"></span><span class="bar-v num" style="left:76.000%">1,14×</span></div></div>
+            <div class="row"><div class="row-lab">Financial District<small>US$ 540 a diária · 128 noites</small></div><div class="track" style="--bh:24px">
+              <span class="bar" style="left:66.667%;width:4.000%"></span><span class="bar-v num" style="left:70.667%">1,06×</span></div></div>
+            <div class="row"><div class="grupo" style="display:flex;align-items:center;gap:8px"><i class="mk mk-quad mk-babu"></i>No fundo da lista</div></div>
+            <div class="row"><div class="row-lab">Chelsea</div><div class="track" style="--bh:24px">
+              <span class="bar babu esq" style="left:22.667%;width:44.000%"></span><span class="bar-v l num" style="left:22.667%">0,34×</span></div></div>
+            <div class="row"><div class="row-lab">Hell's Kitchen</div><div class="track" style="--bh:24px">
+              <span class="bar babu esq" style="left:21.333%;width:45.333%"></span><span class="bar-v l num" style="left:21.333%">0,32×</span></div></div>
+          </div>
+          <div class="axis"><div class="axis-line">
+            <span class="ini num" style="left:0%">0</span><span class="num" style="left:33.333%">0,50×</span>
+            <span class="num" style="left:66.667%">1,00×</span><span class="fim num" style="left:100%">1,50×</span>
+          </div></div>
+          <p class="axis-tit" style="margin-left:194px">Um ano de Airbnb ÷ um ano de aluguel, no mesmo CEP</p>
+        </div>
+
+        <p class="body" style="margin-top:12px">
+          Quem ganha não é bairro de aluguel mais caro: Fort Hamilton cobra pouco e aluga muito; o Financial District cobra caro.
+          No fundo da lista, o Airbnb não rende pouco — <span class="forte">é o aluguel que rende muito</span>.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:18px;padding:14px 22px">
+      <div style="display:grid;grid-template-columns:380px 1fr;gap:28px;align-items:center">
+        <div>
+          <div class="rot" style="margin-bottom:6px">A régua mais simples</div>
+          <p class="body">Noites por ano que o apartamento típico precisa alugar, na própria diária, para empatar com o aluguel.</p>
+        </div>
+        <div class="chart" style="--labw:104px;--rowgap:8px">
+          <div class="rows">
+            <div class="row"><div class="row-lab">Para empatar</div><div class="track" style="--bh:22px;background:var(--cinza);border-radius:3px">
+              <span class="bar base" style="left:0;width:65.753%"></span><span class="bar-v num" style="left:65.753%">240 noites</span></div></div>
+            <div class="row"><div class="row-lab">Aluga de fato</div><div class="track" style="--bh:22px;background:var(--cinza);border-radius:3px">
+              <span class="bar babu" style="left:0;width:32.877%"></span><span class="bar-v num" style="left:32.877%">120 noites</span></div></div>
+          </div>
+          <p class="axis-tit" style="margin-left:118px;margin-top:6px">A barra inteira é um ano: 365 noites.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Compensa? · de onde vem a conta</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== C6 · DIVISÓRIA · O MODELO ========== -->
+<div class="frame"><section class="slide divisoria">
+  <div class="kicker">Parte 5</div>
+  <div class="titulo">O modelo</div>
+  <p class="apoio">Uma ferramenta que estima a diária de qualquer imóvel da cidade — e que qualquer pessoa pode abrir no navegador.</p>
+  <div class="passo num">05</div>
+</section></div>
+
+<!-- ========== C7 · O MODELO E O MAPA ========== -->
+<div class="frame"><section class="slide">
+  <div class="head" style="margin-bottom:18px">
+    <div class="eyebrow">O modelo e o mapa</div>
+    <h1 class="h1 larga">Um mapa que estima a diária de qualquer imóvel de Nova York.</h1>
+  </div>
+
+  <div class="corpo">
+    <div style="display:grid;grid-template-columns:576px 1fr;gap:36px">
+
+      <div>
+        <img src="mapa-simulador.jpg" alt="O mapa do projeto, com o simulador" style="display:block;width:576px;height:324px;object-fit:cover;border:1px solid var(--linha);border-radius:14px;background:var(--cinza)">
+        <div class="link" style="margin-top:12px;font-size:11.5px"><b>Aberto</b><span>felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/</span></div>
+        <div class="card solida" style="margin-top:12px;padding:12px 16px">
+          <p class="body"><span class="forte">Uma descoberta:</span> saber <span class="forte">onde</span> fica o imóvel já diz quase tudo que os dados de crime, metrô, renda e aluguel do entorno diriam. O lugar resume o resto.</p>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--foggy);margin-bottom:8px">O que é</div>
+        <p class="body" style="margin-bottom:14px">Um modelo de <i>machine learning</i> chamado <span class="forte">LightGBM</span>: 61 árvores de decisão pequenas, cada uma corrigindo o erro da anterior. O site roda, no seu navegador, o mesmo modelo que testamos.</p>
+
+        <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--foggy);margin-bottom:10px">Como se usa</div>
+        <ul class="lista num" style="margin-bottom:4px">
+          <li>Diga como é o imóvel: tipo, hóspedes, quartos, banheiros e se aceita estadia curta.</li>
+          <li><span class="forte">Clique num ponto do mapa.</span></li>
+          <li>Receba a diária esperada ali, com uma faixa de valores prováveis.</li>
+        </ul>
+
+        <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--foggy);margin:12px 0 8px">Em números</div>
+        <div style="display:grid;grid-template-columns:132px 1fr;gap:8px 16px;align-items:baseline">
+          <span class="num-lg">±25%</span>
+          <p class="body">de erro típico, para mais ou para menos.</p>
+          <span class="num-lg">8 em 10</span>
+          <p class="body">vezes, o preço real cai dentro da faixa (79,6%).</p>
+          <span class="num-lg" style="color:var(--rausch-texto)">2×</span>
+          <p class="body">em 95% da cidade, o mesmo apartamento vale de 15% menos até o dobro da média, só pelo quarteirão — e nos mais caros, passa disso.</p>
+        </div>
+        <p class="caption" style="margin-top:10px">Testado em pedaços da cidade que o modelo nunca tinha visto — o teste mais difícil, e o mais honesto.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="foot"><span>O modelo · o mapa</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+<!-- ========== C8 · FECHAMENTO ========== -->
+<div class="frame"><section class="slide cinza">
+  <div class="head" style="margin-bottom:20px">
+    <div class="eyebrow">Fechamento</div>
+    <h1 class="h1 larga">Menor, trocado e de estadia longa: o Airbnb de Nova York em 2026.</h1>
+  </div>
+
+  <div class="corpo">
+    <div style="display:grid;grid-template-columns:1fr 400px;gap:28px;align-items:stretch">
+
+      <div class="card" style="padding:18px 24px">
+        <div class="rot">O que levar daqui</div>
+        <ul class="lista num">
+          <li style="font-size:15px;line-height:1.42"><span class="forte">A lei não proibiu o Airbnb: mudou o que ele é.</span> Hoje 82% dos anúncios exigem 30 noites ou mais.</li>
+          <li style="font-size:15px;line-height:1.42"><span class="forte">Encolheu e foi trocado.</span> −38% de anúncios, −59% de noites alugadas — e mais da metade dos anúncios é de gente nova.</li>
+          <li style="font-size:15px;line-height:1.42"><span class="forte">Estadia longa: preço quase igual. Curta: dobrou.</span> Na longa, +4% em sete anos, já descontada a inflação.</li>
+          <li style="font-size:15px;line-height:1.42"><span class="forte">Na média, o Airbnb rende metade de um aluguel.</span> Só a estadia curta registrada ganha dele.</li>
+          <li style="font-size:15px;line-height:1.42;margin-bottom:0"><span class="forte">A lei explica pouco do encolhimento.</span> Cerca de 7% das saídas, pela conta mais simples; as outras aconteceram também entre quem a lei nem alcançava.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="background:var(--grad);border-color:transparent;color:var(--branco);padding:24px 26px;display:flex;flex-direction:column">
+        <div class="rot" style="color:rgba(255,255,255,.75)">Para o futuro</div>
+        <p class="h2" style="line-height:1.25">Uma análise com o mercado brasileiro seria o próximo passo interessante.</p>
+        <p class="body" style="margin-top:14px;color:rgba(255,255,255,.92)">Comparar com um mercado sob regras diferentes ajudaria a separar o que é efeito da lei do que é do próprio mercado.</p>
+      </div>
+
+    </div>
+
+    <div style="margin-top:20px">
+      <div style="font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--foggy);margin-bottom:8px">
+        Para ver mais · mapa, simulador e documentação
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:18px">
+        <div class="link" style="background:var(--branco)"><b>Projeto completo</b><span>felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc</span></div>
+        <div class="link" style="background:var(--branco)"><b>Detalhe técnico</b><span>…/apresentacao/</span></div>
+      </div>
+    </div>
+
+    <p class="aviso escuro" style="margin-top:16px">Análise acadêmica independente. Não afiliada ao Airbnb, Inc.</p>
+  </div>
+
+  <div class="foot"><span>Fechamento</span><span>ESEG · Data Science 2</span></div>
+</section></div>
+
+
+</main>
+
+<div class="hud no-print">
+  <span id="contador" class="num">1 / 20</span>
+  <span class="dica">← → espaço · Home/End · F tela cheia</span>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var deck    = document.getElementById("deck");
+  var frames  = Array.prototype.slice.call(document.querySelectorAll(".frame"));
+  var total   = frames.length;
+  var atual   = 0;
+  var contador = document.getElementById("contador");
+  var barra    = document.getElementById("barra-fill");
+
+  /* ---- escala: o slide tem 1280x720 fixos; a tela so amplia ou reduz ---- */
+  function escalar(){
+    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    s = Math.max(0.2, Math.min(s, 2));
+    document.documentElement.style.setProperty("--s", s.toFixed(4));
+  }
+
+  function pintar(){
+    contador.textContent = (atual + 1) + " / " + total;
+    barra.style.width = ((atual + 1) / total * 100).toFixed(2) + "%";
+  }
+
+  function ir(i, suave){
+    atual = Math.max(0, Math.min(i, total - 1));
+    deck.scrollTo({ top: atual * deck.clientHeight, behavior: suave === false ? "auto" : "smooth" });
+    pintar();
+  }
+
+  var t = null;
+  deck.addEventListener("scroll", function(){
+    if (t) return;
+    t = setTimeout(function(){
+      t = null;
+      var i = Math.round(deck.scrollTop / deck.clientHeight);
+      if (i !== atual){ atual = i; pintar(); }
+    }, 90);
+  }, { passive:true });
+
+  document.addEventListener("keydown", function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === "ArrowRight" || k === "ArrowDown" || k === " " || k === "Spacebar" || k === "PageDown"){
+      e.preventDefault(); ir(atual + 1);
+    } else if (k === "ArrowLeft" || k === "ArrowUp" || k === "PageUp"){
+      e.preventDefault(); ir(atual - 1);
+    } else if (k === "Home"){
+      e.preventDefault(); ir(0);
+    } else if (k === "End"){
+      e.preventDefault(); ir(total - 1);
+    } else if (k === "f" || k === "F"){
+      e.preventDefault();
+      if (document.fullscreenElement) { document.exitFullscreen(); }
+      else if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+    }
+  });
+
+  window.addEventListener("resize", function(){
+    escalar();
+    deck.scrollTo({ top: atual * deck.clientHeight, behavior: "auto" });
+  });
+
+  escalar();
+  pintar();
+})();
+</script>
+
+<script src="../assets/equipe.js"></script>
+</body>
+</html>

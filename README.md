@@ -9,7 +9,8 @@ espacialmente** e um **site público com mapa e teste de localização**.
 |---|---|
 | 🧭 **O projeto inteiro** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/> |
 | 🗺️ **Mapa e teste de localização** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/> |
-| 🎞️ **Apresentação (20 slides)** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/apresentacao/> |
+| 🎞️ **Apresentação executiva** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/executiva/> |
+| 🔬 **Apresentação técnica (20 slides)** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/apresentacao/> |
 | 📚 **Documentação (CRISP-DM)** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/docs/> |
 | 🧾 **Versão anterior (v0, descritiva)** | [`reports/v0/`](reports/v0/) |
 
@@ -29,11 +30,11 @@ descrição não alcança:
 
 | | |
 |---|---|
-| **O mercado encolheu e se profissionalizou** | −38% de anúncios e −56% de anfitriões entre 2019 e 2026; o 1% maior de anfitriões passou de 10% para 25% da oferta |
-| **A Local Law 18 mudou o que é um anúncio** | mínimo de 30 noites passou de 9% para 82% dos anúncios; em dólar constante, a estadia de 30+ noites custa o mesmo que em 2019 e a estadia curta, 2 a 3 vezes mais |
+| **O mercado encolheu, se profissionalizou e foi trocado** | −38% de anúncios, −59% de noites de fato alugadas e −56% de anfitriões entre 2019 e 2026; o 1% de anfitriões com mais anúncios passou de 10% para 25% dos anúncios; 57,5% dos anúncios de hoje são de anfitriões que não existiam em 2019 |
+| **A Local Law 18 mudou o que é um anúncio** | mínimo de 30 noites passou de 9% para 82% dos anúncios; em dólar constante e com a diária sem desconto nos dois anos, o apartamento inteiro de 30+ noites custa praticamente o mesmo que em 2019 (+4%) e a estadia curta, 2 a 3 vezes mais |
 | **A "ocupação de 69%" da v0 era calendário fechado** | ocupação estimada pelas avaliações: 29% em 2019; a métrica da v0 tem correlação −0,11 com ela |
 | **O simulador erra 25% na mediana** | sob validação cruzada **espacial** (lugar novo), com intervalo de 80% calibrado em cada tipo de acomodação; no modelo completo, o KFold aleatório teria prometido 18% de erro onde o real é 22% |
-| **O lugar importa, mesmo descontado o imóvel** | I de Moran 0,44 no resíduo de um modelo que só vê o imóvel; o mesmo apartamento vale do −15% ao dobro da mediana conforme a célula |
+| **O lugar importa, mesmo descontado o imóvel** | I de Moran 0,44 no resíduo de um modelo que só vê o imóvel; em 95% da cidade, o mesmo apartamento vale do −15% ao dobro da mediana conforme a célula — e mais que isso nos 5% mais caros |
 | **Fontes externas: interpretação, não acurácia** | não superam as coordenadas no preço (resultado nulo, publicado), mas explicam o lugar: aluguel do entorno (Zillow) é a 3ª feature do modelo |
 | **Airbnb × aluguel tradicional** | só 28% dos apartamentos ativos faturam mais que um ano de aluguel; na estadia curta legal, 75% |
 

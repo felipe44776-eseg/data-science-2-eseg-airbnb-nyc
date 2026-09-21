@@ -406,12 +406,8 @@ table.tb tr:last-child td{border-bottom:none}
   <div class="meta">
     <span class="rot">Data Science 2 · ESEG · Prof. Marino Catarino</span>
   </div>
-  <div class="equipe">
-    <span>Felipe Marins</span>
-    <span>Otavio Bonfochi</span>
-    <span>Phelipe Torres Pamponet da França</span>
-    <span>Tadeu Radovan Graça</span>
-  </div>
+  <!-- nomes: fonte unica em produto/autoria.py, preenchidos por assets/equipe.js -->
+  <div class="equipe" data-equipe-linha></div>
   <div class="aviso">Análise acadêmica independente. Não afiliada ao Airbnb, Inc.</div>
 </section></div>
 
@@ -540,7 +536,7 @@ table.tb tr:last-child td{border-bottom:none}
 <div class="frame"><section class="slide divisoria">
   <div class="kicker">Parte 1</div>
   <div class="titulo">Por que mudou</div>
-  <p class="apoio">Quinze anos de legislação e um único ponto de fiscalização que funcionou.</p>
+  <p class="apoio">Treze anos de leis até achar o único ponto de fiscalização que funcionou.</p>
   <div class="passo num">01</div>
 </section></div>
 
@@ -972,7 +968,7 @@ table.tb tr:last-child td{border-bottom:none}
           Taxa de sobrevivência por tipo de anúncio
         </div>
 
-        <div class="chart" style="--labw:168px;--rowgap:18px">
+        <div class="chart" style="--labw:168px;--rowgap:18px;--rightgutter:14px">
           <div class="plot-layer">
             <span class="gl" style="left:0%"></span>
             <span class="gl" style="left:20%"></span>
@@ -1045,7 +1041,7 @@ table.tb tr:last-child td{border-bottom:none}
 
       <div>
         <div class="h3" style="margin-bottom:14px">Onde mais sobreviveu</div>
-        <div class="chart" style="--labw:142px;--rowgap:13px">
+        <div class="chart" style="--labw:142px;--rowgap:13px;--rightgutter:14px">
           <div class="plot-layer">
             <span class="gl" style="left:0%"></span><span class="gl" style="left:25%"></span>
             <span class="gl" style="left:50%"></span><span class="gl" style="left:75%"></span>
@@ -1069,7 +1065,7 @@ table.tb tr:last-child td{border-bottom:none}
 
       <div>
         <div class="h3" style="margin-bottom:14px">Onde menos sobreviveu</div>
-        <div class="chart" style="--labw:142px;--rowgap:13px">
+        <div class="chart" style="--labw:142px;--rowgap:13px;--rightgutter:14px">
           <div class="plot-layer">
             <span class="gl" style="left:0%"></span><span class="gl" style="left:25%"></span>
             <span class="gl" style="left:50%"></span><span class="gl" style="left:75%"></span>
@@ -1181,8 +1177,8 @@ table.tb tr:last-child td{border-bottom:none}
 <div class="frame"><section class="slide">
   <div class="head">
     <div class="eyebrow">O que ninguém tinha medido</div>
-    <h1 class="h1 larga">O mercado não encolheu: foi trocado.</h1>
-    <p class="lede">"48.895 → 30.257" parece atrito. Não é: só um quarto dos anúncios de hoje já existia em 2019.</p>
+    <h1 class="h1 larga">O mercado encolheu — e foi trocado.</h1>
+    <p class="lede">Os anúncios caíram 38%: isso é encolher. Mas o que sobrou não é o mercado de 2019 em tamanho menor — só um quarto dos anúncios de hoje já existia.</p>
   </div>
 
   <div class="corpo">
@@ -1242,7 +1238,7 @@ table.tb tr:last-child td{border-bottom:none}
           <span class="lg"><i class="mk mk-quad mk-babu"></i>rende menos que o aluguel</span>
         </div>
 
-        <div class="chart" style="--labw:170px;--rowgap:14px;--plotbot:40px">
+        <div class="chart" style="--labw:170px;--rowgap:14px;--plotbot:40px;--rightgutter:14px">
           <div class="plot-layer">
             <span class="gl" style="left:0%"></span><span class="gl" style="left:25%"></span>
             <span class="gl" style="left:75%"></span><span class="gl" style="left:100%"></span>
@@ -1387,7 +1383,7 @@ table.tb tr:last-child td{border-bottom:none}
       <span class="caption" style="margin-left:6px">Erro mediano percentual absoluto (MdAPE) — quanto menor, melhor.</span>
     </div>
 
-    <div class="chart" style="--labw:296px;--rowgap:15px">
+    <div class="chart" style="--labw:296px;--rowgap:15px;--rightgutter:14px">
       <div class="plot-layer">
         <span class="gl" style="left:0%"></span><span class="gl" style="left:16.667%"></span>
         <span class="gl" style="left:33.333%"></span><span class="gl" style="left:50%"></span>
@@ -1486,7 +1482,7 @@ table.tb tr:last-child td{border-bottom:none}
 
     <p class="aviso escuro" style="margin-top:18px">
       Análise acadêmica independente. Não afiliada ao Airbnb, Inc. ·
-      Data Science 2 · ESEG · Prof. Marino Catarino · Felipe Marins, Otavio Bonfochi, Phelipe Torres Pamponet da França, Tadeu Radovan Graça.
+      Data Science 2 · ESEG · Prof. Marino Catarino · <span data-equipe-texto></span>.
     </p>
   </div>
 
@@ -1566,5 +1562,6 @@ table.tb tr:last-child td{border-bottom:none}
 })();
 </script>
 
+<script src="../assets/equipe.js"></script>
 </body>
 </html>
