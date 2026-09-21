@@ -10,6 +10,7 @@ espacialmente** e um **site público com mapa e teste de localização**.
 | 🧭 **O projeto inteiro** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/> |
 | 🗺️ **Mapa e teste de localização** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/> |
 | 🎞️ **Apresentação executiva** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/executiva/> |
+| 🔠 **Apresentação executiva, letra maior** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/executiva-maior/> |
 | 🔬 **Apresentação técnica (20 slides)** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/apresentacao/> |
 | 📚 **Documentação (CRISP-DM)** | <https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/docs/> |
 | 🧾 **Versão anterior (v0, descritiva)** | [`reports/v0/`](reports/v0/) |

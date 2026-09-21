@@ -12,6 +12,7 @@ validados espacialmente e um site público com mapa e teste de localização.
     preço por noite esperado, com faixa de erro, e quanto um anúncio ativo fatura ali.
 
 - :material-presentation-play: **[A apresentação executiva](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/executiva/)** ·
+  [com letra maior](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/executiva-maior/) ·
   [versão técnica](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/apresentacao/)
 
     Vinte slides com os gráficos dos achados e o passo a passo de cada análise, da linha

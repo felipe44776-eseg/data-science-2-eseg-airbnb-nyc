@@ -71,7 +71,7 @@ jobs:
       - name: conferir que nada ficou vazio nem provisorio
         run: |
           set -euo pipefail
-          for f in _site/index.html _site/mapa/index.html _site/apresentacao/index.html _site/docs/index.html _site/data/resumo.json _site/data/modelo_preco.json _site/data/celulas_r8.json _site/data/celulas_r9.json; do
+          for f in _site/index.html _site/mapa/index.html _site/apresentacao/index.html _site/executiva/index.html _site/executiva-maior/index.html _site/docs/index.html _site/data/resumo.json _site/data/modelo_preco.json _site/data/celulas_r8.json _site/data/celulas_r9.json; do
             test -s "$f" || { echo "vazio ou ausente: $f"; exit 1; }
           done
           # o gate anterior procurava '"provisorio": true' em site/data — chave que

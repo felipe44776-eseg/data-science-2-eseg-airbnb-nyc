@@ -24,8 +24,10 @@ from airbnb.config import RAIZ, SITE_DADOS
 PORTAL = RAIZ / "site" / "index.html"
 DECK = RAIZ / "site" / "apresentacao" / "index.html"
 EXECUTIVA = RAIZ / "site" / "executiva" / "index.html"
+# a mesma executiva com a letra maior; o slide 17 vira dois para caber
+EXECUTIVA_MAIOR = RAIZ / "site" / "executiva-maior" / "index.html"
 MAPA = RAIZ / "site" / "mapa" / "index.html"
-DECKS = [p for p in (DECK, EXECUTIVA)]
+DECKS = [p for p in (DECK, EXECUTIVA, EXECUTIVA_MAIOR)]
 
 
 def _pt(valor: float, casas: int = 1) -> str:
@@ -128,22 +130,44 @@ def test_cada_slide_tem_o_proprio_frame(deck):
     assert len(slide.findall(html)) == len(blocos)
 
 
-def test_a_executiva_nao_escreve_nome_de_integrante(resumo):
+@pytest.mark.parametrize("deck", [EXECUTIVA, EXECUTIVA_MAIOR], ids=lambda p: p.parent.name)
+def test_a_executiva_nao_escreve_nome_de_integrante(resumo, deck):
     """Nome de integrante so existe em produto/autoria.py (CLAUDE.md, invariante da
     equipe). A versao executiva le os nomes de site/data/resumo.json em tempo de
     execucao; se algum aparecer escrito no HTML, ele vai envelhecer sozinho."""
-    if not EXECUTIVA.exists():
-        pytest.skip("versao executiva ausente")
-    html = EXECUTIVA.read_text(encoding="utf-8")
+    if not deck.exists():
+        pytest.skip(f"{deck.parent.name} ausente")
+    html = deck.read_text(encoding="utf-8")
     escritos = [p["nome"] for p in resumo["equipe"] if p["nome"] in html]
-    assert not escritos, f"nomes escritos a mao na versao executiva: {escritos}"
-    assert "data-equipe-cartoes" in html and "resumo.json" in html
+    assert not escritos, f"{deck.parent.name}: nomes escritos a mao: {escritos}"
+    assert "data-equipe-cartoes" in html and "equipe.js" in html
+
+
+@pytest.mark.parametrize("deck", DECKS, ids=lambda p: p.parent.name)
+def test_os_arquivos_que_o_deck_referencia_existem(deck):
+    """A executiva maior usa a captura do mapa da pasta da executiva
+    (../executiva/mapa-simulador.jpg). Renomear ou mover um arquivo compartilhado
+    quebraria a imagem em silencio: o deck abre, so o slide fica sem a figura."""
+    import re
+    if not deck.exists():
+        pytest.skip(f"{deck.parent.name} ausente")
+    html = deck.read_text(encoding="utf-8")
+    locais = {r for r in re.findall(r'(?:src|href)="([^"]+)"', html)
+              if not r.startswith(("http:", "https:", "data:", "#", "mailto:"))}
+    faltando = []
+    for r in sorted(locais):
+        alvo = (deck.parent / r.split("#")[0].split("?")[0]).resolve()
+        if alvo.is_dir():
+            alvo = alvo / "index.html"
+        if not alvo.exists():
+            faltando.append(r)
+    assert not faltando, f"{deck.parent.name}: referencia arquivo que nao existe: {faltando}"
 
 
 def test_nenhuma_superficie_diz_que_o_mercado_nao_encolheu():
     """O mercado encolheu: -38% de anuncios, -59% de oferta operada. O que o dado
     mostra ALEM disso e que ele foi trocado. "Nao encolheu" confundiu quem leu."""
-    for p in (PORTAL, DECK, EXECUTIVA):
+    for p in (PORTAL, DECK, EXECUTIVA, EXECUTIVA_MAIOR):
         if p.exists():
             assert "não encolheu" not in p.read_text(encoding="utf-8").lower(), \
                 f"{p.parent.name}: diz que o mercado nao encolheu"
