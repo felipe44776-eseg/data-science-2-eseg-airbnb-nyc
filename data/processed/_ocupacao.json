@@ -110,16 +110,35 @@
   },
   "receita_vs_aluguel": {
     "n": 5069,
+    "aluguel_mes": 4268.693459294324,
+    "aluguel_ano": 51224.32151153189,
+    "receita_ano": 27368.0,
+    "diaria": 212.03,
+    "noites_ocupadas": 120.0,
+    "noites_para_empatar": 240.17618729478568,
     "razao_mediana": 0.5548490244831301,
+    "pct_acima": 0.27658315249556126,
     "pct_receita_acima_de_um_ano_de_aluguel": 0.27658315249556126,
     "por_min30": {
       "< 30 noites": {
         "n": 1433,
+        "aluguel_mes": 4439.30752501303,
+        "aluguel_ano": 53271.690300156355,
+        "receita_ano": 80024.0,
+        "diaria": 400.04,
+        "noites_ocupadas": 255.0,
+        "noites_para_empatar": 116.97137101520792,
         "razao_mediana": 1.69301037874078,
         "pct_acima": 0.7480809490579204
       },
       "30+ noites": {
         "n": 3636,
+        "aluguel_mes": 4268.693459294324,
+        "aluguel_ano": 51224.32151153189,
+        "receita_ano": 19999.5,
+        "diaria": 173.6,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 279.5138449043096,
         "razao_mediana": 0.4196823924043592,
         "pct_acima": 0.09075907590759076
       }
@@ -127,30 +146,294 @@
     "por_distrito": {
       "Manhattan": {
         "n": 2781,
+        "aluguel_mes": 4778.441490979576,
+        "aluguel_ano": 57341.29789175491,
+        "receita_ano": 29560.0,
+        "diaria": 237.83,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 237.88365130476993,
         "razao_mediana": 0.5243426085863271,
         "pct_acima": 0.26105717367853293
       },
       "Brooklyn": {
         "n": 1691,
+        "aluguel_mes": 3588.6761345296954,
+        "aluguel_ano": 43064.11361435635,
+        "receita_ano": 27815.0,
+        "diaria": 190.63,
+        "noites_ocupadas": 180.0,
+        "noites_para_empatar": 240.20641381356265,
         "razao_mediana": 0.6306178792670338,
         "pct_acima": 0.3122412773506801
       },
       "Queens": {
         "n": 453,
+        "aluguel_mes": 2979.0101357854496,
+        "aluguel_ano": 35748.1216294254,
+        "receita_ano": 20880.0,
+        "diaria": 160.94,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 235.10454558868184,
         "razao_mediana": 0.5659116437874159,
         "pct_acima": 0.2693156732891832
       },
       "Bronx": {
         "n": 96,
+        "aluguel_mes": 2976.700428462539,
+        "aluguel_ano": 35720.405141550465,
+        "receita_ano": 14141.0,
+        "diaria": 123.425,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 275.6573541114127,
         "razao_mediana": 0.4198822044052393,
         "pct_acima": 0.19791666666666666
       },
       "Staten Island": {
         "n": 48,
+        "aluguel_mes": 2733.544463296392,
+        "aluguel_ano": 32802.53355955671,
+        "receita_ano": 12886.0,
+        "diaria": 108.43,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 279.3541583038905,
         "razao_mediana": 0.3899214337432685,
         "pct_acima": 0.14583333333333334
       }
-    }
+    },
+    "por_bairro": {
+      "Fort Hamilton": {
+        "n": 67,
+        "aluguel_mes": 2834.248518374648,
+        "aluguel_ano": 34010.982220495775,
+        "receita_ano": 38760.0,
+        "diaria": 165.0,
+        "noites_ocupadas": 255.0,
+        "noites_para_empatar": 206.12716497270168,
+        "razao_mediana": 1.1396318915083365,
+        "pct_acima": 0.7014925373134329
+      },
+      "Financial District": {
+        "n": 108,
+        "aluguel_mes": 4979.270776451362,
+        "aluguel_ano": 59751.24931741634,
+        "receita_ano": 63138.0,
+        "diaria": 540.0,
+        "noites_ocupadas": 128.0,
+        "noites_para_empatar": 116.8093119879405,
+        "razao_mediana": 1.0566808346481968,
+        "pct_acima": 0.5185185185185185
+      },
+      "Astoria": {
+        "n": 65,
+        "aluguel_mes": 3143.335432158274,
+        "aluguel_ano": 37720.02518589929,
+        "receita_ano": 32150.0,
+        "diaria": 205.7,
+        "noites_ocupadas": 180.0,
+        "noites_para_empatar": 189.2650855396602,
+        "razao_mediana": 0.8093942398650144,
+        "pct_acima": 0.4153846153846154
+      },
+      "Midtown": {
+        "n": 380,
+        "aluguel_mes": 5626.289462376951,
+        "aluguel_ano": 67515.47354852341,
+        "receita_ano": 47746.0,
+        "diaria": 319.0,
+        "noites_ocupadas": 179.0,
+        "noites_para_empatar": 202.16332337241448,
+        "razao_mediana": 0.7646395305647539,
+        "pct_acima": 0.39210526315789473
+      },
+      "Gramercy": {
+        "n": 60,
+        "aluguel_mes": 5158.22619636505,
+        "aluguel_ano": 61898.7143563806,
+        "receita_ano": 45680.5,
+        "diaria": 235.37,
+        "noites_ocupadas": 216.0,
+        "noites_para_empatar": 263.2029633811794,
+        "razao_mediana": 0.7371513064016757,
+        "pct_acima": 0.3333333333333333
+      },
+      "Crown Heights": {
+        "n": 190,
+        "aluguel_mes": 3258.123730164067,
+        "aluguel_ano": 39097.48476196881,
+        "receita_ano": 30568.0,
+        "diaria": 201.9,
+        "noites_ocupadas": 180.0,
+        "noites_para_empatar": 202.89716049435572,
+        "razao_mediana": 0.722549615972855,
+        "pct_acima": 0.4052631578947368
+      },
+      "Bedford-Stuyvesant": {
+        "n": 313,
+        "aluguel_mes": 3588.6761345296954,
+        "aluguel_ano": 43064.11361435635,
+        "receita_ano": 30873.0,
+        "diaria": 196.68,
+        "noites_ocupadas": 180.0,
+        "noites_para_empatar": 218.09273588424614,
+        "razao_mediana": 0.7193242804665996,
+        "pct_acima": 0.3706070287539936
+      },
+      "Harlem": {
+        "n": 220,
+        "aluguel_mes": 3274.7921138780603,
+        "aluguel_ano": 39297.50536653672,
+        "receita_ano": 28442.5,
+        "diaria": 229.25,
+        "noites_ocupadas": 134.5,
+        "noites_para_empatar": 177.64312049686163,
+        "razao_mediana": 0.6855859110870297,
+        "pct_acima": 0.39090909090909093
+      },
+      "Lower East Side": {
+        "n": 108,
+        "aluguel_mes": 4689.0083918090295,
+        "aluguel_ano": 56268.100701708354,
+        "receita_ano": 36474.5,
+        "diaria": 272.385,
+        "noites_ocupadas": 147.5,
+        "noites_para_empatar": 215.82961477929942,
+        "razao_mediana": 0.6388433153370792,
+        "pct_acima": 0.2962962962962963
+      },
+      "East Village": {
+        "n": 87,
+        "aluguel_mes": 5158.22619636505,
+        "aluguel_ano": 61898.7143563806,
+        "receita_ano": 35876.0,
+        "diaria": 237.28,
+        "noites_ocupadas": 124.0,
+        "noites_para_empatar": 253.7394680562918,
+        "razao_mediana": 0.5795920056343118,
+        "pct_acima": 0.28735632183908044
+      },
+      "West Village": {
+        "n": 79,
+        "aluguel_mes": 6087.0613520616125,
+        "aluguel_ano": 73044.73622473935,
+        "receita_ano": 40594.0,
+        "diaria": 266.68,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 261.3046309498617,
+        "razao_mediana": 0.5557416194248822,
+        "pct_acima": 0.26582278481012656
+      },
+      "East Flatbush": {
+        "n": 81,
+        "aluguel_mes": 2797.3293957129813,
+        "aluguel_ano": 33567.95274855578,
+        "receita_ano": 18767.0,
+        "diaria": 130.71,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 260.9279037865608,
+        "razao_mediana": 0.5533774497348033,
+        "pct_acima": 0.30864197530864196
+      },
+      "Bushwick": {
+        "n": 100,
+        "aluguel_mes": 3595.272308880098,
+        "aluguel_ano": 43143.26770656118,
+        "receita_ano": 24248.5,
+        "diaria": 159.57999999999998,
+        "noites_ocupadas": 180.0,
+        "noites_para_empatar": 279.516448305689,
+        "razao_mediana": 0.5453612242001113,
+        "pct_acima": 0.26
+      },
+      "East Harlem": {
+        "n": 98,
+        "aluguel_mes": 3503.8254481314766,
+        "aluguel_ano": 42045.90537757772,
+        "receita_ano": 24521.5,
+        "diaria": 168.37,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 234.84040523823433,
+        "razao_mediana": 0.5443185871464223,
+        "pct_acima": 0.24489795918367346
+      },
+      "Upper East Side": {
+        "n": 367,
+        "aluguel_mes": 4167.374162096695,
+        "aluguel_ano": 50008.48994516034,
+        "receita_ano": 26280.0,
+        "diaria": 218.19,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 234.4105386219275,
+        "razao_mediana": 0.5094552806757506,
+        "pct_acima": 0.18528610354223432
+      },
+      "Williamsburg": {
+        "n": 202,
+        "aluguel_mes": 4984.872609743742,
+        "aluguel_ano": 59818.4713169249,
+        "receita_ano": 27392.0,
+        "diaria": 211.595,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 275.19846639541106,
+        "razao_mediana": 0.5052452751571532,
+        "pct_acima": 0.15841584158415842
+      },
+      "Murray Hill": {
+        "n": 85,
+        "aluguel_mes": 5143.606863295306,
+        "aluguel_ano": 61723.282359543664,
+        "receita_ano": 30532.0,
+        "diaria": 260.02,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 237.3789799228662,
+        "razao_mediana": 0.4946593705459207,
+        "pct_acima": 0.27058823529411763
+      },
+      "Upper West Side": {
+        "n": 243,
+        "aluguel_mes": 4692.319860808826,
+        "aluguel_ano": 56307.83832970591,
+        "receita_ano": 25612.0,
+        "diaria": 206.5,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 268.225808796372,
+        "razao_mediana": 0.46337703302096755,
+        "pct_acima": 0.13168724279835392
+      },
+      "Kips Bay": {
+        "n": 99,
+        "aluguel_mes": 5143.606863295306,
+        "aluguel_ano": 61723.282359543664,
+        "receita_ano": 26364.0,
+        "diaria": 224.36,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 279.215065410041,
+        "razao_mediana": 0.42713217755380106,
+        "pct_acima": 0.16161616161616163
+      },
+      "Chelsea": {
+        "n": 170,
+        "aluguel_mes": 5807.059915142426,
+        "aluguel_ano": 69684.71898170911,
+        "receita_ano": 23960.5,
+        "diaria": 209.49,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 326.0808861308658,
+        "razao_mediana": 0.3438415243704888,
+        "pct_acima": 0.16470588235294117
+      },
+      "Hell's Kitchen": {
+        "n": 334,
+        "aluguel_mes": 4699.138821108977,
+        "aluguel_ano": 56389.66585330773,
+        "receita_ano": 18269.0,
+        "diaria": 193.6,
+        "noites_ocupadas": 120.0,
+        "noites_para_empatar": 295.99563580483266,
+        "razao_mediana": 0.32076799403376827,
+        "pct_acima": 0.19161676646706588
+      }
+    },
+    "minimo_por_bairro": 60
   },
   "features": [
     "room_type_cod",

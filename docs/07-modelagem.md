@@ -192,20 +192,41 @@ fatura mais no Airbnb do que alugado por um ano no mercado tradicional do mesmo 
 Receita = `estimated_revenue_l365d` (bruta: sem taxa da plataforma, limpeza nem
 mobília); aluguel = Zillow ZORI do CEP × 12, em dólar de junho de 2026.
 
-| recorte | apartamentos ativos | receita ÷ aluguel anual (mediana) | faturam mais que o aluguel |
-|---|---:|---:|---:|
-| todos | 5.069 | 0,55 | 27,7% |
-| estadia curta (< 30 noites) | 1.433 | **1,69** | **74,8%** |
-| 30+ noites | 3.636 | 0,42 | 9,1% |
+--8<-- "_snippets/tabela_aluguel_recortes.md"
+
+A razão sozinha esconde de onde ela vem: 0,55× pode ser aluguel caro ou receita baixa,
+e quem decide o que fazer com um imóvel precisa saber qual dos dois. Por isso a tabela
+traz as duas pontas e a coluna **empatar em** — quantas noites, na própria diária do
+recorte, igualariam um ano de aluguel. Na mediana são **240 noites**, e a ocupação
+observada é **120**.
 
 A Local Law 18 dividiu o mercado em dois negócios opostos: a estadia curta **legal**
 (registrada) é muito mais rentável que o aluguel — três em quatro superam um ano de
 aluguel —, enquanto o aluguel mensal mobiliado pelo Airbnb fatura, na mediana, menos
 da metade de um aluguel tradicional. Parte dessa distância é método: a ocupação
 estimada de 30+ noites conta 60 noites por avaliação, e hóspedes de estadia longa
-avaliam menos — a receita desse grupo tende a estar subestimada. Por distrito e no
-[mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/) (métrica
-"Airbnb × aluguel de longo prazo").
+avaliam menos — a receita desse grupo tende a estar subestimada.
+
+### Por bairro
+
+A média da cidade não decide nada sobre um imóvel — o bairro decide. Só os bairros com
+60 ou mais apartamentos inteiros ativos, para que a mediana signifique alguma coisa:
+
+--8<-- "_snippets/tabela_aluguel_bairros.md"
+
+Dois bairros passam de 1,00×, e **não são os de aluguel mais caro**. São os de estadia
+curta registrada, que operam o ano inteiro: **Fort Hamilton** (1,14×) tem a terceira
+diária mais barata da lista — US$ 165 — e mesmo assim vence, porque vende 255 noites.
+**Financial District** (1,06×) chega pelo outro extremo: diária de US$ 540 e só 128
+noites, o que basta para empatar em 117.
+
+No fundo da tabela estão **Hell's Kitchen** (0,32×) e **Chelsea** (0,34×), que precisam
+de 296 e 326 noites para empatar e vendem 120. Não é que o Airbnb renda pouco lá — é que
+o aluguel rende muito. A conta perde para o contrato justamente onde o contrato é caro.
+
+Por célula, a mesma métrica está no
+[mapa](https://felipe44776-eseg.github.io/data-science-2-eseg-airbnb-nyc/mapa/), em
+"Airbnb × aluguel de longo prazo".
 
 ## 4. Sobrevivência 2019 → 2026
 

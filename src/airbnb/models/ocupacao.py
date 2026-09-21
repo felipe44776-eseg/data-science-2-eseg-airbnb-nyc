@@ -91,6 +91,33 @@ def penalidade_sobrepreco(df: pd.DataFrame) -> dict | None:
     return {"por_estrato": saida, "spearman_sobrepreco_ocupacao": float(rho), "n": int(len(d))}
 
 
+#: recorte com menos anuncios que isto nao publica mediana (bairro)
+MIN_ANUNCIOS_RECORTE = 60
+
+
+def _bloco_aluguel(g: pd.DataFrame) -> dict:
+    """Mediana de cada grandeza no recorte, e nao so a razao.
+
+    A razao sozinha esconde de onde ela vem: 0,55 pode ser aluguel caro ou
+    receita baixa, e a decisao de quem tem o imovel depende de qual dos dois.
+    Publicamos as duas pontas e as noites que faltam para empatar.
+    """
+    aluguel_ano = 12 * g[E.ZORI]
+    razao = g[S.COL_RECEITA_L365D] / aluguel_ano
+    return {
+        "n": int(len(g)),
+        "aluguel_mes": float(g[E.ZORI].median()),
+        "aluguel_ano": float(aluguel_ano.median()),
+        "receita_ano": float(g[S.COL_RECEITA_L365D].median()),
+        "diaria": float(g[E.PRECO].median()),
+        "noites_ocupadas": float(g[E.OCUPACAO].median()),
+        # quantas noites, na propria diaria, empatariam com um ano de aluguel
+        "noites_para_empatar": float((aluguel_ano / g[E.PRECO]).median()),
+        "razao_mediana": float(razao.median()),
+        "pct_acima": float((razao > 1).mean()),
+    }
+
+
 def receita_vs_aluguel(df: pd.DataFrame) -> dict:
     """O Airbnb fatura mais que um ano de aluguel de longo prazo no mesmo lugar?
 
@@ -98,22 +125,27 @@ def receita_vs_aluguel(df: pd.DataFrame) -> dict:
     do imovel inteiro). Aluguel = ZORI do CEP da celula x 12, em dolar de 2026-06.
     Receita = estimated_revenue_l365d (preco x noites estimadas) — bruta: sem
     taxa da plataforma, limpeza, mobilia, vacancia entre estadias.
+
+    Alem da razao agregada, o recorte por BAIRRO: e nele que a conta deixa de ser
+    uma media da cidade e vira uma decisao sobre um imovel. Dois bairros passam de
+    1,00x, e nao sao os de aluguel mais caro — sao os de estadia curta registrada,
+    que operam o ano inteiro.
     """
     at = df[(df[ATIVO] == 1) & (df[E.TIPO_QUARTO_COD] == 0) & df[E.ZORI].notna()]
-    razao = at[S.COL_RECEITA_L365D] / (12 * at[E.ZORI])
-    saida = {
-        "n": int(len(at)),
-        "razao_mediana": float(razao.median()),
-        "pct_receita_acima_de_um_ano_de_aluguel": float((razao > 1).mean()),
-        "por_min30": {("30+ noites" if k else "< 30 noites"):
-                      {"n": int(len(g)), "razao_mediana": float(g.median()),
-                       "pct_acima": float((g > 1).mean())}
-                      for k, g in razao.groupby(at[E.MIN30])},
-        "por_distrito": {str(k): {"n": int(len(g)), "razao_mediana": float(g.median()),
-                                  "pct_acima": float((g > 1).mean())}
-                         for k, g in razao.groupby(at[E.DISTRITO]) if len(g) >= 30},
+    return {
+        **_bloco_aluguel(at),
+        "pct_receita_acima_de_um_ano_de_aluguel": float(
+            (at[S.COL_RECEITA_L365D] / (12 * at[E.ZORI]) > 1).mean()),
+        "por_min30": {("30+ noites" if k else "< 30 noites"): _bloco_aluguel(g)
+                      for k, g in at.groupby(at[E.MIN30], observed=True)},
+        "por_distrito": {str(k): _bloco_aluguel(g)
+                         for k, g in at.groupby(E.DISTRITO, observed=True) if len(g) >= 30},
+        "por_bairro": dict(sorted(
+            ((str(k), _bloco_aluguel(g))
+             for k, g in at.groupby(E.BAIRRO, observed=True) if len(g) >= MIN_ANUNCIOS_RECORTE),
+            key=lambda kv: -kv[1]["razao_mediana"])),
+        "minimo_por_bairro": MIN_ANUNCIOS_RECORTE,
     }
-    return saida
 
 
 def main() -> None:
