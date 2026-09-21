@@ -253,6 +253,39 @@ def ocupacao(o: dict) -> str:
                      _num(n["modelo"]["spearman"], 3)]])
 
 
+def _linha_aluguel(rotulo: str, v: dict, forte: bool = False) -> list[str]:
+    razao = _num(v["razao_mediana"], 2) + "×"
+    return [f"**{rotulo}**" if forte else rotulo,
+            _num(v["n"]),
+            _num(v["aluguel_mes"], prefixo="US$ "),
+            _num(v["diaria"], prefixo="US$ "),
+            _num(v["noites_ocupadas"]),
+            _num(v["noites_para_empatar"]),
+            _num(v["receita_ano"], prefixo="US$ "),
+            f"**{razao}**" if v["razao_mediana"] > 1 else razao,
+            _pct(v["pct_acima"])]
+
+
+_CAB_ALUGUEL = ["recorte", "n", "aluguel/mês", "diária", "noites/ano", "empatar em",
+                "receita/ano", "razão", "acima de 1,00×"]
+
+
+def aluguel_recortes(o: dict) -> str:
+    """Airbnb x aluguel no agregado, por regime de noites e por distrito."""
+    a = o["receita_vs_aluguel"]
+    linhas = [_linha_aluguel("todos os apartamentos inteiros ativos", a, forte=True)]
+    linhas += [_linha_aluguel(k, v) for k, v in a["por_min30"].items()]
+    linhas += [_linha_aluguel(k, v) for k, v in a["por_distrito"].items()]
+    return _tabela(_CAB_ALUGUEL, linhas, "lrrrrrrrr")
+
+
+def aluguel_bairros(o: dict) -> str:
+    """O mesmo por bairro: e aqui que a media da cidade vira decisao sobre um imovel."""
+    a = o["receita_vs_aluguel"]
+    linhas = [_linha_aluguel(k, v) for k, v in a["por_bairro"].items()]
+    return _tabela(_CAB_ALUGUEL, linhas, "lrrrrrrrr")
+
+
 def criterios(p: dict | None, s: dict | None) -> str:
     """Os criterios de sucesso de docs/01 contra o resultado — sem ajuste de regua."""
     linhas = []
@@ -296,6 +329,8 @@ def main() -> None:
         "tabela_sobrevivencia_or": ("sobrevivencia", sobrevivencia_or),
         "tabela_sobrevivencia_taxas": ("sobrevivencia", sobrevivencia_taxas),
         "tabela_deriva": ("deriva", deriva), "tabela_ocupacao": ("ocupacao", ocupacao),
+        "tabela_aluguel_recortes": ("ocupacao", aluguel_recortes),
+        "tabela_aluguel_bairros": ("ocupacao", aluguel_bairros),
     }
     for nome, (fonte, f) in geradores.items():
         dado = fontes[fonte]
