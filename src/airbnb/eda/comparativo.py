@@ -27,6 +27,7 @@ from airbnb.external.cpi import fator_cpi
 SAIDA = PROCESSED / "_comparativo.json"
 SAIDA_R8 = PROCESSED / "comparativo_r8.parquet"
 COL_PRECO_REAL = "preco_real"
+COL_PRECO_COTADO = "preco_real_cotado"   # 2026 com desconto: so para transparencia
 ESTRATO = "estrato"
 
 #: celula r8 com menos anuncios que isto nao publica mediana de preco
@@ -34,12 +35,29 @@ MIN_ANUNCIOS_CELULA = 5
 
 
 def carregar() -> tuple[pd.DataFrame, dict]:
+    """Os dois snapshots com o preco na MESMA definicao, em dolar de 2026.
+
+    Inflacao nao e o unico problema de comparar 2019 com 2026 — e nem o maior. O
+    `price` de 2019 e a diaria anunciada pelo anfitriao; o de 2026 e a cotacao de
+    uma estadia do minimo de noites JA COM DESCONTO (mensal, semanal, oferta). Na
+    estadia de 30+ noites o desconto mediano e de 4,4%, o que fazia o apartamento
+    inteiro de 30+ noites parecer 6,4% mais barato que em 2019 quando, na mesma
+    definicao, ele esta 4,0% mais caro. Por isso 2026 entra com `preco_cheio` — a
+    diaria sem desconto, que existe exatamente para esta comparacao (schema.py).
+    A cotacao com desconto continua publicada ao lado, em `*_cotado`.
+    """
     df = pd.read_parquet(PROCESSED / f"{S.SRESUMO}.parquet")
+    cheio = pd.read_parquet(PROCESSED / f"{S.S2026}.parquet",
+                            columns=[S.COL_ID, S.COL_PRECO_CHEIO])
     fator, mes_para = fator_cpi(de=SNAPSHOT_2019[:7])
-    e19 = df[S.COL_SNAPSHOT] == ROTULO_2019
-    df[COL_PRECO_REAL] = df[S.COL_PRECO].where(~e19, df[S.COL_PRECO] * fator)
+    e19 = (df[S.COL_SNAPSHOT] == ROTULO_2019).to_numpy()
+    preco_cheio = df[S.COL_ID].map(cheio.set_index(S.COL_ID)[S.COL_PRECO_CHEIO])
+    df[COL_PRECO_COTADO] = df[S.COL_PRECO].where(~e19, df[S.COL_PRECO] * fator)
+    df[COL_PRECO_REAL] = np.where(e19, df[S.COL_PRECO] * fator,
+                                  preco_cheio.fillna(df[S.COL_PRECO]))
     df[ESTRATO] = np.where(df[S.COL_MIN30], "30+ noites", "< 30 noites")
-    return df, {"fator": round(float(fator), 6), "de": SNAPSHOT_2019[:7], "para": mes_para}
+    return df, {"fator": round(float(fator), 6), "de": SNAPSHOT_2019[:7], "para": mes_para,
+                "preco_2026": "preco_cheio: diaria sem desconto, mesma definicao do price de 2019"}
 
 
 def _mediana_ic(x: np.ndarray, n_boot: int = 1000, semente: int = SEMENTE) -> tuple:
@@ -73,6 +91,7 @@ def kpis(df: pd.DataFrame) -> dict:
             "pct_disponibilidade_zero": float((g[S.COL_DISPONIBILIDADE_365] == 0).mean()),
             "preco_mediano_real": float(p.median()),
             "preco_mediano_nominal": float(g.loc[g[S.COL_PRECO_VALIDO], S.COL_PRECO].median()),
+            "preco_mediano_cotado": float(g.loc[g[S.COL_PRECO_VALIDO], COL_PRECO_COTADO].median()),
             # invariante 8: o preco agregado so e publicado ao lado do estratificado
             "preco_mediano_real_curta": float(
                 g.loc[g[S.COL_PRECO_VALIDO] & ~g[S.COL_MIN30], COL_PRECO_REAL].median()),

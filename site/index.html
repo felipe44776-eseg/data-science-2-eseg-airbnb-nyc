@@ -274,18 +274,22 @@ footer{background:var(--paper-2); border-top:1px solid var(--line); padding-bloc
 <section id="espinha">
   <div class="cab">
     <h2>O que separa os dois retratos</h2>
-    <p>Sete indicadores comparáveis: o preço em dólar de 2026 e cada proporção sobre a mesma base.</p>
+    <p>Oito indicadores, todos comparáveis entre os dois anos: cada proporção sobre a mesma base e
+    cada preço como o mesmo produto, na mesma definição e em dólar de 2026.</p>
   </div>
   <div class="espinha">
     <div class="ei cabeca"><span class="rot">Indicador</span><span class="a">2019</span><span class="s"></span><span class="b">2026</span><span class="d">Variação</span></div>
     <div id="espinha-linhas"></div>
   </div>
   <div class="aviso">
-    <h4>A leitura que não se pode fazer</h4>
-    <p>A diária mediana sobe 29% — e é a única linha que engana. Em 2026, 82% dos anúncios exigem 30
-    noites ou mais, e neles o preço já vem com desconto mensal embutido: é outra mercadoria.
-    Separando os regimes, a estadia longa custa <b>o mesmo</b> de 2019 e a curta, <b>duas a três vezes
-    mais</b>. Toda comparação aqui é em dólar constante e dentro do mesmo estrato de mínimo de noites.</p>
+    <h4>Por que o preço aparece em duas linhas, e não em uma</h4>
+    <p>A diária mediana da cidade inteira sobe de US$ 137 para US$ 194 (+41,5%) — e esse número
+    <b>não é comparável</b>. Corrigir a inflação não basta: em 2019, 9% dos anúncios exigiam 30+
+    noites; em 2026, 82%. A mediana geral mistura dois produtos diferentes em proporções diferentes.
+    Por isso cada linha de preço compara <b>o mesmo produto</b> — apartamento inteiro, no mesmo regime
+    de noites — com a diária <b>sem desconto</b> nos dois anos, que é a definição de 2019. O que
+    sobra é o que de fato mudou: a estadia longa custa praticamente o mesmo; a curta, o dobro. Na
+    curta, com uma ressalva: é o preço do que restou legal, e o estrato perdeu 87% dos anúncios.</p>
   </div>
 </section>
 
@@ -406,10 +410,11 @@ const espinha = [
   ["Anúncios", "48.895", "30.257", "−38,1%"],
   ["Anfitriões distintos", "37.457", "16.472", "−56,0%"],
   ["Exigem 30 noites ou mais", "9,2%", "81,7%", "+72,5 p.p."],
-  ["Parcela do 1% maior dos anfitriões", "10,1%", "25,0%", "+14,9 p.p."],
-  ["Anfitriões com mais de um anúncio", "33,9%", "56,1%", "+22,2 p.p."],
-  ["Imóvel inteiro", "52,0%", "55,5%", "+3,5 p.p."],
-  ["Diária mediana, em dólar de 2026", "US$ 137", "US$ 177", "+29,3%"],
+  ["Anúncios nas mãos do 1% de anfitriões com mais anúncios", "10,1%", "25,0%", "+14,9 p.p."],
+  ["Anúncios de quem tem mais de um anúncio", "33,9%", "56,1%", "+22,2 p.p."],
+  ["Anúncios de imóvel inteiro", "52,0%", "55,5%", "+3,5 p.p."],
+  ["Diária do apartamento inteiro, estadia de 30+ noites", "US$ 220", "US$ 229", "+4,0%"],
+  ["Diária do apartamento inteiro, estadia de menos de 30 noites", "US$ 207", "US$ 408", "+97,2%"],
 ];
 document.getElementById("espinha-linhas").innerHTML = espinha.map(e =>
   `<div class="ei"><span class="rot">${e[0]}</span><span class="a">${e[1]}</span>` +
@@ -432,10 +437,13 @@ const grupos = [
      r:"Depois da lei, o preço de um anúncio de 30+ noites é cotação com desconto mensal. Comparar sem estratificar mede composição, não preço.",
      ir:"A decisão registrada", h:D+"adr/0005-comparabilidade-2019-2026/"},
   ]},
-  {n:"02", t:"O que mudou no preço", sub:"Corrigido pela inflação de Nova York e separado por regime — sem as duas coisas, mede-se composição.", cards:[
-    {p:"O preço subiu?", v:"+22,8%", vs:"em dólar constante",
-     r:"Toda a alta vem de dentro dos estratos; a mudança de composição contribui negativamente. A estadia curta dobrou ou triplicou, a longa está onde estava.",
+  {n:"02", t:"O que mudou no preço", sub:"Corrigido pela inflação, na mesma definição de preço e separado por regime — sem as três coisas, mede-se outra coisa.", cards:[
+    {p:"O apartamento de estadia longa ficou mais caro?", v:"+4,0%", vs:"em 7 anos, já sem inflação",
+     r:"De US$ 220 para US$ 229 a diária, com a mesma definição nos dois anos: sem o desconto mensal que a cotação de 2026 embute. Com o desconto, parecia −6,4% — o desconto escondia a alta.",
      ir:"Comparativo 2019 → 2026", h:D+"05-comparativo-2019-2026/"},
+    {p:"E a estadia curta?", v:"+97%", vs:"o apartamento inteiro",
+     r:"De US$ 207 para US$ 408. O quarto privativo sobe 175%. Mas é o preço do que restou legal: o estrato perdeu 87% dos anúncios no caminho, então não é o preço da mesma coisa.",
+     ir:"Avaliação §2", h:D+"08-avaliacao/"},
     {p:"O mercado de 2019 ainda explica o de hoje?", v:"33,3%", vs:"de erro, contra 25,3%",
      r:"O modelo treinado em 2019, aplicado a 2026, perde oito pontos. O resíduo por área vira a valorização ajustada do mapa.",
      ir:"Modelagem §deriva", h:D+"07-modelagem/"},
