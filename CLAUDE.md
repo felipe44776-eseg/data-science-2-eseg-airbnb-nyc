@@ -145,10 +145,12 @@ Cada um destes já foi publicado errado e corrigido:
   nem piso nem teto;
 - cobertura do intervalo de 80%: **79,6%**, nunca "80%".
 
+Os três decks passam em `tests/geometria_decks.mjs` sem nenhum problema (2026-09-22,
+depois de corrigir os slides 3 e 19 do deck técnico). Rodar de novo a cada mudança de
+texto ou de estilo num deck.
+
 ### Pendências conhecidas
 
-- Deck técnico: no slide 3 o "US$ 313" quebra em duas linhas; no slide 19 os dois cartões
-  de baixo invadem o rodapé (~34 px). Acusados por `tests/geometria_decks.mjs`.
 - `pipeline/estado.py` não enxerga dependência em `regras.py`, `relatorio.py` e nos
   snippets, e trata entrada ausente como ok.
 - Falha de fonte externa vira NaN em silêncio.
