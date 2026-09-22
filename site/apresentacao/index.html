@@ -191,6 +191,7 @@ h1,h2,h3,p,li{hyphens:none}
 .comp .antes{display:flex;align-items:center;gap:9px;margin-top:14px}
 .comp .depois{display:flex;align-items:center;gap:9px;margin-top:8px}
 .comp .antes .v{font-size:24px;font-weight:600;color:var(--foggy);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.comp .v{white-space:nowrap}
 .comp .depois .v{font-size:34px;font-weight:800;color:var(--hof);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
 .comp .ano{font-size:11px;font-weight:800;color:var(--foggy);letter-spacing:.08em}
 .comp .rodape{margin-top:auto;padding-top:14px}
@@ -516,8 +517,8 @@ table.tb tr:last-child td{border-bottom:none}
 
       <div class="comp">
         <div class="rot">Diária mediana, estadia curta</div>
-        <div class="antes"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num">US$ 129</span></div>
-        <div class="depois"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num">US$ 313</span></div>
+        <div class="antes"><span class="mk mk-2019"></span><span class="ano">2019</span><span class="v num"><span style="font-size:.6em;letter-spacing:0">US$</span> 129</span></div>
+        <div class="depois"><span class="mk mk-2026"></span><span class="ano">2026</span><span class="v num"><span style="font-size:.6em;letter-spacing:0">US$</span> 313</span></div>
         <div class="rodape"><span class="chip rausch">▲ alta</span></div>
       </div>
 
@@ -1371,19 +1372,19 @@ table.tb tr:last-child td{border-bottom:none}
 
 <!-- ========== 19 · GRÁFICO · A ESCADA DE MODELOS ========== -->
 <div class="frame"><section class="slide">
-  <div class="head" style="margin-bottom:18px">
+  <div class="head" style="margin-bottom:14px">
     <div class="eyebrow">A escada de modelos</div>
     <h1 class="h1 larga">Cada degrau vale o que vale sob validação espacial.</h1>
   </div>
 
   <div class="corpo">
-    <div class="legend" style="margin-bottom:16px">
+    <div class="legend" style="margin-bottom:12px">
       <span class="lg"><i class="mk mk-quad mk-base"></i>linha de base</span>
       <span class="lg"><i class="mk mk-quad mk-mod"></i>modelo treinado</span>
       <span class="caption" style="margin-left:6px">Erro mediano percentual absoluto (MdAPE) — quanto menor, melhor.</span>
     </div>
 
-    <div class="chart" style="--labw:296px;--rowgap:15px;--rightgutter:14px">
+    <div class="chart" style="--labw:296px;--rowgap:11px;--rightgutter:14px">
       <div class="plot-layer">
         <span class="gl" style="left:0%"></span><span class="gl" style="left:16.667%"></span>
         <span class="gl" style="left:33.333%"></span><span class="gl" style="left:50%"></span>
@@ -1393,19 +1394,19 @@ table.tb tr:last-child td{border-bottom:none}
 
       <div class="rows">
         <div class="row"><div class="row-lab">B0 · mediana da cidade</div>
-          <div class="track" style="--bh:26px"><span class="bar base" style="left:0;width:89.17%"></span><span class="bar-v num" style="left:89.17%">53,5%</span></div></div>
+          <div class="track" style="--bh:24px"><span class="bar base" style="left:0;width:89.17%"></span><span class="bar-v num" style="left:89.17%">53,5%</span></div></div>
         <div class="row"><div class="row-lab">B1 · mediana bairro × tipo</div>
-          <div class="track" style="--bh:26px"><span class="bar base" style="left:0;width:77.67%"></span><span class="bar-v num" style="left:77.67%">46,6%</span></div></div>
+          <div class="track" style="--bh:24px"><span class="bar base" style="left:0;width:77.67%"></span><span class="bar-v num" style="left:77.67%">46,6%</span></div></div>
         <div class="row"><div class="row-lab">M1 · regressão hedônica</div>
-          <div class="track" style="--bh:26px"><span class="bar" style="left:0;width:46.00%"></span><span class="bar-v num" style="left:46.00%">27,6%</span></div></div>
+          <div class="track" style="--bh:24px"><span class="bar" style="left:0;width:46.00%"></span><span class="bar-v num" style="left:46.00%">27,6%</span></div></div>
         <div class="row"><div class="row-lab">M2 · só o imóvel</div>
-          <div class="track" style="--bh:26px"><span class="bar" style="left:0;width:40.83%"></span><span class="bar-v num" style="left:40.83%">24,5%</span></div></div>
+          <div class="track" style="--bh:24px"><span class="bar" style="left:0;width:40.83%"></span><span class="bar-v num" style="left:40.83%">24,5%</span></div></div>
         <div class="row"><div class="row-lab">M3 · + coordenadas</div>
-          <div class="track" style="--bh:26px"><span class="bar" style="left:0;width:36.17%"></span><span class="bar-v num" style="left:36.17%">21,7%</span></div></div>
+          <div class="track" style="--bh:24px"><span class="bar" style="left:0;width:36.17%"></span><span class="bar-v num" style="left:36.17%">21,7%</span></div></div>
         <div class="row"><div class="row-lab">M4 · + fontes externas</div>
-          <div class="track" style="--bh:26px"><span class="bar" style="left:0;width:36.67%"></span><span class="bar-v num" style="left:36.67%">22,0%</span></div></div>
+          <div class="track" style="--bh:24px"><span class="bar" style="left:0;width:36.67%"></span><span class="bar-v num" style="left:36.67%">22,0%</span></div></div>
         <div class="row"><div class="row-lab">M5 · o que vai para o site</div>
-          <div class="track" style="--bh:26px"><span class="bar" style="left:0;width:41.67%"></span><span class="bar-v num" style="left:41.67%">25,0%</span></div></div>
+          <div class="track" style="--bh:24px"><span class="bar" style="left:0;width:41.67%"></span><span class="bar-v num" style="left:41.67%">25,0%</span></div></div>
       </div>
 
       <div class="axis"><div class="axis-line">
@@ -1416,7 +1417,7 @@ table.tb tr:last-child td{border-bottom:none}
       </div></div>
     </div>
 
-    <div class="grade g2" style="margin-top:20px;gap:22px">
+    <div class="grade g2" style="margin-top:16px;gap:22px">
       <div class="card">
         <div class="rot">Por que não há número melhor aqui</div>
         <p class="body">Tudo sob <span class="forte">validação cruzada espacial</span>: o bloco de teste é uma região inteira que o modelo nunca viu. O KFold aleatório prometeria <span class="num forte">18,5%</span> onde o real é <span class="num forte">22,0%</span> — o otimismo de vizinho treinando com vizinho.</p>
