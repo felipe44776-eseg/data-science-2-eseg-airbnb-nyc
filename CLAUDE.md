@@ -69,7 +69,9 @@ noites. Toda comparação 2019 × 2026 tem de levar isso em conta.
    do modelo de avaliações do Inside Airbnb (2019).
 8. **Preço de 2019 só se compara com o atual em dólar constante** (CPI-U NY,
    `CUURS12ASA0`) **e estratificado por mínimo de noites** (< 30 / ≥ 30): pós-LL18, o
-   `price` de estadia longa é cotação com desconto mensal (ADR 0005).
+   `price` de estadia longa é cotação com desconto mensal (ADR 0005). Em 2026 a diária
+   comparável é o **`preco_cheio`** (sem desconto) — a mesma definição do `price` de
+   2019; o preço descontado fica só como transparência (`preco_real_cotado`).
 9. **Nenhum dado pessoal nas superfícies publicadas**: sem `host_name`, `host_about`,
    fotos, URLs de perfil, nem id de anúncio no site.
 10. **O site calcula com o mesmo modelo validado.** Paridade Python ↔ JavaScript
@@ -87,13 +89,71 @@ noites. Toda comparação 2019 × 2026 tem de levar isso em conta.
 | o modelo que o site roda | `site/data/modelo_preco.json` — **é** o modelo |
 | tabelas e figuras dos docs | geradas: `docs/_snippets/`, `docs/assets/figuras/` (`.\tasks.ps1 figuras`) |
 | decisões travadas | `docs/adr/` |
+| as páginas publicadas | `site/`: `index.html` (portal), `mapa/`, `apresentacao/`, `executiva/`, `executiva-maior/` |
+| se uma página diverge do pipeline | `tests/test_superficies.py` |
+| se um deck quebrou o layout | `node tests/geometria_decks.mjs <url>` — manual, precisa de Chrome (cabeçalho do arquivo) |
 
 ## Estado
 
-**Pipeline completo em 2026-09-19: 13/13 etapas ok**, ~170 testes, ruff limpo, paridade
-Python ↔ JS com erro 0. Critérios pré-registrados (docs/01 §5): C1, C2, C3 atendidos;
-**C4 (externas melhoram o preço) e C5 (sobrevivência AUC ≥ 0,70) não** — reportados como
-resultado, não escondidos (docs/07, docs/08).
+**Em 2026-09-22: pipeline 13/13 etapas ok**, 185 testes, ruff limpo, paridade
+Python ↔ JS com erro 0 nos dois modelos do site (preço e ocupação). Critérios
+pré-registrados (docs/01 §5): C1, C2, C3 atendidos; **C4 (externas melhoram o preço) e C5
+(sobrevivência AUC ≥ 0,70) não** — reportados como resultado, não escondidos (docs/07,
+docs/08). C4 e C5 são o mesmo achado: dado o ponto no mapa, o resto da geografia é
+redundante (η² mediano de 0,85 das externas explicado pela célula r8).
+
+`.\tasks.ps1 status` compara **data de modificação**. Como os `_*.json` são versionados,
+trocar de branch reescreve código e resultado no mesmo segundo e pode marcar etapa como
+"obsoleto" sem nada ter mudado. Rodar a etapa de novo e conferir `git status` limpo tira
+a dúvida (feito em 2026-09-22: as seis etapas marcadas reproduziram resultado idêntico).
+
+### Superfícies publicadas
+
+GitHub Pages, deploy a cada merge em `main` que toque `site/**`.
+
+| URL | o que é |
+|---|---|
+| `/` | portal do projeto (identidade ESEG: `#08223D`, `#00A1B8`, Public Sans) |
+| `/mapa/` | mapa + simulador (modelo de preço e de ocupação no navegador) |
+| `/apresentacao/` | deck técnico, 20 slides, paleta Airbnb (sem logo, com a linha de não afiliação) |
+| `/executiva/` | deck executivo, 20 slides, tom leve |
+| `/executiva-maior/` | a executiva com a letra ~15% maior; 21 slides ("De onde vem a conta" vira dois) |
+| `/docs/` | MkDocs, uma página por fase do CRISP-DM |
+
+- **Os decks escrevem os números no HTML.** Resultado mudou → atualizar o portal e os três
+  decks no mesmo commit. `test_superficies.py` amarra os números do portal e do deck
+  técnico ao pipeline; as executivas não têm essa amarra.
+- **`executiva-maior/` é cópia editada à mão de `executiva/`.** Mudança de texto ou número
+  numa vai para a outra, e a maior usa a captura `../executiva/mapa-simulador.jpg`.
+- Nomes da equipe nos decks vêm de `site/assets/equipe.js`, que lê `site/data/resumo.json`.
+
+### Números revisados — não reintroduzir
+
+Cada um destes já foi publicado errado e corrigido:
+
+- preço 2019 × 2026 do apartamento inteiro de 30+ noites: **+4,0%** com `preco_cheio`
+  (o −6,4% era o preço descontado);
+- cumprimento do registro: **86%** dentro da base (2.268 de 2.635 que precisam de
+  registro); o "60%" dividia registros da cidade por anúncios da base e foi retirado;
+- o mercado **encolheu** (−38% de anúncios, −59,3% de noites ocupadas) **e foi trocado**
+  (57,5% dos anúncios de 2026 são de anfitriões que não existiam em 2019) — nunca "não
+  encolheu";
+- leis até a fiscalização funcionar: **13 anos** (2010 → 2023);
+- prêmio da localização: de −15% ao dobro **em 95% da cidade** (nos 5% mais caros passa
+  disso, até +445%);
+- saídas atribuíveis à LL18 pelo controle de 30+ noites: **6,8%, ordem de grandeza** —
+  nem piso nem teto;
+- cobertura do intervalo de 80%: **79,6%**, nunca "80%".
+
+### Pendências conhecidas
+
+- Deck técnico: no slide 3 o "US$ 313" quebra em duas linhas; no slide 19 os dois cartões
+  de baixo invadem o rodapé (~34 px). Acusados por `tests/geometria_decks.mjs`.
+- `pipeline/estado.py` não enxerga dependência em `regras.py`, `relatorio.py` e nos
+  snippets, e trata entrada ausente como ok.
+- Falha de fonte externa vira NaN em silêncio.
+- `site/data/anuncios_2026.json` publica coordenada com 4 casas (~11 m). O Airbnb já
+  desloca ~150 m, mas arredondar para 3 casas reduz o risco de reidentificação.
 
 Falhas conhecidas de ambiente:
 - **A API do Census exige chave** desde 2026: o ACS vem do Summary File oficial por HTTP
